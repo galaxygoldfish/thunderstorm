@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="thunderstorm_launcher_name">Thunderstorm</string>
+
     <string name="sun_rain_lightning_cloud_content_desc">Sunny with rain and lightning</string>
     <string name="thunderstorm_cloud_content_desc">Lightning</string>
 
