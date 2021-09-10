@@ -38,7 +38,10 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
+import com.thunderstorm.app.datastore.DataStore
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
@@ -146,7 +149,16 @@ fun SetupViewPager(
                     onClick = {
                         if (viewModel.allowNavigateNext.value) {
                             if (viewPagerState.currentPage == 1) {
-                                navController.navigate(NavigationDestination.WeatherView)
+                                val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
+                                viewModel.apply {
+                                    dataStore.apply {
+                                        putInteger("PREF_TEMP_UNITS", selectionTemperature.value)
+                                        putInteger("PREF_SPEED_UNITS", selectionSpeed.value)
+                                        putInteger("PREF_PRECIP_UNITS", selectionPrecip.value)
+                                        putInteger("PREF_AIR_UNITS", selectionAir.value)
+                                        navController.navigate(NavigationDestination.WeatherView)
+                                    }
+                                }
                             } else {
                                 composeAsync.launch {
                                     viewPagerState.animateScrollToPage(viewPagerState.currentPage + 1)

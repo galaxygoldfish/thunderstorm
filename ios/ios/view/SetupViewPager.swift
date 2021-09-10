@@ -1,6 +1,7 @@
 import SwiftUIPager
 import SwiftUI
 import UIKit
+import shared
 
 struct SetupViewPager: View {
     
@@ -70,6 +71,11 @@ struct SetupViewPager: View {
                                     if (pageIndex == 0) {
                                        pageIndex = 1
                                     } else {
+                                        let dataStore = DataStore(context: NSObject())
+                                        dataStore.putInteger(key: "PREF_TEMP_UNITS", value: Int32(setupViewModel.selectionTemperature))
+                                        dataStore.putInteger(key: "PREF_SPEED_UNITS", value: Int32(setupViewModel.selectionSpeed))
+                                        dataStore.putInteger(key: "PREF_PRECIP_UNITS", value: Int32(setupViewModel.selectionPrecip))
+                                        dataStore.putInteger(key: "PREF_AIR_UNITS", value: Int32(setupViewModel.selectionAir))
                                         navigateWeather = true
                                     }
                                 }
