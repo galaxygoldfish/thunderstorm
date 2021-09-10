@@ -1,0 +1,29 @@
+<resources>
+
+    <string name="sun_rain_lightning_cloud_content_desc">Sunny with rain and lightning</string>
+    <string name="thunderstorm_cloud_content_desc">Lightning</string>
+
+    <string name="maps_location_place_content_desc">Map with location marker</string>
+    <string name="double_arrow_next_content_desc">Double right arrow</string>
+    <string name="right_circle_content_desc">Right arrow circle</string>
+    <string name="left_circle_content_desc">Left arrow circle</string>
+    <string name="search_glyph_content_desc">Search magnifier</string>
+    <string name="gps_location_content_desc">GPS icon</string>
+    <string name="nothing_here_content_desc">Nothing here…</string>
+    <string name="check_circle_content_desc">Check mark</string>
+
+    <string name="welcome_title_header">Thunderstorm</string>
+    <string name="welcome_title_subheader">Your new favorite weather app.</string>
+    <string name="welcome_button_start_text">START</string>
+
+    <string name="add_location_header_title">Add your first\ncity</string>
+    <string name="add_location_search_field_hint">Search the world</string>
+    <string name="add_location_nothing_here_text">There\'s nothing here yet…</string>
+
+    <string name="customization_header">Customize\nsettings</string>
+    <string name="customization_temp_title">Temperature units</string>
+    <string name="customization_speed_title">Speed units</string>
+    <string name="customization_precipitation_title">Precipitation units</string>
+    <string name="customization_pressure_title">Air pressure units</string>
+
+</resources>

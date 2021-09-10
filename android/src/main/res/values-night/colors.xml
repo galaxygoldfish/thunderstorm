@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="thunderstorm_accent_color">#FFFFFF</color>
+    <color name="interface_gray">#252525</color>
+    <color name="interface_gray_alt">#191919</color>
+    <color name="interface_gray_contrast">#272727</color>
+    <color name="text_color">@android:color/white</color>
+</resources>

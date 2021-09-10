@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.Thunderstorm" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/thunderstorm_accent_color</item>
+        <item name="colorPrimaryDark">@color/thunderstorm_accent_color</item>
+        <item name="colorAccent">@color/thunderstorm_accent_color</item>
+        <item name="colorControlNormal">#FF000000</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@android:color/black</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+</resources>

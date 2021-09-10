@@ -1,0 +1,22 @@
+"welcome_page_header" = "Thunderstorm";
+"welcome_page_subheader" = "Your new favorite weather app.";
+"welcome_page_button_start" = "START";
+
+"add_city_header_title" = "Add your first\ncity";
+"add_city_search_hint" = "Search the world";
+"add_city_nothing_here_hint" = "There's nothing here yet...";
+
+"customization_header_title" = "Customize\nsettings";
+"customization_temp_unit_title" = "Temperature units";
+"customization_temp_unit_c" = "Celsius";
+"customization_temp_unit_f" = "Farenheit";
+"customization_speed_unit_title" = "Speed units";
+"customization_speed_unit_mph" = "MPH";
+"customization_speed_unit_kph" = "KPH";
+"customization_air_unit_title" = "Air pressure units";
+"customization_air_unit_in" = "inHg";
+"customization_air_unit_mm" = "mmHg";
+"customization_precip_unit_title" = "Precipitation units";
+"customization_precip_unit_in" = "Inches";
+"customization_precip_unit_mm" = "Millimeters";
+

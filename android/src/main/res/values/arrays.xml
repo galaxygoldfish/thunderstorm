@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="temperature_units">
+        <item>Celsius</item>
+        <item>Fahrenheit</item>
+    </string-array>
+
+    <string-array name="speed_units">
+        <item>MPH</item>
+        <item>KPH</item>
+    </string-array>
+
+    <string-array name="precipitation_units">
+        <item>Inches</item>
+        <item>Millimeters</item>
+    </string-array>
+
+    <string-array name="pressure_units">
+        <item>inHg</item>
+        <item>mmHg</item>
+    </string-array>
+
+</resources>

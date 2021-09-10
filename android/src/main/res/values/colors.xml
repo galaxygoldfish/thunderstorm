@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="thunderstorm_accent_color">#000000</color>
+    <color name="interface_gray">#DFDFDF</color>
+    <color name="interface_gray_alt">#F1F1F1</color>
+    <color name="interface_gray_contrast">#919191</color>
+    <color name="text_color">@android:color/black</color>
+
+    <color name="affirmative_green">#49EC6C</color>
+
+</resources>
