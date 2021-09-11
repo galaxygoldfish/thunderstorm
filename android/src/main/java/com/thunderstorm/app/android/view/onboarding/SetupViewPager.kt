@@ -34,11 +34,13 @@ import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.thunderstorm.app.ThunderstormDatabase
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
-import com.thunderstorm.app.datastore.DataStore
+import com.thunderstorm.app.database.DatabaseDriver
+import com.thunderstorm.app.database.datastore.DataStore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -150,12 +152,17 @@ fun SetupViewPager(
                         if (viewModel.allowNavigateNext.value) {
                             if (viewPagerState.currentPage == 1) {
                                 val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
+                                val cityDatabase = ThunderstormDatabase(DatabaseDriver(navController.context).createDriver())
                                 viewModel.apply {
+                                    selectedCity.value?.apply {
+                                        cityDatabase.cityStoreQueries.insertNewCity(name, region, country)
+                                    }
                                     dataStore.apply {
                                         putInteger("PREF_TEMP_UNITS", selectionTemperature.value)
                                         putInteger("PREF_SPEED_UNITS", selectionSpeed.value)
                                         putInteger("PREF_PRECIP_UNITS", selectionPrecip.value)
                                         putInteger("PREF_AIR_UNITS", selectionAir.value)
+                                        putBoolean("INDICATION_ONBOARDING_DONE", true)
                                         navController.navigate(NavigationDestination.WeatherView)
                                     }
                                 }

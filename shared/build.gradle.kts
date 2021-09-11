@@ -4,6 +4,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("com.squareup.sqldelight")
     kotlin("plugin.serialization") version "1.5.20"
 }
 
@@ -33,24 +34,34 @@ kotlin {
     sourceSets {
 
         val ktorVersion = "1.5.2"
+        val sqlDelightVersion = "1.5.0"
 
         val commonMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.0.0")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
             }
         }
         val androidMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val iosMain by getting {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
             }
         }
+    }
+}
+
+sqldelight {
+    database("ThunderstormDatabase") {
+        packageName = "com.thunderstorm.app"
     }
 }
 

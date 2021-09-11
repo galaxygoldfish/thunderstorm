@@ -1,9 +1,9 @@
-package com.thunderstorm.app.datastore
+package com.thunderstorm.app.database.datastore
 
 import android.app.Activity
 import android.content.Context.MODE_PRIVATE
 
-val DataStoreName = "com.thunderstorm.app.preference"
+val DataStoreName = "com.thunderstorm.app.preferences"
 
 actual typealias SharedContext = Activity
 

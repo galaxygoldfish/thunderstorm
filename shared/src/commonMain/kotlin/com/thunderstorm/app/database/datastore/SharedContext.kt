@@ -1,4 +1,4 @@
-package com.thunderstorm.app.datastore
+package com.thunderstorm.app.database.datastore
 
 expect class SharedContext
 

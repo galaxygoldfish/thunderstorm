@@ -1,4 +1,4 @@
-package com.thunderstorm.app.datastore
+package com.thunderstorm.app.database.datastore
 
 import platform.Foundation.NSUserDefaults
 import platform.darwin.NSObject
@@ -11,7 +11,7 @@ actual fun SharedContext.insertBoolean(key: String, value: Boolean) {
 }
 
 actual fun SharedContext.getBoolean(key: String): Boolean {
-    return NSUserDefaults.standardUserDefaults.getBoolean(key)
+    return NSUserDefaults.standardUserDefaults.boolForKey(key) ?: false
 }
 
 actual fun SharedContext.insertString(key: String, value: String) {
@@ -19,7 +19,7 @@ actual fun SharedContext.insertString(key: String, value: String) {
 }
 
 actual fun SharedContext.getString(key: String): String {
-    return NSUserDefaults.standardUserDefaults.getString(key)
+    return NSUserDefaults.standardUserDefaults.stringForKey(key) ?: ""
 }
 
 actual fun SharedContext.insertInteger(key: String, value: Int) {
@@ -27,5 +27,5 @@ actual fun SharedContext.insertInteger(key: String, value: Int) {
 }
 
 actual fun SharedContext.getInteger(key: String): Int {
-    return NSUserDefaults.standardUserDefaults.getInteger(key)
+    return (NSUserDefaults.standardUserDefaults.integerForKey(key) ?: 0).toInt()
 }

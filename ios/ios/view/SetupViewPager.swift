@@ -76,6 +76,7 @@ struct SetupViewPager: View {
                                         dataStore.putInteger(key: "PREF_SPEED_UNITS", value: Int32(setupViewModel.selectionSpeed))
                                         dataStore.putInteger(key: "PREF_PRECIP_UNITS", value: Int32(setupViewModel.selectionPrecip))
                                         dataStore.putInteger(key: "PREF_AIR_UNITS", value: Int32(setupViewModel.selectionAir))
+                                        dataStore.putBoolean(key: "INDICATION_ONBOARDING_DONE", value: true)
                                         navigateWeather = true
                                     }
                                 }

@@ -10,6 +10,7 @@
         android:theme="@style/Theme.Thunderstorm"
         android:label="@string/thunderstorm_launcher_name"
         android:icon="@mipmap/ic_launcher_icon"
+        android:roundIcon="@mipmap/ic_launcher_icon"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.ThunderstormBaseActivity"

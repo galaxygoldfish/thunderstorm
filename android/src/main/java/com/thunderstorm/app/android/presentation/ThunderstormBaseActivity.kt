@@ -19,6 +19,7 @@ import com.thunderstorm.app.android.view.onboarding.SetupViewPager
 import com.thunderstorm.app.android.view.WelcomeView
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
+import com.thunderstorm.app.database.datastore.DataStore
 
 object NavigationDestination {
     const val WelcomeView = "welcome"
@@ -47,10 +48,19 @@ class ThunderstormBaseActivity : ComponentActivity() {
 
     @Composable
     fun ThunderstormNavHost() {
+
+        val dataStore = DataStore(this)
+        val passedSetup = dataStore.getBoolean("INDICATION_ONBOARDING_DONE")
+
         navigationController = rememberNavController()
+
         NavHost(
             navController = navigationController,
-            startDestination = NavigationDestination.WelcomeView,
+            startDestination = if (passedSetup) {
+                NavigationDestination.WeatherView
+            } else {
+                NavigationDestination.WelcomeView
+            },
             builder = {
                 composable(NavigationDestination.WelcomeView) {
                     WelcomeView(
