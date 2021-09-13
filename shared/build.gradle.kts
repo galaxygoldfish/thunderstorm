@@ -19,6 +19,15 @@ kotlin {
         else -> ::iosX64
     }
 
+    /** https://github.com/cashapp/sqldelight/issues/1442#issuecomment-615991279 **/
+    targets.filterIsInstance<KotlinNativeTarget>().forEach{
+        it.binaries.filterIsInstance<org.jetbrains.kotlin.gradle.plugin.mpp.Framework>()
+            .forEach { lib ->
+                lib.isStatic = false
+                lib.linkerOpts.add("-lsqlite3")
+            }
+    }
+
     iosTarget("ios") {
 
     }
@@ -63,6 +72,7 @@ sqldelight {
     database("ThunderstormDatabase") {
         packageName = "com.thunderstorm.app"
     }
+    linkSqlite = true
 }
 
 android {

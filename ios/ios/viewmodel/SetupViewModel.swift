@@ -6,6 +6,7 @@ class SetupViewModel: ObservableObject {
 
     @Published var cityList: [SearchCityResult] = []
     @Published var allowNavigateNext: Bool = false
+    @Published var selectedCity: SearchCityResult? = nil
     
     @Published var selectionTemperature = 0
     @Published var selectionSpeed = 0
@@ -15,16 +16,16 @@ class SetupViewModel: ObservableObject {
     func fetchCitiesForSearch(query: String?) {
         if (query != "" && query != nil) {
             NetworkingClient().getMatchingCitiesForSearch(
-                       query: query,
-                       completionHandler: { result, error in
-                           if (error == nil) {
-                               self.cityList.removeAll()
-                               result?.forEach { item in
-                                   self.cityList.append(item)
-                               }
-                           }
-                       }
-                   )
+                query: query,
+                completionHandler: { result, error in
+                    if (error == nil) {
+                        self.cityList.removeAll()
+                        result?.forEach { item in
+                            self.cityList.append(item)
+                        }
+                    }
+                }
+            )
         }
     }
     

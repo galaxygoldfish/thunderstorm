@@ -7,7 +7,12 @@ expect class DatabaseDriver {
     fun createDriver(): SqlDriver
 }
 
-fun createDatabase(databaseDriver: DatabaseDriver) {
-    val driver = databaseDriver.createDriver()
-    val database = ThunderstormDatabase(driver)
+/**
+ * Workaround to create database instance on iOS
+ * where creating one normally results in an error,
+ * because "there are no available constructors for
+ * class ThunderstormDatabase"
+ */
+fun createDatabase(databaseDriver: SqlDriver) : ThunderstormDatabase {
+    return ThunderstormDatabase(databaseDriver)
 }

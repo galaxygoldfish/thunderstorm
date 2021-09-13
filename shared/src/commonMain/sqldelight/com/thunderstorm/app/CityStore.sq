@@ -2,11 +2,12 @@ CREATE TABLE CityStore (
     cityID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     cityName TEXT NOT NULL,
     stateName TEXT NOT NULL,
-    countryName TEXT NOT NULL
+    countryName TEXT NOT NULL,
+    serviceUrl TEXT NOT NULL
 );
 
 clearAllCities:
 DELETE FROM CityStore;
 
 insertNewCity:
-INSERT INTO CityStore(cityName, stateName, countryName) VALUES(?, ?, ?);
+INSERT INTO CityStore(cityName, stateName, countryName, serviceUrl) VALUES(?, ?, ?, ?);

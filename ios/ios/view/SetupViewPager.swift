@@ -72,6 +72,16 @@ struct SetupViewPager: View {
                                        pageIndex = 1
                                     } else {
                                         let dataStore = DataStore(context: NSObject())
+                                        let city = setupViewModel.selectedCity!
+                                        let databaseAccess: ThunderstormDatabase = DatabaseOperationsKt.createDatabase(
+                                            databaseDriver: DatabaseDriver().createDriver()
+                                        )
+                                        databaseAccess.cityStoreQueries.insertNewCity(
+                                            cityName: city.name,
+                                            stateName: city.region,
+                                            countryName: city.country,
+                                            serviceUrl: city.url
+                                        )
                                         dataStore.putInteger(key: "PREF_TEMP_UNITS", value: Int32(setupViewModel.selectionTemperature))
                                         dataStore.putInteger(key: "PREF_SPEED_UNITS", value: Int32(setupViewModel.selectionSpeed))
                                         dataStore.putInteger(key: "PREF_PRECIP_UNITS", value: Int32(setupViewModel.selectionPrecip))

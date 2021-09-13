@@ -89,6 +89,7 @@ struct SearchResultListItem: View {
         Button( action: {
             selectionTracker = searchResult
             viewModel.allowNavigateNext = true
+            viewModel.selectedCity = searchResult
         }) {
             ZStack(alignment: .leading) {
                 Color("InterfaceGrayAlt")
