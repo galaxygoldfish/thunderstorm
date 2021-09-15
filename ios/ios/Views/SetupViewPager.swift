@@ -62,7 +62,7 @@ struct SetupViewPager: View {
                     }
                     Spacer()
                     NavigationLink(
-                        destination: WeatherView(),
+                        destination: WeatherView().environmentObject(WeatherViewModel()),
                         isActive: $navigateWeather
                     ) {
                         Button(

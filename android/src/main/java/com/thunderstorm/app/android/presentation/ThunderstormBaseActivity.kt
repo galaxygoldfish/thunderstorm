@@ -73,7 +73,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
                         viewModel = setupViewModel
                     )
                 }
-                composable("""${NavigationDestination.WeatherView}/{""") {
+                composable(NavigationDestination.WeatherView) {
                     WeatherView(
                         viewModel = weatherViewModel,
                         navController = navigationController

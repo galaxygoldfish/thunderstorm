@@ -23,10 +23,22 @@ val Manrope = FontFamily(
 
 @Composable
 fun typography() = Typography(
+    h1 = TextStyle(
+        fontFamily = TexGyreHeros,
+        fontWeight = FontWeight.Bold,
+        fontSize = 60.sp,
+        color = colorResource(id = R.color.text_color)
+    ),
     h2 = TextStyle(
         fontFamily = TexGyreHeros,
         fontWeight = FontWeight.Bold,
         fontSize = 40.sp,
+        color = colorResource(id = R.color.text_color)
+    ),
+    h3 = TextStyle(
+        fontFamily = TexGyreHeros,
+        fontWeight = FontWeight.Bold,
+        fontSize = 35.sp,
         color = colorResource(id = R.color.text_color)
     ),
     h4 = TextStyle(

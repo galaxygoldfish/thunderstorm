@@ -9,5 +9,8 @@ CREATE TABLE CityStore (
 clearAllCities:
 DELETE FROM CityStore;
 
+getAllCities:
+SELECT * FROM CityStore;
+
 insertNewCity:
 INSERT INTO CityStore(cityName, stateName, countryName, serviceUrl) VALUES(?, ?, ?, ?);

@@ -19,6 +19,7 @@
 		9E0BAEF626E19D6A00590C3D /* TexGyreHeros-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E0BAEF026E19D6A00590C3D /* TexGyreHeros-Regular.otf */; };
 		9E0BAEF726E19D6A00590C3D /* Manrope-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9E0BAEF126E19D6A00590C3D /* Manrope-Bold.otf */; };
 		9E0BAEF926E19DC800590C3D /* TypefaceCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E0BAEF826E19DC800590C3D /* TypefaceCatalog.swift */; };
+		9E45190B26EEE13B00D9C15C /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E45190A26EEE13B00D9C15C /* WeatherViewModel.swift */; };
 		9E68A7FC26E97A9600DA7B3F /* CustomizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */; };
 		9EC7E41826E2F1830004BEB9 /* MiscComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */; };
 		9EC7E41A26E2F5CD0004BEB9 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */; };
@@ -60,6 +61,7 @@
 		9E0BAEF026E19D6A00590C3D /* TexGyreHeros-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TexGyreHeros-Regular.otf"; sourceTree = "<group>"; };
 		9E0BAEF126E19D6A00590C3D /* Manrope-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-Bold.otf"; sourceTree = "<group>"; };
 		9E0BAEF826E19DC800590C3D /* TypefaceCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypefaceCatalog.swift; sourceTree = "<group>"; };
+		9E45190A26EEE13B00D9C15C /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationView.swift; sourceTree = "<group>"; };
 		9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscComponents.swift; sourceTree = "<group>"; };
 		9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
@@ -110,15 +112,15 @@
 			isa = PBXGroup;
 			children = (
 				7555FF8C242A565B00829871 /* Info.plist */,
-				9EC7E41626E2F1730004BEB9 /* components */,
-				9E0BAEE426E19BA500590C3D /* viewmodel */,
-				9E0BAEE126E19B9000590C3D /* view */,
-				9E0BAEE326E19B9E00590C3D /* resources */,
+				9EC7E41626E2F1730004BEB9 /* Components */,
+				9E0BAEE426E19BA500590C3D /* ViewModels */,
+				9E0BAEE126E19B9000590C3D /* Views */,
+				9E0BAEE326E19B9E00590C3D /* Resources */,
 			);
 			path = ios;
 			sourceTree = "<group>";
 		};
-		9E0BAEE126E19B9000590C3D /* view */ = {
+		9E0BAEE126E19B9000590C3D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				7555FF82242A565900829871 /* AddCityView.swift */,
@@ -127,28 +129,29 @@
 				9EF0B51926EAFC280077FA52 /* WeatherView.swift */,
 				9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */,
 			);
-			path = view;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		9E0BAEE326E19B9E00590C3D /* resources */ = {
+		9E0BAEE326E19B9E00590C3D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9E0BAEEB26E19D0300590C3D /* fonts */,
+				9E0BAEEB26E19D0300590C3D /* Fonts */,
 				9E0BAEE726E19CE500590C3D /* Assets.xcassets */,
 				9E0BAEE926E19CF500590C3D /* Localizable.strings */,
 			);
-			path = resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
-		9E0BAEE426E19BA500590C3D /* viewmodel */ = {
+		9E0BAEE426E19BA500590C3D /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */,
+				9E45190A26EEE13B00D9C15C /* WeatherViewModel.swift */,
 			);
-			path = viewmodel;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		9E0BAEEB26E19D0300590C3D /* fonts */ = {
+		9E0BAEEB26E19D0300590C3D /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
 				9E0BAEF126E19D6A00590C3D /* Manrope-Bold.otf */,
@@ -159,15 +162,15 @@
 				9E0BAEF026E19D6A00590C3D /* TexGyreHeros-Regular.otf */,
 				9E0BAEF826E19DC800590C3D /* TypefaceCatalog.swift */,
 			);
-			path = fonts;
+			path = Fonts;
 			sourceTree = "<group>";
 		};
-		9EC7E41626E2F1730004BEB9 /* components */ = {
+		9EC7E41626E2F1730004BEB9 /* Components */ = {
 			isa = PBXGroup;
 			children = (
 				9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */,
 			);
-			path = components;
+			path = Components;
 			sourceTree = "<group>";
 		};
 		FC8AC0698B081FD127FDAFF6 /* Pods */ = {
@@ -305,6 +308,7 @@
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				9EC7E41826E2F1830004BEB9 /* MiscComponents.swift in Sources */,
 				9E0BAEE626E19BE700590C3D /* WelcomeView.swift in Sources */,
+				9E45190B26EEE13B00D9C15C /* WeatherViewModel.swift in Sources */,
 				7555FF83242A565900829871 /* AddCityView.swift in Sources */,
 				9EF0B51A26EAFC280077FA52 /* WeatherView.swift in Sources */,
 				9E68A7FC26E97A9600DA7B3F /* CustomizationView.swift in Sources */,

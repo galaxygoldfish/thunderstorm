@@ -9,7 +9,7 @@ struct iOSApp: App {
 	var body: some Scene {
 		WindowGroup {
             if (dataStore.getBoolean(key: "INDICATION_ONBOARDING_DONE")) {
-                WeatherView()
+                WeatherView().environmentObject(WeatherViewModel())
             } else {
                 WelcomeView()
             }
