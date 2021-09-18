@@ -26,7 +26,7 @@ fun typography() = Typography(
     h1 = TextStyle(
         fontFamily = TexGyreHeros,
         fontWeight = FontWeight.Bold,
-        fontSize = 60.sp,
+        fontSize = 80.sp,
         color = colorResource(id = R.color.text_color)
     ),
     h2 = TextStyle(
@@ -63,6 +63,12 @@ fun typography() = Typography(
         fontFamily = Manrope,
         fontWeight = FontWeight.SemiBold,
         fontSize = 17.sp,
+        color = colorResource(id = R.color.text_color)
+    ),
+    subtitle1 = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.Normal,
+        fontSize = 19.sp,
         color = colorResource(id = R.color.text_color)
     ),
     button = TextStyle(

@@ -20,7 +20,7 @@ struct WelcomeView: View {
                 Spacer()
                 Spacer()
                 NavigationLink(
-                    destination: SetupViewPager(),
+                    destination: SetupViewPager().environmentObject(SetupViewModel()),
                     isActive: $navigateSetup
                 ) {
                     Button(

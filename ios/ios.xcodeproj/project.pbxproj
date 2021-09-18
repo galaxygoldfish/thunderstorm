@@ -25,6 +25,7 @@
 		9EC7E41A26E2F5CD0004BEB9 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */; };
 		9ECB140826E58C9800B9EF4F /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EF0B51A26EAFC280077FA52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0B51926EAFC280077FA52 /* WeatherView.swift */; };
+		9EF40D9126F579A20068C377 /* loading_anim.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EF40D9026F579A20068C377 /* loading_anim.json */; };
 		9EFDDE6E26E6EE9F00129525 /* SetupViewPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */; };
 		F783B491973425B4E8914661 /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1046807196FC6C10D1D752E9 /* Pods_ios.framework */; };
 /* End PBXBuildFile section */
@@ -66,6 +67,7 @@
 		9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscComponents.swift; sourceTree = "<group>"; };
 		9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		9EF0B51926EAFC280077FA52 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		9EF40D9026F579A20068C377 /* loading_anim.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = loading_anim.json; path = ../../../../android/src/main/res/raw/loading_anim.json; sourceTree = "<group>"; };
 		9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewPager.swift; sourceTree = "<group>"; usesTabs = 0; };
 /* End PBXFileReference section */
 
@@ -135,6 +137,7 @@
 		9E0BAEE326E19B9E00590C3D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9E157CA126F42A9C00667646 /* Animations */,
 				9E0BAEEB26E19D0300590C3D /* Fonts */,
 				9E0BAEE726E19CE500590C3D /* Assets.xcassets */,
 				9E0BAEE926E19CF500590C3D /* Localizable.strings */,
@@ -163,6 +166,14 @@
 				9E0BAEF826E19DC800590C3D /* TypefaceCatalog.swift */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		9E157CA126F42A9C00667646 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				9EF40D9026F579A20068C377 /* loading_anim.json */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		9EC7E41626E2F1730004BEB9 /* Components */ = {
@@ -245,6 +256,7 @@
 			files = (
 				9E0BAEE826E19CE500590C3D /* Assets.xcassets in Resources */,
 				9E0BAEF726E19D6A00590C3D /* Manrope-Bold.otf in Resources */,
+				9EF40D9126F579A20068C377 /* loading_anim.json in Resources */,
 				9E0BAEF426E19D6A00590C3D /* Manrope-Regular.otf in Resources */,
 				9E0BAEF226E19D6A00590C3D /* TexGyreHeros-Bold.otf in Resources */,
 				9E0BAEF326E19D6A00590C3D /* Manrope-ExtraBold.otf in Resources */,

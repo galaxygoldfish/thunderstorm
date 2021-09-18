@@ -1,13 +1,16 @@
 PODS:
+  - lottie-ios (3.2.3)
   - shared (1.0)
   - SwiftUIPager (2.3.1)
 
 DEPENDENCIES:
+  - lottie-ios
   - shared (from `../shared`)
   - SwiftUIPager
 
 SPEC REPOS:
   trunk:
+    - lottie-ios
     - SwiftUIPager
 
 EXTERNAL SOURCES:
@@ -15,9 +18,10 @@ EXTERNAL SOURCES:
     :path: "../shared"
 
 SPEC CHECKSUMS:
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   shared: 1d110cd8912059f617eedb7a73d68d96a0b5c506
   SwiftUIPager: 273cbaec55a03784d5fbec30f57d8b8974e60450
 
-PODFILE CHECKSUM: b6dafc5e354521fe13939820092e344876952921
+PODFILE CHECKSUM: d4405d65f81f2067cd6bcfb2d75eb803adf8344f
 
 COCOAPODS: 1.11.0

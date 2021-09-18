@@ -5,5 +5,6 @@ target 'ios' do
   
   pod 'shared', :path => '../shared'
   pod 'SwiftUIPager'
+  pod 'lottie-ios'
   
 end

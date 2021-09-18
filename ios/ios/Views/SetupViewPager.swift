@@ -5,7 +5,7 @@ import shared
 
 struct SetupViewPager: View {
     
-    @StateObject private var setupViewModel: SetupViewModel = SetupViewModel()
+    @EnvironmentObject var viewModel: SetupViewModel
     
     @State private var navigateWelcome: Bool = false
     @State private var navigateWeather: Bool = false
@@ -32,13 +32,13 @@ struct SetupViewPager: View {
                     id: \.self,
                     content: { index in
                         if (index == 0) {
-                            AddCityView().environmentObject(setupViewModel)
+                            AddCityView()
                         } else {
-                            CustomizationView().environmentObject(setupViewModel)
+                            CustomizationView()
                         }
                     }
                 )
-                .allowsDragging(setupViewModel.allowNavigateNext)
+                .allowsDragging(viewModel.allowNavigateNext)
                 .animation(.easeIn)
                 HStack {
                     NavigationLink(
@@ -67,12 +67,12 @@ struct SetupViewPager: View {
                     ) {
                         Button(
                             action: {
-                                if (setupViewModel.allowNavigateNext) {
+                                if (viewModel.allowNavigateNext) {
                                     if (pageIndex == 0) {
                                        pageIndex = 1
                                     } else {
                                         let dataStore = DataStore(context: NSObject())
-                                        let city = setupViewModel.selectedCity!
+                                        let city = viewModel.selectedCity!
                                         let databaseAccess: ThunderstormDatabase = DatabaseOperationsKt.createDatabase(
                                             databaseDriver: DatabaseDriver().createDriver()
                                         )
@@ -82,10 +82,10 @@ struct SetupViewPager: View {
                                             countryName: city.country,
                                             serviceUrl: city.url
                                         )
-                                        dataStore.putInteger(key: "PREF_TEMP_UNITS", value: Int32(setupViewModel.selectionTemperature))
-                                        dataStore.putInteger(key: "PREF_SPEED_UNITS", value: Int32(setupViewModel.selectionSpeed))
-                                        dataStore.putInteger(key: "PREF_PRECIP_UNITS", value: Int32(setupViewModel.selectionPrecip))
-                                        dataStore.putInteger(key: "PREF_AIR_UNITS", value: Int32(setupViewModel.selectionAir))
+                                        dataStore.putInteger(key: "PREF_TEMP_UNITS", value: Int32(viewModel.selectionTemperature))
+                                        dataStore.putInteger(key: "PREF_SPEED_UNITS", value: Int32(viewModel.selectionSpeed))
+                                        dataStore.putInteger(key: "PREF_PRECIP_UNITS", value: Int32(viewModel.selectionPrecip))
+                                        dataStore.putInteger(key: "PREF_AIR_UNITS", value: Int32(viewModel.selectionAir))
                                         dataStore.putBoolean(key: "INDICATION_ONBOARDING_DONE", value: true)
                                         navigateWeather = true
                                     }
@@ -94,7 +94,7 @@ struct SetupViewPager: View {
                         ) {
                             Image("RightCircle")
                                 .renderingMode(.template)
-                                .colorMultiply(setupViewModel.allowNavigateNext == true ? activeTint() : Color("InterfaceGrayAlt"))
+                                .colorMultiply(viewModel.allowNavigateNext == true ? activeTint() : Color("InterfaceGrayAlt"))
                                 .padding(.trailing, 20)
                                 .padding(.bottom, 20)
                                 .padding(.top, 10)

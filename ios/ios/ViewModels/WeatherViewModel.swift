@@ -7,9 +7,12 @@ class WeatherViewModel: ObservableObject {
     @Published var currentCityRegion: String? = nil
     
     @Published var currentWeatherData: CurrentDataResult? = nil
+    @Published var currentWeatherIcon: String? = nil
     
     init() {
-        loadCityData()
+        if (DataStore(context: NSObject()).getBoolean(key: "INDICATION_ONBOARDING_DONE")) {
+            loadCityData()
+        }
     }
     
     func loadCityData() {
@@ -29,6 +32,15 @@ class WeatherViewModel: ObservableObject {
             completionHandler: { result, error in
                 if (error == nil) {
                     self.currentWeatherData = result!
+                    let iconCode = result!.current.condition.code
+                    let iconName = WeatherIconCodes().getIconForWeatherCode(code: iconCode)
+                    var dayNightText: String
+                    if (result!.current.isDay == 1) {
+                        dayNightText = "Day"
+                    } else {
+                        dayNightText = "Night"
+                    }
+                    self.currentWeatherIcon = "Weather\(iconName.prefix(1).capitalized + iconName.lowercased().dropFirst())\(dayNightText)"
                 }
             }
         )
