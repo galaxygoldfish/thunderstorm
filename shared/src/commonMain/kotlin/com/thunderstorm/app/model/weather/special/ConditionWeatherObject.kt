@@ -1,4 +1,4 @@
-package com.thunderstorm.app.model.weather
+package com.thunderstorm.app.model.weather.special
 
 import kotlinx.serialization.Serializable
 

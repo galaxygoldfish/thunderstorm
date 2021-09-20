@@ -13,6 +13,9 @@
     <string name="gps_location_content_desc">GPS icon</string>
     <string name="nothing_here_content_desc">Nothing here…</string>
     <string name="check_circle_content_desc">Check mark</string>
+    <string name="person_icon_content_desc">Feels like</string>
+    <string name="rain_cloud_icon_content_desc">Precipitation</string>
+    <string name="wind_icon_content_desc">Wind speed</string>
 
     <string name="welcome_title_header">Thunderstorm</string>
     <string name="welcome_title_subheader">Your new favorite weather app.</string>
@@ -27,5 +30,7 @@
     <string name="customization_speed_title">Speed units</string>
     <string name="customization_precipitation_title">Precipitation units</string>
     <string name="customization_pressure_title">Air pressure units</string>
+
+    <string name="weather_feels_like_template">Feels like %1$s°</string>
 
 </resources>

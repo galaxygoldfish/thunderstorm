@@ -23,6 +23,7 @@
 		9E68A7FC26E97A9600DA7B3F /* CustomizationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */; };
 		9EC7E41826E2F1830004BEB9 /* MiscComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */; };
 		9EC7E41A26E2F5CD0004BEB9 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */; };
+		9EC9B66626F818870028A51F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC9B66526F818870028A51F /* Utilities.swift */; };
 		9ECB140826E58C9800B9EF4F /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9EF0B51A26EAFC280077FA52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0B51926EAFC280077FA52 /* WeatherView.swift */; };
 		9EF40D9126F579A20068C377 /* loading_anim.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EF40D9026F579A20068C377 /* loading_anim.json */; };
@@ -66,6 +67,7 @@
 		9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationView.swift; sourceTree = "<group>"; };
 		9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiscComponents.swift; sourceTree = "<group>"; };
 		9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
+		9EC9B66526F818870028A51F /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		9EF0B51926EAFC280077FA52 /* WeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		9EF40D9026F579A20068C377 /* loading_anim.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = loading_anim.json; path = ../../../../android/src/main/res/raw/loading_anim.json; sourceTree = "<group>"; };
 		9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewPager.swift; sourceTree = "<group>"; usesTabs = 0; };
@@ -113,6 +115,7 @@
 		7555FF7D242A565900829871 /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				9EC9B66426F8187B0028A51F /* Utilities */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				9EC7E41626E2F1730004BEB9 /* Components */,
 				9E0BAEE426E19BA500590C3D /* ViewModels */,
@@ -182,6 +185,14 @@
 				9EC7E41726E2F1830004BEB9 /* MiscComponents.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		9EC9B66426F8187B0028A51F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9EC9B66526F818870028A51F /* Utilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		FC8AC0698B081FD127FDAFF6 /* Pods */ = {
@@ -317,6 +328,7 @@
 			files = (
 				9E0BAEF926E19DC800590C3D /* TypefaceCatalog.swift in Sources */,
 				9EFDDE6E26E6EE9F00129525 /* SetupViewPager.swift in Sources */,
+				9EC9B66626F818870028A51F /* Utilities.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				9EC7E41826E2F1830004BEB9 /* MiscComponents.swift in Sources */,
 				9E0BAEE626E19BE700590C3D /* WelcomeView.swift in Sources */,

@@ -20,3 +20,4 @@
 "customization_precip_unit_in" = "Inches";
 "customization_precip_unit_mm" = "Millimeters";
 
+"weather_feels_like_template_%@" = "Feels like %@°";

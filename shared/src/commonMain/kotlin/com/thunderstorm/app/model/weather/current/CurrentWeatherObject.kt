@@ -1,5 +1,7 @@
-package com.thunderstorm.app.model.weather
+package com.thunderstorm.app.model.weather.current
 
+import com.thunderstorm.app.model.weather.special.AirQualityWeatherObject
+import com.thunderstorm.app.model.weather.special.ConditionWeatherObject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

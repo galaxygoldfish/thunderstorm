@@ -1,6 +1,7 @@
 import SwiftUI
 import UIKit
 import Lottie
+import shared
 
 struct WeatherView: View {
     
@@ -18,30 +19,94 @@ struct WeatherView: View {
                     .padding(.leading, 20)
             }
             if (viewModel.currentWeatherData != nil) {
-                HStack {
-                    VStack {
-                        Text(
-                            String(Int(viewModel.currentWeatherData!.current.tempFarenheit)) + "°"
-                        )
-                        .font(.custom(TexGyreHerosBold, size: 80))
+                let currentWeatherData = viewModel.currentWeatherData!
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text(
+                                String(Int(currentWeatherData.current.tempFarenheit)) + "°"
+                            )
+                            .font(.custom(TexGyreHerosBold, size: 80))
+                            Spacer()
+                            Image(viewModel.currentWeatherIcon!)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 120, height: 120)
+                        }
+                        .padding(.top, 40)
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
                         Text(viewModel.currentWeatherData!.current.condition.text)
                             .font(.custom(ManropeRegular, size: 19))
+                            .padding(.leading, 20)
+                        Text(
+                            LocalizedStringKey(
+                                "weather_feels_like_template_\(String(Int(currentWeatherData.current.feelsLikeFarenheit)))"
+                            )
+                        )
+                        .font(.custom(ManropeRegular, size: 15))
+                        .colorMultiply(.gray)
+                        .padding(.leading, 20)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            LazyHStack {
+                                ForEach(1...currentWeatherData.forecast.forecastDay[0].hourDetails.count, id: \.self) { item in
+                                    HourlyListItem(weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1])
+                                }
+                            }
+                            .padding(.leading, 20)
+                            .padding(.trailing, 20)
+                            .padding(.top, 35)
+                        
+                        }
                     }
-                    Spacer()
-                    Image(viewModel.currentWeatherIcon!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 120, height: 120)
                 }
-                .padding(.top, 40)
-                .padding(.leading, 20)
-                .padding(.trailing, 20)
             } else {
-                
+                //
             }
-            FullscreenPlaceholder()
         }
         .navigationBarBackButtonHidden(true)
         .navigationTitle("")
+    }
+}
+
+struct HourlyListItem: View {
+    var weather: HourWeatherObject
+    var formattedTime: String? = nil
+    init(weatherData: HourWeatherObject) {
+        weather = weatherData
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let formattedDate = dateFormatter.date(from: String(weatherData.localTime.split(separator: " ")[1]))
+        dateFormatter.dateFormat = "h a"
+        formattedTime  = dateFormatter.string(from: formattedDate!)
+    }
+    var body: some View {
+        ZStack {
+            Color("InterfaceGray")
+                .cornerRadius(10)
+                .opacity(0.5)
+            VStack {
+                Text(formattedTime!)
+                    .font(.custom(ManropeSemiBold, size: 16))
+                    .padding(.top, 10)
+                Image(
+                    getIconForCodeAndName(
+                        isDay: weather.isDay,
+                        code: weather.condition.code
+                    )
+                )
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 40, height: 40)
+                .padding(.leading, 12)
+                .padding(.trailing, 12)
+                .padding(.top, 15)
+                Text(String(Int(weather.temperatureFahrenheit)) + "°")
+                    .font(.custom(ManropeSemiBold, size: 16))
+                    .padding(.top, 10)
+                    .padding(.bottom, 10)
+            }
+        }
+        .padding(.trailing, 10)
     }
 }
