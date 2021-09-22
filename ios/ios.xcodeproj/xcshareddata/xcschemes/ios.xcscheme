@@ -73,6 +73,7 @@
    </AnalyzeAction>
    <ArchiveAction
       buildConfiguration = "Release"
+      customArchiveName = "Thunderstorm"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

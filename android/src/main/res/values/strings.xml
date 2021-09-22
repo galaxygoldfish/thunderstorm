@@ -16,6 +16,7 @@
     <string name="person_icon_content_desc">Feels like</string>
     <string name="rain_cloud_icon_content_desc">Precipitation</string>
     <string name="wind_icon_content_desc">Wind speed</string>
+    <string name="cities_icon_content_desc">My cities</string>
 
     <string name="welcome_title_header">Thunderstorm</string>
     <string name="welcome_title_subheader">Your new favorite weather app.</string>

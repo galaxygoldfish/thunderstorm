@@ -70,10 +70,26 @@ fun WeatherView(
 ) {
     viewModel.loadDefaultCity(navController.context)
     val scaffoldState = rememberScaffoldState()
-    val coroutineScope =  rememberCoroutineScope()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        scaffoldState = scaffoldState
+        scaffoldState = scaffoldState,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    
+                },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_cities_icon),
+                        contentDescription = stringResource(id = R.string.cities_icon_content_desc),
+                        tint = MaterialTheme.colors.background,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                },
+                shape = RoundedCornerShape(10.dp),
+                backgroundColor = colorResource(id = R.color.thunderstorm_accent_color)
+            )
+        }
     ) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -135,7 +151,39 @@ fun WeatherView(
                         val scrollState = rememberScrollState()
                         Row(
                             content = {
-                                hourlyWeatherData.forecastDay[0].hourDetails.forEachIndexed { index, item ->
+                                fun getWeatherData(day: Int): List<HourWeatherObject> = hourlyWeatherData.forecastDay[day].hourDetails
+                                getWeatherData(0).forEachIndexed { _, item ->
+                                    ProcessHourListItem(
+                                        item = item,
+                                        context = navController.context
+                                    )
+                                }
+                                Column(
+                                    modifier = Modifier
+                                        .padding(end = 15.dp)
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .background(
+                                            colorResource(id = R.color.interface_gray_alt).copy(
+                                                0.5F
+                                            )
+                                        ),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    val localTimeData = getWeatherData(1)[0].localTime.split("-")
+                                    Text(
+                                        text = """${localTimeData[1]} / ${localTimeData[2].split(" ")[0]}""",
+                                        style = MaterialTheme.typography.body2,
+                                        fontSize = 15.sp,
+                                        modifier = Modifier.padding(top = 10.dp, start = 12.dp, end = 10.dp)
+                                    )
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_double_arrow_next),
+                                        contentDescription = stringResource(id = R.string.double_arrow_next_content_desc),
+                                        modifier = Modifier.padding(top = 30.dp, bottom = 33.dp)
+                                            .size(34.dp)
+                                    )
+                                }
+                                getWeatherData(1).forEachIndexed{ _, item ->
                                     HourlyListItem(
                                         weatherData = item,
                                         context = navController.context
@@ -143,6 +191,7 @@ fun WeatherView(
                                 }
                             },
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(start = 20.dp, top = 35.dp, end = 10.dp)
                                 .horizontalScroll(scrollState)
                         )
@@ -175,6 +224,27 @@ fun WeatherView(
                         .size(100.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun ProcessHourListItem(item: HourWeatherObject, context: Context) {
+    val usTimeFormat = SimpleDateFormat("h a", Locale.getDefault())
+    val militaryTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+    val targetTimeHour = usTimeFormat.format(militaryTimeFormat.parse(item.localTime.split(" ")[1])!!)
+    val currentTimeHour = usTimeFormat.format(Date())
+    val targetAMPM = targetTimeHour.split(" ")[1]
+    val currentAMPM = currentTimeHour.split(" ")[1]
+    if (
+        targetAMPM == currentAMPM &&
+        currentTimeHour.split(" ")[0].toInt() <= targetTimeHour.split(" ")[0].toInt()
+    ) {
+        if (targetTimeHour != "12 $currentAMPM") {
+            HourlyListItem(
+                weatherData = item,
+                context = context
+            )
         }
     }
 }

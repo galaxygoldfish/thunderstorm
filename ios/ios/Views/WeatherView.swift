@@ -53,11 +53,10 @@ struct WeatherView: View {
                                     HourlyListItem(weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1])
                                 }
                             }
-                            .padding(.leading, 20)
-                            .padding(.trailing, 20)
-                            .padding(.top, 35)
-                        
                         }
+                        .padding(.leading, 20)
+                        .padding(.trailing, 20)
+                        .padding(.top, 35)
                     }
                 }
             } else {
