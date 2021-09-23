@@ -33,7 +33,7 @@ struct WeatherView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 120, height: 120)
                         }
-                        .padding(.top, 40)
+                        .padding(.top, 35)
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
                         Text(viewModel.currentWeatherData!.current.condition.text)
@@ -50,13 +50,41 @@ struct WeatherView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             LazyHStack {
                                 ForEach(1...currentWeatherData.forecast.forecastDay[0].hourDetails.count, id: \.self) { item in
-                                    HourlyListItem(weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1])
+                                    processHourlyListItem(
+                                        weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1]
+                                    )
+                                }
+                                ZStack(alignment: .top) {
+                                    Color("InterfaceGrayAlt")
+                                        .cornerRadius(10)
+                                        .opacity(0.5)
+                                    VStack {
+                                        let intermediateWeather = currentWeatherData.forecast.forecastDay[1].hourDetails[0].localTime
+                                        Text("\(intermediateWeather.split(separator: "-")[1]) / " +
+                                             "\(intermediateWeather.split(separator: "-")[2].split(separator: " ")[0])"
+                                        )
+                                            .font(.custom(ManropeSemiBold, size: 15))
+                                            .padding(.top, 16)
+                                            .padding(.horizontal, 10)
+                                        Image("DoubleArrowNext")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 30, height: 30)
+                                            .padding(.bottom, 30)
+                                            .padding(.top, 25)
+                                    }
+                                }
+                                .padding(.trailing, 10)
+                                ForEach(1...currentWeatherData.forecast.forecastDay[1].hourDetails.count, id: \.self) { item in
+                                    HourlyListItem(
+                                        weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1]
+                                    )
                                 }
                             }
                         }
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
-                        .padding(.top, 35)
+                        .padding(.top, 25)
                     }
                 }
             } else {
@@ -66,6 +94,28 @@ struct WeatherView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle("")
     }
+}
+
+
+func processHourlyListItem(weatherData: HourWeatherObject) -> HourlyListItem? {
+    var viewOrNil: HourlyListItem? = nil
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    let formattedDate = dateFormatter.date(from: String(weatherData.localTime.split(separator: " ")[1]))
+    dateFormatter.dateFormat = "h a"
+    let currentDateFull = dateFormatter.string(from: Date())
+    let targetDateFull = dateFormatter.string(from: formattedDate!)
+    let targetAMPM = targetDateFull.split(separator: " ")[1]
+    let currentAMPM = currentDateFull.split(separator: " ")[1]
+    if (
+        currentAMPM == targetAMPM &&
+        currentDateFull.split(separator: " ")[0] <= targetDateFull.split(separator: " ")[0]
+    ) {
+        if (targetDateFull != "12 \(currentAMPM)") {
+            viewOrNil = HourlyListItem(weatherData: weatherData)
+        }
+    }
+    return viewOrNil
 }
 
 struct HourlyListItem: View {
@@ -99,7 +149,7 @@ struct HourlyListItem: View {
                 .frame(width: 40, height: 40)
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
-                .padding(.top, 15)
+                .padding(.top, 10)
                 Text(String(Int(weather.temperatureFahrenheit)) + "°")
                     .font(.custom(ManropeSemiBold, size: 16))
                     .padding(.top, 10)
