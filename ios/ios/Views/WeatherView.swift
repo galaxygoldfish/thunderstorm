@@ -85,6 +85,43 @@ struct WeatherView: View {
                         .padding(.leading, 20)
                         .padding(.trailing, 20)
                         .padding(.top, 25)
+                        ZStack(alignment: .leading) {
+                            Color("InterfaceGray")
+                                .cornerRadius(10)
+                                .opacity(0.3)
+                            HStack(alignment: .center) {
+                                Image("SunIcon")
+                                    .padding(.vertical, 20)
+                                    .padding(.leading, 20)
+                                Text(
+                                    format24HourTo12Hour(
+                                        time: currentWeatherData.forecast.forecastDay[0].astronomy.sunrise
+                                    )
+                                )
+                                    .padding(.leading, 15)
+                                    .font(.custom(ManropeSemiBold, size: 17))
+                                Spacer()
+                                VStack {
+                                    Color.white
+                                        .frame(width: 1, height: 40, alignment: .center)
+                                        .opacity(0.3)
+                                }
+                                Spacer()
+                                Text(
+                                    format24HourTo12Hour(
+                                        time: currentWeatherData.forecast.forecastDay[0].astronomy.sunset
+                                    )
+                                )
+                                    .padding(.trailing, 15)
+                                    .font(.custom(ManropeSemiBold, size: 17))
+                                Image("MoonIcon")
+                                    .padding(.vertical, 20)
+                                    .padding(.trailing, 20)
+                                
+                            }
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.top, 25)
                     }
                 }
             } else {
@@ -95,6 +132,7 @@ struct WeatherView: View {
         .navigationTitle("")
     }
 }
+
 
 
 func processHourlyListItem(weatherData: HourWeatherObject) -> HourlyListItem? {

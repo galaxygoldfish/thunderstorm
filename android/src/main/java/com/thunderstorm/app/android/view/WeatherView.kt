@@ -46,6 +46,7 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -53,6 +54,7 @@ import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.thunderstorm.app.android.R
+import com.thunderstorm.app.android.theme.TexGyreHeros
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
@@ -108,7 +110,7 @@ fun WeatherView(
             if (viewModel.forecastWeatherData.value != null) {
                 val currentWeatherData = viewModel.forecastWeatherData.value!!.current
                 val hourlyWeatherData = viewModel.forecastWeatherData.value!!.forecast
-                Column {
+                Column(modifier = Modifier.fillMaxSize()) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
@@ -147,71 +149,145 @@ fun WeatherView(
                         color = LocalContentColor.current.copy(0.6F),
                         modifier = Modifier.padding(start = 22.dp)
                     )
-                    Box {
-                        val scrollState = rememberScrollState()
-                        Row(
-                            content = {
-                                fun getWeatherData(day: Int): List<HourWeatherObject> = hourlyWeatherData.forecastDay[day].hourDetails
-                                getWeatherData(0).forEachIndexed { _, item ->
-                                    ProcessHourListItem(
-                                        item = item,
-                                        context = navController.context
-                                    )
-                                }
-                                Column(
-                                    modifier = Modifier
-                                        .padding(end = 15.dp)
-                                        .clip(RoundedCornerShape(10.dp))
-                                        .background(
-                                            colorResource(id = R.color.interface_gray_alt).copy(
-                                                0.5F
+                    Column {
+                        Box {
+                            val scrollState = rememberScrollState()
+                            Row(
+                                content = {
+                                    fun getWeatherData(day: Int): List<HourWeatherObject> =
+                                        hourlyWeatherData.forecastDay[day].hourDetails
+                                    getWeatherData(0).forEachIndexed { _, item ->
+                                        ProcessHourListItem(
+                                            item = item,
+                                            context = navController.context
+                                        )
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .padding(end = 15.dp)
+                                            .clip(RoundedCornerShape(10.dp))
+                                            .background(
+                                                colorResource(id = R.color.interface_gray_alt).copy(
+                                                    0.5F
+                                                )
+                                            ),
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        val localTimeData =
+                                            getWeatherData(1)[0].localTime.split("-")
+                                        Text(
+                                            text = """${localTimeData[1]} / ${
+                                                localTimeData[2].split(
+                                                    " "
+                                                )[0]
+                                            }""",
+                                            style = MaterialTheme.typography.body2,
+                                            fontSize = 15.sp,
+                                            modifier = Modifier.padding(
+                                                top = 10.dp,
+                                                start = 12.dp,
+                                                end = 10.dp
                                             )
-                                        ),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    val localTimeData = getWeatherData(1)[0].localTime.split("-")
-                                    Text(
-                                        text = """${localTimeData[1]} / ${localTimeData[2].split(" ")[0]}""",
-                                        style = MaterialTheme.typography.body2,
-                                        fontSize = 15.sp,
-                                        modifier = Modifier.padding(top = 10.dp, start = 12.dp, end = 10.dp)
+                                        )
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_double_arrow_next),
+                                            contentDescription = stringResource(id = R.string.double_arrow_next_content_desc),
+                                            modifier = Modifier
+                                                .padding(top = 30.dp, bottom = 33.dp)
+                                                .size(34.dp)
+                                        )
+                                    }
+                                    getWeatherData(1).forEachIndexed { _, item ->
+                                        HourlyListItem(
+                                            weatherData = item,
+                                            context = navController.context
+                                        )
+                                    }
+                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 20.dp, top = 35.dp, end = 10.dp)
+                                    .horizontalScroll(scrollState)
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .background(
+                                        Brush.horizontalGradient(
+                                            listOf(
+                                                Color.Transparent,
+                                                MaterialTheme.colors.background
+                                            ),
+                                            startX = 0.0F,
+                                            endX = 90.0F
+                                        )
                                     )
-                                    Icon(
-                                        painter = painterResource(id = R.drawable.ic_double_arrow_next),
-                                        contentDescription = stringResource(id = R.string.double_arrow_next_content_desc),
-                                        modifier = Modifier.padding(top = 30.dp, bottom = 33.dp)
-                                            .size(34.dp)
-                                    )
-                                }
-                                getWeatherData(1).forEachIndexed{ _, item ->
-                                    HourlyListItem(
-                                        weatherData = item,
-                                        context = navController.context
-                                    )
-                                }
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 20.dp, top = 35.dp, end = 10.dp)
-                                .horizontalScroll(scrollState)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .background(
-                                    Brush.horizontalGradient(
-                                        listOf(
-                                            Color.Transparent,
-                                            MaterialTheme.colors.background
-                                        ),
-                                        startX = 0.0F,
-                                        endX = 90.0F
-                                    )
+                                    .padding(end = 10.dp)
+                                    .width(40.dp)
+                                    .height(170.dp)
+                                    .align(Alignment.CenterEnd)
+                            )
+                        }
+                    }
+                    val initialAstroTime = SimpleDateFormat("hh:mm a", Locale.getDefault())
+                    val targetAstroTime = SimpleDateFormat("h:mm a", Locale.getDefault())
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp, start = 20.dp, end = 20.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(
+                                colorResource(id = R.color.interface_gray).copy(0.3F)
+                            ),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_sun_icon),
+                                contentDescription = stringResource(id = R.string.sun_icon_content_desc),
+                                modifier = Modifier.padding(
+                                    start = 20.dp,
+                                    top = 20.dp,
+                                    bottom = 20.dp
                                 )
-                                .padding(end = 10.dp)
-                                .width(40.dp)
-                                .fillMaxHeight()
-                                .align(Alignment.CenterEnd)
-                        )
+                            )
+                            Text(
+                                text = targetAstroTime.format(
+                                    initialAstroTime.parse(hourlyWeatherData.forecastDay[0].astronomy.sunrise)!!
+                                ),
+                                style = MaterialTheme.typography.body2,
+                                modifier = Modifier.padding(start = 20.dp)
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .size(width = 1.dp, height = 40.dp)
+                                .background(Color.White.copy(0.3F)
+                                )
+                        ) {}
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = targetAstroTime.format(
+                                    initialAstroTime.parse(hourlyWeatherData.forecastDay[0].astronomy.sunset)!!
+                                ),
+                                style = MaterialTheme.typography.body2,
+                                modifier = Modifier.padding(end = 20.dp)
+                            )
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_moon_cloudy_icon),
+                                contentDescription = stringResource(id = R.string.moon_icon_content_desc),
+                                modifier = Modifier.padding(
+                                    end = 20.dp,
+                                    top = 20.dp,
+                                    bottom = 20.dp
+                                )
+                            )
+                        }
                     }
                 }
             } else {
