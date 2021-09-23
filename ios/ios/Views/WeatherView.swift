@@ -88,7 +88,7 @@ struct WeatherView: View {
                     }
                 }
             } else {
-                //
+                FullscreenPlaceholder()
             }
         }
         .navigationBarBackButtonHidden(true)
