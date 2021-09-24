@@ -88,7 +88,7 @@ struct WeatherView: View {
                         ZStack(alignment: .leading) {
                             Color("InterfaceGray")
                                 .cornerRadius(10)
-                                .opacity(0.3)
+                                .opacity(0.5)
                             HStack(alignment: .center) {
                                 Image("SunIcon")
                                     .padding(.vertical, 20)
@@ -102,7 +102,7 @@ struct WeatherView: View {
                                     .font(.custom(ManropeSemiBold, size: 17))
                                 Spacer()
                                 VStack {
-                                    Color.white
+                                    Color("AccentColor")
                                         .frame(width: 1, height: 40, alignment: .center)
                                         .opacity(0.3)
                                 }
@@ -122,6 +122,44 @@ struct WeatherView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 25)
+                        HStack {
+                            ZStack(alignment: .leading) {
+                                Color("InterfaceGray")
+                                    .cornerRadius(10)
+                                    .opacity(0.5)
+                                VStack {
+                                    Text("\(currentWeatherData.current.humidity)%")
+                                        .font(.custom(TexGyreHerosBold, size: 33))
+                                        .padding(.leading, 15)
+                                        .padding(.top, 5)
+                                    Text(LocalizedStringKey("weather_detail_humidity_text"))
+                                        .font(.custom(ManropeRegular, size: 16))
+                                        .padding(.leading, 15)
+                                        .padding(.bottom, 15)
+                                }
+                            }
+                            .padding(.trailing, 5)
+                            Spacer()
+                            ZStack(alignment: .leading) {
+                                Color("InterfaceGray")
+                                    .cornerRadius(10)
+                                    .opacity(0.5)
+                                VStack(alignment: .leading) {
+                                    Text("\(Int(currentWeatherData.current.uv))")
+                                        .font(.custom(TexGyreHerosBold, size: 33))
+                                        .padding(.leading, 15)
+                                        .padding(.top, 5)
+                                    Text(LocalizedStringKey("weather_detail_uv_index_text"))
+                                        .font(.custom(ManropeRegular, size: 16))
+                                        .padding(.leading, 15)
+                                        .padding(.bottom, 15)
+                                }
+                            }
+                            .padding(.leading, 5)
+                        }
+                        .frame(width: .infinity)
+                        .padding(.top, 20)
+                        .padding(.horizontal, 20)
                     }
                 }
             } else {

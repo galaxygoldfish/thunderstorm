@@ -230,14 +230,13 @@ fun WeatherView(
                     }
                     val initialAstroTime = SimpleDateFormat("hh:mm a", Locale.getDefault())
                     val targetAstroTime = SimpleDateFormat("h:mm a", Locale.getDefault())
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 20.dp, start = 20.dp, end = 20.dp)
                             .clip(RoundedCornerShape(10.dp))
                             .background(
-                                colorResource(id = R.color.interface_gray).copy(0.3F)
+                                colorResource(id = R.color.interface_gray).copy(0.5F)
                             ),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
@@ -265,7 +264,8 @@ fun WeatherView(
                         Column(
                             modifier = Modifier
                                 .size(width = 1.dp, height = 40.dp)
-                                .background(Color.White.copy(0.3F)
+                                .background(
+                                    MaterialTheme.colors.onBackground.copy(0.3F)
                                 )
                         ) {}
                         Row(
@@ -286,6 +286,50 @@ fun WeatherView(
                                     top = 20.dp,
                                     bottom = 20.dp
                                 )
+                            )
+                        }
+                    }
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(0.5F)
+                                .padding(top = 20.dp, start = 20.dp, end = 5.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    colorResource(id = R.color.interface_gray).copy(0.5F)
+                                )
+                        ) {
+                            Text(
+                                text = """${currentWeatherData.humidity}%""",
+                                style = MaterialTheme.typography.h4,
+                                fontSize = 33.sp,
+                                modifier = Modifier.padding(start = 15.dp, top = 5.dp)
+                            )
+                            Text(
+                                text = stringResource(id = R.string.weather_humidity_detail_text),
+                                modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
+                            )
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 20.dp, end = 20.dp, start = 5.dp)
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(
+                                    colorResource(id = R.color.interface_gray).copy(0.5F)
+                                )
+                        ) {
+                            Text(
+                                text = """${currentWeatherData.uv.roundToInt()}""",
+                                style = MaterialTheme.typography.h4,
+                                fontSize = 33.sp,
+                                modifier = Modifier.padding(start = 15.dp, top = 5.dp)
+                            )
+                            Text(
+                                text = stringResource(id = R.string.weather_uv_detail_text),
+                                modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
                             )
                         }
                     }
