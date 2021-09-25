@@ -1,6 +1,7 @@
 package com.thunderstorm.app.android.view
 
 import android.content.Context
+import android.text.SpannableString
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -46,7 +48,11 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -57,6 +63,8 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.theme.TexGyreHeros
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
+import com.thunderstorm.app.model.weather.forecast.DailyWeatherObject
+import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -104,19 +112,23 @@ fun WeatherView(
             Text(
                 text = viewModel.currentRegionName.value.toString(),
                 style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(top = 1.dp, start = 20.dp),
+                modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
                 fontSize = 14.sp
             )
             if (viewModel.forecastWeatherData.value != null) {
                 val currentWeatherData = viewModel.forecastWeatherData.value!!.current
                 val hourlyWeatherData = viewModel.forecastWeatherData.value!!.forecast
-                Column(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 40.dp)
+                            .padding(top = 30.dp)
                     ) {
                         Text(
                             text = currentWeatherData.tempFarenheit.toInt().toString() + "°",
@@ -177,9 +189,7 @@ fun WeatherView(
                                             getWeatherData(1)[0].localTime.split("-")
                                         Text(
                                             text = """${localTimeData[1]} / ${
-                                                localTimeData[2].split(
-                                                    " "
-                                                )[0]
+                                                localTimeData[2].split(" ")[0]
                                             }""",
                                             style = MaterialTheme.typography.body2,
                                             fontSize = 15.sp,
@@ -333,6 +343,19 @@ fun WeatherView(
                             )
                         }
                     }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
+                    ) {
+                        hourlyWeatherData.forecastDay.forEach { item ->
+                            DailyListItem(
+                                weatherData = item,
+                                isDay = currentWeatherData.isDay,
+                                context = navController.context
+                            )
+                        }
+                    }
                 }
             } else {
                 LottieAnimation(
@@ -342,6 +365,76 @@ fun WeatherView(
                         .size(100.dp)
                         .align(Alignment.CenterHorizontally)
                         .size(100.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun DailyListItem(
+    weatherData: ForecastDayWeatherObject,
+    isDay: Int,
+    context: Context
+) {
+    val weekdayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
+    val weatherServiceFormat = SimpleDateFormat("yyyy-dd-mm HH:mm", Locale.getDefault())
+    val weekdayParsed = weekdayFormat.format(weatherServiceFormat.parse(weatherData.hourDetails[0].localTime)!!)
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(colorResource(id = R.color.interface_gray).copy(0.5F)),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(
+                    id = context.getIconForNameAndCode(
+                        isDay,
+                        weatherData.dayDetails.condition.code
+                    )
+                ),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 15.dp, top = 15.dp, bottom = 15.dp)
+                    .size(30.dp)
+            )
+            Text(
+                text = weekdayParsed,
+                modifier = Modifier.padding(start = 15.dp)
+            )
+        }
+        Row(
+            modifier = Modifier.padding(end = 20.dp)
+        ) {
+            weatherData.dayDetails.let { data ->
+                Text(
+                    text = buildAnnotatedString {
+                        withStyle(
+                            SpanStyle(
+                                fontSize = 25.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = TexGyreHeros
+                            )
+                        ) {
+                            append("""${data.highTempFahrenheit.roundToInt()}°""")
+                        }
+                        withStyle(
+                            SpanStyle(
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = TexGyreHeros,
+                                color = LocalContentColor.current.copy(0.7F)
+                            )
+                        ) {
+                            append("""${data.lowTempFahrenheit.roundToInt()}°""")
+                        }
+                    }
                 )
             }
         }

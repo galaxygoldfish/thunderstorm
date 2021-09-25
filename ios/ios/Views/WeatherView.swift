@@ -121,7 +121,7 @@ struct WeatherView: View {
                             }
                         }
                         .padding(.horizontal, 20)
-                        .padding(.top, 25)
+                        .padding(.top, 15)
                         HStack {
                             ZStack(alignment: .leading) {
                                 Color("InterfaceGray")
@@ -158,8 +158,14 @@ struct WeatherView: View {
                             .padding(.leading, 5)
                         }
                         .frame(width: .infinity)
-                        .padding(.top, 20)
+                        .padding(.top, 15)
                         .padding(.horizontal, 20)
+                        VStack {
+                            ForEach(1...currentWeatherData.forecast.forecastDay.count, id: \.self) { item in
+                                DailyListItem(weatherData: currentWeatherData.forecast.forecastDay[item - 1], isDay: 1)
+                            }
+                        }
+                        .padding(.top, 15)
                     }
                 }
             } else {
@@ -171,7 +177,55 @@ struct WeatherView: View {
     }
 }
 
+struct DailyListItem: View {
+    let weatherData: ForecastDayWeatherObject
+    let isDay: Int
+    var body: some View {
+        ZStack(alignment: .leading) {
+            Color("InterfaceGray")
+                .cornerRadius(10)
+                .opacity(0.5)
+            HStack(alignment: .center) {
+                Image(
+                    getIconForCodeAndName(
+                        isDay: Int32(isDay),
+                        code: weatherData.dayDetails.condition.code
+                    )
+                )
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 30, height: 30)
+                    .padding(.leading, 15)
+                Text(parseWeekday(date: weatherData.date))
+                    .font(.custom(ManropeRegular, size: 18))
+                    .padding(.leading, 10)
+                Spacer()
+                HStack(alignment: .bottom) {
+                    Text(String(Int(weatherData.dayDetails.highTempFahrenheit)) + "°")
+                        .font(.custom(TexGyreHerosBold, size: 27))
+                        .padding(.trailing, 0)
+                    Text(String(Int(weatherData.dayDetails.lowTempFahrenheit)) + "°")
+                        .font(.custom(TexGyreHerosBold, size: 20))
+                        .colorMultiply(Color("AccentColor").opacity(0.5))
+                        .padding(.trailing, 15)
+                        .padding(.leading, 0)
+                        .padding(.bottom, 1)
+                }
+            }
+            .padding(.vertical, 10)
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 8)
+    }
+}
 
+func parseWeekday(date: String) -> String {
+    let dateFormat = DateFormatter()
+    dateFormat.dateFormat = "yyyy-mm-dd"
+    let parsedDate = dateFormat.date(from: date)
+    dateFormat.dateFormat = "EEEE"
+    return dateFormat.string(from: parsedDate!)
+}
 
 func processHourlyListItem(weatherData: HourWeatherObject) -> HourlyListItem? {
     var viewOrNil: HourlyListItem? = nil
