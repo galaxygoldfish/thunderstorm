@@ -37,5 +37,7 @@
     <string name="weather_feels_like_template">Feels like %1$s°</string>
     <string name="weather_humidity_detail_text">Humidity</string>
     <string name="weather_uv_detail_text">UV index</string>
+    <string name="weather_service_credit_text">Powered by WeatherAPI</string>
+    <string name="weather_last_updated_template">Last updated at %1$s</string>
 
 </resources>

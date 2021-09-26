@@ -20,7 +20,7 @@ struct WeatherView: View {
             }
             if (viewModel.currentWeatherData != nil) {
                 let currentWeatherData = viewModel.currentWeatherData!
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     VStack(alignment: .leading) {
                         HStack {
                             Text(
@@ -75,9 +75,9 @@ struct WeatherView: View {
                                     }
                                 }
                                 .padding(.trailing, 10)
-                                ForEach(1...currentWeatherData.forecast.forecastDay[1].hourDetails.count, id: \.self) { item in
+                                ForEach(0...currentWeatherData.forecast.forecastDay[1].hourDetails.count, id: \.self) { item in
                                     HourlyListItem(
-                                        weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item - 1]
+                                        weatherData: currentWeatherData.forecast.forecastDay[0].hourDetails[item]
                                     )
                                 }
                             }
@@ -166,6 +166,18 @@ struct WeatherView: View {
                             }
                         }
                         .padding(.top, 15)
+                        VStack(alignment: .leading) {
+                            Text(LocalizedStringKey("weather_service_credit_text"))
+                                .font(.custom(ManropeSemiBold, size: 16))
+                            Text(
+                                LocalizedStringKey(
+                                    "weather_last_updated_template_\(getCurrentTime())"
+                                )
+                            )
+                                .font(.custom(ManropeRegular, size: 14))
+                                .colorMultiply(Color("AccentColor").opacity(0.5))
+                        }
+                        .padding(.leading, 20)
                     }
                 }
             } else {
@@ -175,6 +187,12 @@ struct WeatherView: View {
         .navigationBarBackButtonHidden(true)
         .navigationTitle("")
     }
+}
+
+func getCurrentTime() -> String {
+    let dateFormatter = DateFormatter();
+    dateFormatter.dateFormat = "h:mm a";
+    return dateFormatter.string(from: Date())
 }
 
 struct DailyListItem: View {

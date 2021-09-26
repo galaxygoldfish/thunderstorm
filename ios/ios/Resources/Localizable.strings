@@ -23,3 +23,5 @@
 "weather_feels_like_template_%@" = "Feels like %@°";
 "weather_detail_humidity_text" = "Humidity";
 "weather_detail_uv_index_text" = "UV index";
+"weather_service_credit_text" = "Powered by WeatherAPI";
+"weather_last_updated_template_%@" = "Last updated at %@";

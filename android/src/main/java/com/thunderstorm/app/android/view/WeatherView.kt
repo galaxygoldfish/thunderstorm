@@ -67,6 +67,7 @@ import com.thunderstorm.app.model.weather.forecast.DailyWeatherObject
 import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
 import java.text.SimpleDateFormat
+import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
@@ -120,8 +121,8 @@ fun WeatherView(
                 val hourlyWeatherData = viewModel.forecastWeatherData.value!!.forecast
                 Column(
                     modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                 ) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -355,6 +356,25 @@ fun WeatherView(
                                 context = navController.context
                             )
                         }
+                    }
+                    Column(
+                        modifier = Modifier.height(80.dp)
+                            .padding(start = 20.dp, bottom = 5.dp),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.weather_service_credit_text),
+                            style = MaterialTheme.typography.body2,
+                            fontSize = 16.sp
+                        )
+                        Text(
+                            text = String.format(
+                                stringResource(id = R.string.weather_last_updated_template),
+                                SimpleDateFormat("h:mm a", Locale.getDefault()).format(Date())
+                            ),
+                            color = LocalContentColor.current.copy(0.5F),
+                            fontSize = 14.sp
+                        )
                     }
                 }
             } else {

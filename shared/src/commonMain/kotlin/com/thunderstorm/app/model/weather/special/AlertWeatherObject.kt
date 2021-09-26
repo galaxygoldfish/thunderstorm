@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AlertWeatherResult(
-    var alert: List<AlertWeatherObject?>
+    var alert: List<AlertWeatherObject?>?
 )
 
 @Serializable
 data class AlertWeatherObject(
     var headline: String,
-    var msgType: String,
+    var msgtype: String,
     var severity: String,
     var urgency: String,
     var areas: String,
