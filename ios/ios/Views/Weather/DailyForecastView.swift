@@ -13,12 +13,6 @@ struct DailyForecastView: View {
     }
 }
 
-func getCurrentTime() -> String {
-    let dateFormatter = DateFormatter();
-    dateFormatter.dateFormat = "h:mm a";
-    return dateFormatter.string(from: Date())
-}
-
 struct DailyListItem: View {
     let weatherData: ForecastDayWeatherObject
     let isDay: Int
@@ -64,10 +58,13 @@ struct DailyListItem: View {
 func parseWeekday(date: String) -> String {
     let dateFormat = DateFormatter()
     dateFormat.dateFormat = "yyyy-mm-dd"
-    let parsedDate = dateFormat.date(from: date)
-    dateFormat.dateFormat = "EEEE"
-    return dateFormat.string(from: parsedDate!)
+    let parsedDate = dateFormat.date(from: date)!
+    return dateFormat.weekdaySymbols[Calendar.current.component(.weekday, from: parsedDate) - 3] // subtract 3 to get correctly formatted weekday
 }
 
-
+func getCurrentTime() -> String {
+    let dateFormatter = DateFormatter();
+    dateFormatter.dateFormat = "h:mm a";
+    return dateFormatter.string(from: Date())
+}
 

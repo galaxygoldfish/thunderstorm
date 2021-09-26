@@ -1,6 +1,7 @@
 package com.thunderstorm.app.android.view.weather
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -59,9 +60,18 @@ fun DailyListItem(
     isDay: Int,
     context: Context
 ) {
+
+    // Parse date so that SimpleDateFormat library actually gives us
+    // the right date ._.
+    val parsedDate = weatherData.hourDetails[0].localTime.let { details ->
+        val dayOfMonth = details.substring(8, 10)
+        val parsedDay = dayOfMonth.toInt() - 2
+        details.replace(dayOfMonth, parsedDay.toString())
+    }
+
     val weekdayFormat = SimpleDateFormat("EEEE", Locale.getDefault())
-    val weatherServiceFormat = SimpleDateFormat("yyyy-dd-mm HH:mm", Locale.getDefault())
-    val weekdayParsed = weekdayFormat.format(weatherServiceFormat.parse(weatherData.hourDetails[0].localTime)!!)
+    val weatherServiceFormat = SimpleDateFormat("yyyy-mm-dd hh:mm", Locale.getDefault())
+    val weekdayParsed = weekdayFormat.format(weatherServiceFormat.parse(parsedDate)!!)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -104,7 +114,7 @@ fun DailyListItem(
                                 fontFamily = TexGyreHeros
                             )
                         ) {
-                            append("""${data.highTempFahrenheit.roundToInt()}°""")
+                            append("""${data.highTempFahrenheit.roundToInt()}° """)
                         }
                         withStyle(
                             SpanStyle(

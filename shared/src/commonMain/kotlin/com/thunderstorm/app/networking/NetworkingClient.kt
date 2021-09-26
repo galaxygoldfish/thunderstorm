@@ -35,7 +35,7 @@ class NetworkingClient {
             parameter("q", query)
             parameter("key", Keystore.WeatherAPIKey)
             parameter("aqi", "yes")
-            parameter("days", 3)
+            parameter("days", 4)
             parameter("alerts", "yes")
         }
     }
