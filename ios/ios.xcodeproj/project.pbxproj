@@ -128,11 +128,9 @@
 		9E0BAEE126E19B9000590C3D /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7555FF82242A565900829871 /* AddCityView.swift */,
+				9E603C672701203B00258C54 /* Weather */,
+				9E603C652701202800258C54 /* Onboarding */,
 				9E0BAEE526E19BE700590C3D /* WelcomeView.swift */,
-				9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */,
-				9EF0B51926EAFC280077FA52 /* WeatherView.swift */,
-				9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -177,6 +175,24 @@
 				9EF40D9026F579A20068C377 /* loading_anim.json */,
 			);
 			path = Animations;
+			sourceTree = "<group>";
+		};
+		9E603C652701202800258C54 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7555FF82242A565900829871 /* AddCityView.swift */,
+				9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */,
+				9EFDDE6D26E6EE9F00129525 /* SetupViewPager.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		9E603C672701203B00258C54 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				9EF0B51926EAFC280077FA52 /* WeatherView.swift */,
+			);
+			path = Weather;
 			sourceTree = "<group>";
 		};
 		9EC7E41626E2F1730004BEB9 /* Components */ = {

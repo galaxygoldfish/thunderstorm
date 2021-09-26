@@ -35,6 +35,7 @@
     <string name="customization_pressure_title">Air pressure units</string>
 
     <string name="weather_feels_like_template">Feels like %1$s°</string>
+    <string name="weather_temperature_template">%1$s°</string>
     <string name="weather_humidity_detail_text">Humidity</string>
     <string name="weather_uv_detail_text">UV index</string>
     <string name="weather_air_quality_detail_text">Air quality</string>
