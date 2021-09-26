@@ -122,44 +122,85 @@ struct WeatherView: View {
                         }
                         .padding(.horizontal, 20)
                         .padding(.top, 15)
-                        HStack {
-                            ZStack(alignment: .leading) {
-                                Color("InterfaceGray")
-                                    .cornerRadius(10)
-                                    .opacity(0.5)
-                                VStack {
-                                    Text("\(currentWeatherData.current.humidity)%")
-                                        .font(.custom(TexGyreHerosBold, size: 33))
-                                        .padding(.leading, 15)
-                                        .padding(.top, 5)
-                                    Text(LocalizedStringKey("weather_detail_humidity_text"))
-                                        .font(.custom(ManropeRegular, size: 16))
-                                        .padding(.leading, 15)
-                                        .padding(.bottom, 15)
+                        VStack {
+                            HStack {
+                                ZStack(alignment: .leading) {
+                                    Color("InterfaceGray")
+                                        .cornerRadius(10)
+                                        .opacity(0.5)
+                                    VStack {
+                                        Text("\(currentWeatherData.current.humidity)%")
+                                            .font(.custom(TexGyreHerosBold, size: 33))
+                                            .padding(.leading, 15)
+                                            .padding(.top, 5)
+                                        Text(LocalizedStringKey("weather_detail_humidity_text"))
+                                            .font(.custom(ManropeRegular, size: 16))
+                                            .padding(.leading, 15)
+                                            .padding(.bottom, 15)
+                                    }
                                 }
-                            }
-                            .padding(.trailing, 5)
-                            Spacer()
-                            ZStack(alignment: .leading) {
-                                Color("InterfaceGray")
-                                    .cornerRadius(10)
-                                    .opacity(0.5)
-                                VStack(alignment: .leading) {
-                                    Text("\(Int(currentWeatherData.current.uv))")
-                                        .font(.custom(TexGyreHerosBold, size: 33))
-                                        .padding(.leading, 15)
-                                        .padding(.top, 5)
-                                    Text(LocalizedStringKey("weather_detail_uv_index_text"))
-                                        .font(.custom(ManropeRegular, size: 16))
-                                        .padding(.leading, 15)
-                                        .padding(.bottom, 15)
+                                .padding(.trailing, 5)
+                                Spacer()
+                                ZStack(alignment: .leading) {
+                                    Color("InterfaceGray")
+                                        .cornerRadius(10)
+                                        .opacity(0.5)
+                                    VStack(alignment: .leading) {
+                                        Text("\(Int(currentWeatherData.current.uv))")
+                                            .font(.custom(TexGyreHerosBold, size: 33))
+                                            .padding(.leading, 15)
+                                            .padding(.top, 5)
+                                        Text(LocalizedStringKey("weather_detail_uv_index_text"))
+                                            .font(.custom(ManropeRegular, size: 16))
+                                            .padding(.leading, 15)
+                                            .padding(.bottom, 15)
+                                    }
                                 }
+                                .padding(.leading, 5)
                             }
-                            .padding(.leading, 5)
+                            .frame(width: .infinity)
+                            .padding(.top, 15)
+                            .padding(.horizontal, 20)
+                            HStack {
+                                ZStack(alignment: .leading) {
+                                    Color("InterfaceGray")
+                                        .cornerRadius(10)
+                                        .opacity(0.5)
+                                    VStack(alignment: .leading) {
+                                        Text(LocalizedStringKey("weather_air_quality_" + String(Int(currentWeatherData.current.airQuality.usEpaIndex))))
+                                            .font(.custom(TexGyreHerosBold, size: 27))
+                                            .padding(.leading, 15)
+                                            .padding(.top, 5)
+                                        Text(LocalizedStringKey("weather_detail_air_quality_text"))
+                                            .font(.custom(ManropeRegular, size: 16))
+                                            .padding(.leading, 15)
+                                            .padding(.bottom, 15)
+                                    }
+                                }
+                                .padding(.trailing, 5)
+                                Spacer()
+                                ZStack(alignment: .leading) {
+                                    Color("InterfaceGray")
+                                        .cornerRadius(10)
+                                        .opacity(0.5)
+                                    VStack(alignment: .leading) {
+                                        Text("\(Int(currentWeatherData.current.visibilityMi)) mi")
+                                            .font(.custom(TexGyreHerosBold, size: 33))
+                                            .padding(.leading, 15)
+                                            .padding(.top, 5)
+                                        Text(LocalizedStringKey("weather_detail_visibility_text"))
+                                            .font(.custom(ManropeRegular, size: 16))
+                                            .padding(.leading, 15)
+                                            .padding(.bottom, 15)
+                                    }
+                                }
+                                .padding(.leading, 5)
+                            }
+                            .frame(width: .infinity)
+                            .padding(.top, 15)
+                            .padding(.horizontal, 20)
                         }
-                        .frame(width: .infinity)
-                        .padding(.top, 15)
-                        .padding(.horizontal, 20)
+                        
                         VStack {
                             ForEach(1...currentWeatherData.forecast.forecastDay.count, id: \.self) { item in
                                 DailyListItem(weatherData: currentWeatherData.forecast.forecastDay[item - 1], isDay: 1)

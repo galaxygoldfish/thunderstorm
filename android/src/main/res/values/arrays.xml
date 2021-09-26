@@ -31,4 +31,12 @@
         <item>Saturday</item>
     </string-array>
 
+    <string-array name="air_quality_units_epa">
+        <item>Good</item>
+        <item>Moderate</item>
+        <item>Poor</item>
+        <item>Unhealthy</item>
+        <item>Hazardous</item>
+    </string-array>
+
 </resources>

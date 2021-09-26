@@ -47,6 +47,7 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -300,48 +301,95 @@ fun WeatherView(
                             )
                         }
                     }
-                    Row(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth(0.5F)
-                                .padding(top = 20.dp, start = 20.dp, end = 5.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(
-                                    colorResource(id = R.color.interface_gray).copy(0.5F)
-                                )
+                    Column {
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = """${currentWeatherData.humidity}%""",
-                                style = MaterialTheme.typography.h4,
-                                fontSize = 33.sp,
-                                modifier = Modifier.padding(start = 15.dp, top = 5.dp)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.weather_humidity_detail_text),
-                                modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5F)
+                                    .padding(top = 20.dp, start = 20.dp, end = 5.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        colorResource(id = R.color.interface_gray).copy(0.5F)
+                                    )
+                            ) {
+                                Text(
+                                    text = """${currentWeatherData.humidity}%""",
+                                    style = MaterialTheme.typography.h4,
+                                    fontSize = 33.sp,
+                                    modifier = Modifier.padding(start = 15.dp, top = 5.dp)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.weather_humidity_detail_text),
+                                    modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 20.dp, end = 20.dp, start = 5.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        colorResource(id = R.color.interface_gray).copy(0.5F)
+                                    )
+                            ) {
+                                Text(
+                                    text = """${currentWeatherData.uv.roundToInt()}""",
+                                    style = MaterialTheme.typography.h4,
+                                    fontSize = 33.sp,
+                                    modifier = Modifier.padding(start = 15.dp, top = 5.dp)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.weather_uv_detail_text),
+                                    modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
+                                )
+                            }
                         }
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 20.dp, end = 20.dp, start = 5.dp)
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(
-                                    colorResource(id = R.color.interface_gray).copy(0.5F)
-                                )
+                        Row(
+                            modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = """${currentWeatherData.uv.roundToInt()}""",
-                                style = MaterialTheme.typography.h4,
-                                fontSize = 33.sp,
-                                modifier = Modifier.padding(start = 15.dp, top = 5.dp)
-                            )
-                            Text(
-                                text = stringResource(id = R.string.weather_uv_detail_text),
-                                modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth(0.5F)
+                                    .padding(top = 10.dp, end = 5.dp, start = 20.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        colorResource(id = R.color.interface_gray).copy(0.5F)
+                                    )
+                            ) {
+                                val airQualityLevel = currentWeatherData.airQuality.usEpaIndex.toInt()
+                                Text(
+                                    text = stringArrayResource(id = R.array.air_quality_units_epa)[airQualityLevel - 1],
+                                    style = MaterialTheme.typography.h4,
+                                    fontSize = 27.sp,
+                                    modifier = Modifier.padding(start = 14.dp, top = 7.dp)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.weather_air_quality_detail_text),
+                                    modifier = Modifier.padding(start = 15.dp, bottom = 18.dp, top = 3.dp)
+                                )
+                            }
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp, end = 20.dp, start = 5.dp)
+                                    .clip(RoundedCornerShape(10.dp))
+                                    .background(
+                                        colorResource(id = R.color.interface_gray).copy(0.5F)
+                                    )
+                            ) {
+                                Text(
+                                    text = """${currentWeatherData.visibilityMi.toInt()} mi""",
+                                    style = MaterialTheme.typography.h4,
+                                    fontSize = 33.sp,
+                                    modifier = Modifier.padding(start = 15.dp, top = 5.dp)
+                                )
+                                Text(
+                                    text = stringResource(id = R.string.weather_visibility_detail_text),
+                                    modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
+                                )
+                            }
                         }
                     }
                     Column(
@@ -358,7 +406,8 @@ fun WeatherView(
                         }
                     }
                     Column(
-                        modifier = Modifier.height(80.dp)
+                        modifier = Modifier
+                            .height(80.dp)
                             .padding(start = 20.dp, bottom = 5.dp),
                         verticalArrangement = Arrangement.Center
                     ) {
