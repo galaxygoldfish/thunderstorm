@@ -25,6 +25,8 @@ class WeatherViewModel : ViewModel() {
     val forecastWeatherData: MutableState<WeatherDataResult?> = mutableStateOf(null)
     val currentIconResource: MutableState<Int> = mutableStateOf(R.drawable.ic_cloudy_night)
 
+    val weatherAlertAvailable: MutableState<Boolean> = mutableStateOf(false)
+
     fun loadDefaultCity(context: Context) {
         val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
         val cityName = database.cityStoreQueries.getAllCities().executeAsList()[0]
@@ -46,6 +48,7 @@ class WeatherViewModel : ViewModel() {
                         weatherResponse.current.condition.code
                     )
                     forecastWeatherData.value = weatherResponse
+                    weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
                 }
             }
         } catch (exception: Exception) {

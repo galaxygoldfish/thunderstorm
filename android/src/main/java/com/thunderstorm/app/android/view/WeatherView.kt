@@ -2,8 +2,10 @@ package com.thunderstorm.app.android.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LocalContentColor
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -76,17 +79,56 @@ fun WeatherView(
         Column(
             modifier = Modifier.fillMaxSize()
         ) {
-            Text(
-                text = viewModel.currentCityName.value.toString(),
-                modifier = Modifier.padding(top = 20.dp, start = 20.dp),
-                style = MaterialTheme.typography.h3
-            )
-            Text(
-                text = viewModel.currentRegionName.value.toString(),
-                style = MaterialTheme.typography.body1,
-                modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
-                fontSize = 14.sp
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text(
+                        text = viewModel.currentCityName.value.toString(),
+                        modifier = Modifier.padding(top = 20.dp, start = 20.dp),
+                        style = MaterialTheme.typography.h3
+                    )
+                    Text(
+                        text = viewModel.currentRegionName.value.toString(),
+                        style = MaterialTheme.typography.body1,
+                        modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
+                        fontSize = 14.sp
+                    )
+                }
+                Row(
+                    modifier = Modifier.padding(top = 20.dp, end = 15.dp)
+                ) {
+                    if (viewModel.weatherAlertAvailable.value) {
+                        IconButton(
+                            onClick = {
+
+                            },
+                            content = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_warning_icon),
+                                    contentDescription = stringResource(id = R.string.warning_icon_content_desc),
+                                    modifier = Modifier
+                                        .size(24.dp)
+                                )
+                            }
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+
+                        },
+                        content = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_settings_icon),
+                                contentDescription = stringResource(id = R.string.settings_icon_content_desc),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
+                    )
+                }
+            }
+
             if (viewModel.forecastWeatherData.value != null) {
                 val currentWeatherData = viewModel.forecastWeatherData.value!!
                 val dataStore = DataStore(navController.context as ThunderstormBaseActivity)

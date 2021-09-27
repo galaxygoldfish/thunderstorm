@@ -9,13 +9,45 @@ struct WeatherView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if (viewModel.currentCityName != nil) {
-                Text(viewModel.currentCityName!)
-                    .font(.custom(TexGyreHerosBold, size: 40))
-                    .padding(.top, 20)
-                    .padding(.leading, 20)
-                Text(viewModel.currentCityRegion!)
-                    .font(.custom(ManropeRegular, size: 14))
-                    .padding(.leading, 20)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(viewModel.currentCityName!)
+                            .font(.custom(TexGyreHerosBold, size: 40))
+                            .padding(.top, 20)
+                            .padding(.leading, 20)
+                        Text(viewModel.currentCityRegion!)
+                            .font(.custom(ManropeRegular, size: 14))
+                            .padding(.leading, 20)
+                    }
+                    Spacer()
+                    HStack {
+                        if (viewModel.weatherAlertAvailable) {
+                            Button(
+                                action: {
+                                    
+                                }
+                            ) {
+                                Image("WarningIcon")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 24, height: 24)
+                                    .padding(.trailing, 15)
+                            }
+                        }
+                        Button(
+                            action: {
+                                
+                            }
+                        ) {
+                            Image("SettingsIcon")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 24, height: 24)
+                                .padding(.trailing, 15)
+                        }
+                    }
+                }
+                .frame(width: .infinity, alignment: .leading)
             }
             if (viewModel.currentWeatherData != nil) {
                 let currentWeatherData = viewModel.currentWeatherData!

@@ -9,6 +9,8 @@ class WeatherViewModel: ObservableObject {
     @Published var currentWeatherData: WeatherDataResult? = nil
     @Published var currentWeatherIcon: String? = nil
     
+    @Published var weatherAlertAvailable: Bool = false
+    
     init() {
         if (DataStore(context: NSObject()).getBoolean(key: "INDICATION_ONBOARDING_DONE")) {
             loadCityData()
@@ -32,6 +34,7 @@ class WeatherViewModel: ObservableObject {
             completionHandler: { result, error in
                 if (error == nil) {
                     self.currentWeatherData = result!
+                    self.weatherAlertAvailable = !result!.alerts.alert!.isEmpty
                     self.currentWeatherIcon = getIconForCodeAndName(
                         isDay: result!.current.isDay,
                         code: result!.current.condition.code
