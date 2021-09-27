@@ -17,14 +17,20 @@ import com.thunderstorm.app.android.theme.ThunderstormTheme
 import com.thunderstorm.app.android.view.WeatherView
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
 import com.thunderstorm.app.android.view.WelcomeView
+import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
+import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
+import com.thunderstorm.app.android.viewmodel.WeatherAlertViewModel
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.model.weather.WeatherDataResult
 
 object NavigationDestination {
     const val WelcomeView = "welcome"
     const val SetupView = "setup"
     const val WeatherView = "weather"
+    const val AlertView = "alert"
+    const val AlertDetailView = "alertdetails"
 }
 
 @ExperimentalPagerApi
@@ -35,6 +41,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
 
     private val setupViewModel: SetupViewModel by viewModels()
     private val weatherViewModel: WeatherViewModel by viewModels()
+    private val weatherAlertViewModel: WeatherAlertViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +84,20 @@ class ThunderstormBaseActivity : ComponentActivity() {
                     WeatherView(
                         viewModel = weatherViewModel,
                         navController = navigationController
+                    )
+                }
+                composable("""${NavigationDestination.AlertView}/{weatherCity}""") {
+                    WeatherAlertList(
+                        navController = navigationController,
+                        weatherCity = it.arguments!!.getString("weatherCity")!!,
+                        viewModel = weatherAlertViewModel
+                    )
+                }
+                composable("""${NavigationDestination.AlertDetailView}/{alertIndex}""") {
+                    WeatherAlertDetail(
+                        navController = navigationController,
+                        alertIndex = it.arguments!!.getInt("alertIndex"),
+                        viewModel = weatherAlertViewModel
                     )
                 }
             }

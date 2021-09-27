@@ -35,6 +35,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.R
+import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.view.weather.CurrentWeatherView
 import com.thunderstorm.app.android.view.weather.DailyForecastView
@@ -102,7 +103,9 @@ fun WeatherView(
                     if (viewModel.weatherAlertAvailable.value) {
                         IconButton(
                             onClick = {
-
+                                navController.navigate(
+                                    """${NavigationDestination.AlertView}/${viewModel.currentCityServiceUrl.value}"""
+                                )
                             },
                             content = {
                                 Icon(

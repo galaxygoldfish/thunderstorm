@@ -21,6 +21,7 @@
     <string name="moon_icon_content_desc">Moon icon</string>
     <string name="settings_icon_content_desc">Settings</string>
     <string name="warning_icon_content_desc">Weather alerts</string>
+    <string name="back_button_content_desc">Back button</string>
 
     <string name="welcome_title_header">Thunderstorm</string>
     <string name="welcome_title_subheader">Your new favorite weather app.</string>
@@ -44,5 +45,17 @@
     <string name="weather_visibility_detail_text">Visibility</string>
     <string name="weather_service_credit_text">Powered by WeatherAPI</string>
     <string name="weather_last_updated_template">Last updated at %1$s</string>
+
+    <string name="alerts_actionbar_title">Weather alerts</string>
+    <string name="alerts_detail_page_title">Alert details</string>
+    <string name="weather_alert_headline_header">Headline</string>
+    <string name="weather_alert_severity_header">Severity</string>
+    <string name="weather_alert_urgency_header">Urgency</string>
+    <string name="weather_alert_areas_header">Areas affected</string>
+    <string name="weather_alert_category_header">Category</string>
+    <string name="weather_alert_event_header">Event</string>
+    <string name="weather_alert_note_header">Notes</string>
+    <string name="weather_alert_desc_header">Description</string>
+    <string name="weather_alert_instruction_header">Instructions</string>
 
 </resources>

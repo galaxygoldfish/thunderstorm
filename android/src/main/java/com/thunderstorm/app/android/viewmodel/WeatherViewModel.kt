@@ -21,6 +21,7 @@ class WeatherViewModel : ViewModel() {
 
     val currentCityName: MutableLiveData<String> = MutableLiveData()
     val currentRegionName: MutableLiveData<String> = MutableLiveData()
+    val currentCityServiceUrl: MutableLiveData<String> = MutableLiveData()
 
     val forecastWeatherData: MutableState<WeatherDataResult?> = mutableStateOf(null)
     val currentIconResource: MutableState<Int> = mutableStateOf(R.drawable.ic_cloudy_night)
@@ -32,6 +33,7 @@ class WeatherViewModel : ViewModel() {
         val cityName = database.cityStoreQueries.getAllCities().executeAsList()[0]
         currentCityName.value = cityName.cityName.split(",")[0]
         currentRegionName.value = cityName.stateName
+        currentCityServiceUrl.value = cityName.serviceUrl
         getCurrentData(context, cityName.serviceUrl)
     }
 
