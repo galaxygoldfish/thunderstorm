@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thunderstorm.app.android.R
+import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,7 +30,8 @@ import kotlin.math.roundToInt
 
 @Composable
 fun QuickDetailView(
-    weatherData: WeatherDataResult
+    weatherData: WeatherDataResult,
+    dataStore: DataStore
 ) {
     AstronomyDetailCard(
         weatherData = weatherData
@@ -62,8 +64,14 @@ fun QuickDetailView(
                 airQualityText = true
             )
             QuickDetailCard(
-                mainText = """${weatherData.current.visibilityMi.roundToInt()} mi""",
-                subtitle = stringResource(id = R.string.weather_uv_detail_text),
+                mainText = """${
+                    if (dataStore.getInteger("PREF_SPEED_UNITS") == 0) {
+                        weatherData.current.visibilityMi.roundToInt()
+                    } else {
+                        weatherData.current.visibilityKm.roundToInt()
+                    }
+                } mi""",
+                subtitle = stringResource(id = R.string.weather_visibility_detail_text),
                 position = false
             )
         }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
+import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
 import java.text.SimpleDateFormat
@@ -40,7 +41,8 @@ import kotlin.math.roundToInt
 @Composable
 fun HourlyForecastView(
     weatherData: WeatherDataResult,
-    context: Context
+    context: Context,
+    dataStore: DataStore
 ) {
     fun getWeatherData(day: Int): List<HourWeatherObject> = weatherData.forecast.forecastDay[day].hourDetails
     Column {
@@ -51,7 +53,8 @@ fun HourlyForecastView(
                     getWeatherData(0).forEachIndexed { _, item ->
                         ProcessHourListItem(
                             item = item,
-                            context = context
+                            context = context,
+                            dataStore = dataStore
                         )
                     }
                     NextDayWeatherCard(
@@ -60,7 +63,8 @@ fun HourlyForecastView(
                     getWeatherData(1).forEachIndexed { _, item ->
                         HourlyListItem(
                             weatherData = item,
-                            context = context
+                            context = context,
+                            dataStore = dataStore
                         )
                     }
                 },
@@ -129,7 +133,11 @@ fun NextDayWeatherCard(
 }
 
 @Composable
-private fun ProcessHourListItem(item: HourWeatherObject, context: Context) {
+private fun ProcessHourListItem(
+    item: HourWeatherObject,
+    context: Context,
+    dataStore: DataStore
+) {
     val usTimeFormat = SimpleDateFormat("h a", Locale.getDefault())
     val militaryTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val targetTimeHour = usTimeFormat.format(militaryTimeFormat.parse(item.localTime.split(" ")[1])!!)
@@ -143,7 +151,8 @@ private fun ProcessHourListItem(item: HourWeatherObject, context: Context) {
         if (targetTimeHour != "12 $currentAMPM") {
             HourlyListItem(
                 weatherData = item,
-                context = context
+                context = context,
+                dataStore = dataStore
             )
         }
     }
@@ -152,7 +161,8 @@ private fun ProcessHourListItem(item: HourWeatherObject, context: Context) {
 @Composable
 fun HourlyListItem(
     weatherData: HourWeatherObject,
-    context: Context
+    context: Context,
+    dataStore: DataStore
 ) {
     val weatherIcon = context.getIconForNameAndCode(
         weatherData.isDay,
@@ -184,7 +194,14 @@ fun HourlyListItem(
                 .size(40.dp)
         )
         Text(
-            text = weatherData.temperatureFahrenheit.roundToInt().toString() + "°",
+            text = String.format(
+                stringResource(id = R.string.weather_temperature_template),
+                if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
+                    weatherData.temperatureCelsius.roundToInt()
+                } else {
+                    weatherData.temperatureFahrenheit.roundToInt()
+                }
+            ),
             style = MaterialTheme.typography.body2,
             fontSize = 15.sp,
             modifier = Modifier.padding(top = 10.dp, bottom = 10.dp)

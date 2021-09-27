@@ -16,6 +16,20 @@ struct DailyForecastView: View {
 struct DailyListItem: View {
     let weatherData: ForecastDayWeatherObject
     let isDay: Int
+    let temperatureLow: Int
+    let temperatureHigh: Int
+    init(weatherData: ForecastDayWeatherObject, isDay: Int) {
+        self.weatherData = weatherData
+        self.isDay = isDay
+        let dataStore = DataStore(context: NSObject())
+        if (dataStore.getInteger(key: "PREF_TEMP_UNITS") == 0) {
+            temperatureLow = Int(weatherData.dayDetails.lowTempFahrenheit)
+            temperatureHigh = Int(weatherData.dayDetails.highTempFahrenheit)
+        } else {
+            temperatureLow = Int(weatherData.dayDetails.lowTempCelsius)
+            temperatureHigh = Int(weatherData.dayDetails.highTempCelsius)
+        }
+    }
     var body: some View {
         ZStack(alignment: .leading) {
             Color("InterfaceGray")

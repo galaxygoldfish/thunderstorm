@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.theme.TexGyreHeros
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
+import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import java.text.SimpleDateFormat
@@ -37,7 +38,8 @@ import kotlin.math.roundToInt
 @Composable
 fun DailyForecastView(
     weatherData: WeatherDataResult,
-    context: Context
+    context: Context,
+    dataStore: DataStore
 ) {
     Column(
         modifier = Modifier
@@ -48,7 +50,8 @@ fun DailyForecastView(
             DailyListItem(
                 weatherData = item,
                 isDay = weatherData.current.isDay,
-                context = context
+                context = context,
+                dataStore = dataStore
             )
         }
     }
@@ -58,7 +61,8 @@ fun DailyForecastView(
 fun DailyListItem(
     weatherData: ForecastDayWeatherObject,
     isDay: Int,
-    context: Context
+    context: Context,
+    dataStore: DataStore
 ) {
 
     // Parse date so that SimpleDateFormat library actually gives us
@@ -114,7 +118,15 @@ fun DailyListItem(
                                 fontFamily = TexGyreHeros
                             )
                         ) {
-                            append("""${data.highTempFahrenheit.roundToInt()}° """)
+                            append(
+                                """${
+                                    if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
+                                        data.highTempCelsius.roundToInt()
+                                    } else {
+                                        data.highTempFahrenheit.roundToInt()
+                                    }
+                                }° """
+                            )
                         }
                         withStyle(
                             SpanStyle(
@@ -124,7 +136,13 @@ fun DailyListItem(
                                 color = LocalContentColor.current.copy(0.7F)
                             )
                         ) {
-                            append("""${data.lowTempFahrenheit.roundToInt()}°""")
+                            append("""${
+                                if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
+                                    data.lowTempCelsius.roundToInt()
+                                } else {
+                                    data.lowTempFahrenheit.roundToInt()
+                                }
+                            }°""")
                         }
                     }
                 )

@@ -55,7 +55,7 @@ struct QuickDetailView: View {
             }
             .frame(width: .infinity)
             .padding(.top, 15)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 18.5)
             HStack {
                 QuickDetailCard(
                     mainText:
@@ -72,7 +72,7 @@ struct QuickDetailView: View {
             }
             .frame(width: .infinity)
             .padding(.top, 5)
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 18.5)
         }
         
     }
@@ -105,6 +105,7 @@ struct QuickDetailCard: View {
                     .padding(.bottom, 15)
             }
         }
-        .padding(.trailing, 5)
+        .padding(.trailing, 2.5)
+        .padding(.leading, 2.5)
     }
 }

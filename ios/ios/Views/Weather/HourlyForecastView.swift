@@ -69,6 +69,7 @@ func processHourlyListItem(weatherData: HourWeatherObject) -> HourlyListItem? {
 struct HourlyListItem: View {
     var weather: HourWeatherObject
     var formattedTime: String? = nil
+    let weatherTemperature: Int
     init(weatherData: HourWeatherObject) {
         weather = weatherData
         let dateFormatter = DateFormatter()
@@ -76,6 +77,12 @@ struct HourlyListItem: View {
         let formattedDate = dateFormatter.date(from: String(weatherData.localTime.split(separator: " ")[1]))
         dateFormatter.dateFormat = "h a"
         formattedTime  = dateFormatter.string(from: formattedDate!)
+        let dataStore = DataStore(context: NSObject())
+        if (dataStore.getInteger(key: "PREF_TEMP_UNITS") == 0) {
+            weatherTemperature = Int(weather.temperatureFahrenheit)
+        } else {
+            weatherTemperature = Int(weather.temperatureCelsius)
+        }
     }
     var body: some View {
         ZStack {
@@ -98,7 +105,7 @@ struct HourlyListItem: View {
                 .padding(.leading, 12)
                 .padding(.trailing, 12)
                 .padding(.top, 10)
-                Text(String(Int(weather.temperatureFahrenheit)) + "°")
+                Text(String(weatherTemperature) + "°")
                     .font(.custom(ManropeSemiBold, size: 16))
                     .padding(.top, 10)
                     .padding(.bottom, 10)

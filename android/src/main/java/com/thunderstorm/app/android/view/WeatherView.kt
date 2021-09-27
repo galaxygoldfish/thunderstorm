@@ -102,14 +102,17 @@ fun WeatherView(
                     )
                     HourlyForecastView(
                         weatherData = currentWeatherData,
-                        context = navController.context
+                        context = navController.context,
+                        dataStore = dataStore
                     )
                     QuickDetailView(
-                        weatherData = currentWeatherData
+                        weatherData = currentWeatherData,
+                        dataStore = dataStore
                     )
                     DailyForecastView(
                         weatherData = currentWeatherData,
-                        context = navController.context
+                        context = navController.context,
+                        dataStore = dataStore
                     )
                     WeatherCreditFooter()
                 }
