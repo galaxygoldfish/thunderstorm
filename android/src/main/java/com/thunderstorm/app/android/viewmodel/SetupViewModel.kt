@@ -30,11 +30,15 @@ class SetupViewModel : ViewModel() {
 
     fun fetchCitiesForSearch() {
         asyncScope.launch {
-            val cityRequestResult = NetworkingClient().getMatchingCitiesForSearch(searchFieldValue.value.text)
-            cityAutocompleteItems.value.clear()
-            cityRequestResult.forEach { searchCityResult ->
-                cityAutocompleteItems.value.add(searchCityResult)
-            }
+            NetworkingClient().getMatchingCitiesForSearch(
+                query = searchFieldValue.value.text,
+                onResultAvailable = { result ->
+                    cityAutocompleteItems.value.clear()
+                    result.forEach { searchCityResult ->
+                        cityAutocompleteItems.value.add(searchCityResult)
+                    }
+                }
+            )
         }
     }
 

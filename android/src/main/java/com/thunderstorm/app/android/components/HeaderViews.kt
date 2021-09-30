@@ -46,7 +46,7 @@ fun ActionBar(
            style = MaterialTheme.typography.h4,
            fontSize = 22.sp,
            fontWeight = FontWeight.SemiBold,
-           modifier = Modifier.padding(start = 10.dp)
+           modifier = Modifier.padding(start = 5.dp)
        )
    }
 }

@@ -32,3 +32,5 @@
 "weather_air_quality_5" = "Hazardous";
 "weather_service_credit_text" = "Powered by WeatherAPI";
 "weather_last_updated_template_%@" = "Last updated at %@";
+
+"alert_list_header_title" = "Weather alerts";

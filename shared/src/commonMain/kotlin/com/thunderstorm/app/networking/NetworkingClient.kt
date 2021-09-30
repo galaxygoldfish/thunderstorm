@@ -8,6 +8,7 @@ import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
+import kotlinx.coroutines.*
 import kotlinx.serialization.json.Json
 
 class NetworkingClient {
@@ -19,14 +20,20 @@ class NetworkingClient {
         }
     }
 
-    suspend fun getMatchingCitiesForSearch(query: String?) : List<SearchCityResult> {
-        return if (query != null) {
-            httpClient.get("""${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_SEARCH}""") {
-                parameter("q", query)
-                parameter("key", Keystore.WeatherAPIKey)
+    fun getMatchingCitiesForSearch(
+        query: String?,
+        onResultAvailable: (List<SearchCityResult>) -> Unit
+    ) {
+        if (query != null) {
+            CoroutineScope(Dispatchers.Default).launch {
+                val result = httpClient.get<List<SearchCityResult>>("""${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_SEARCH}""") {
+                    parameter("q", query)
+                    parameter("key", Keystore.WeatherAPIKey)
+                }
+                CoroutineScope(Dispatchers.Main).launch {
+                    onResultAvailable.invoke(result)
+                }
             }
-        } else {
-            listOf()
         }
     }
 

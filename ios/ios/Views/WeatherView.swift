@@ -5,6 +5,7 @@ import shared
 struct WeatherView: View {
     
     @EnvironmentObject private var viewModel: WeatherViewModel
+    @State private var navigateAlert: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -22,16 +23,21 @@ struct WeatherView: View {
                     Spacer()
                     HStack {
                         if (viewModel.weatherAlertAvailable) {
-                            Button(
-                                action: {
-                                    
-                                }
+                            NavigationLink(
+                                destination: WeatherAlertListView(),
+                                isActive: $navigateAlert
                             ) {
-                                Image("WarningIcon")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24, height: 24)
-                                    .padding(.trailing, 15)
+                                Button(
+                                    action: {
+                                        navigateAlert = true
+                                    }
+                                ) {
+                                    Image("WarningIcon")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 24, height: 24)
+                                        .padding(.trailing, 15)
+                                }
                             }
                         }
                         Button(

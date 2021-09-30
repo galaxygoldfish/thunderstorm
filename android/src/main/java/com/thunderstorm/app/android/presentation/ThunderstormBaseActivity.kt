@@ -14,11 +14,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.theme.ThunderstormTheme
+import com.thunderstorm.app.android.view.SettingsView
 import com.thunderstorm.app.android.view.WeatherView
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
 import com.thunderstorm.app.android.view.WelcomeView
 import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
 import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
+import com.thunderstorm.app.android.viewmodel.SettingsViewModel
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.android.viewmodel.WeatherAlertViewModel
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
@@ -31,6 +33,7 @@ object NavigationDestination {
     const val WeatherView = "weather"
     const val AlertView = "alert"
     const val AlertDetailView = "alertdetails"
+    const val SettingsView = "settings"
 }
 
 @ExperimentalPagerApi
@@ -42,6 +45,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
     private val setupViewModel: SetupViewModel by viewModels()
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val weatherAlertViewModel: WeatherAlertViewModel by viewModels()
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,6 +102,12 @@ class ThunderstormBaseActivity : ComponentActivity() {
                         navController = navigationController,
                         alertIndex = it.arguments!!.getInt("alertIndex"),
                         viewModel = weatherAlertViewModel
+                    )
+                }
+                composable(NavigationDestination.SettingsView) {
+                    SettingsView(
+                        navController = navigationController,
+                        viewModel = settingsViewModel
                     )
                 }
             }

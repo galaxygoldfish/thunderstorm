@@ -118,8 +118,8 @@ fun WeatherView(
                         )
                     }
                     IconButton(
-                        onClick = {
-
+                        onClick ={
+                             navController.navigate(NavigationDestination.SettingsView)
                         },
                         content = {
                             Icon(
