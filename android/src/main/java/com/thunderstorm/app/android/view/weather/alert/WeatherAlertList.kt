@@ -98,7 +98,7 @@ fun AlertListItem(
             Column(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
-                    .padding(start = 20.dp, top = 15.dp, bottom = 15.dp)
+                    .padding(start = 20.dp, top = 15.dp, bottom = 15.dp, end = 20.dp)
             ) {
                 Text(
                     text = alertObject.headline,

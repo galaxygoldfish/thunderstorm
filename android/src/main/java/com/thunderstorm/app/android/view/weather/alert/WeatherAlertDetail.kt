@@ -46,13 +46,13 @@ fun WeatherAlertDetail(
         alertHeaderItems.forEachIndexed { index, item ->
             if (alertValueItems[index].isNotEmpty()) {
                 Column(
-                    modifier = Modifier.padding(bottom = 15.dp)
+                    modifier = Modifier.padding(bottom = 15.dp, end = 20.dp)
                 ) {
                     Text(
-                        text = item.toUpperCase(),
+                        text = item,
                         style = MaterialTheme.typography.overline,
                         modifier = Modifier.padding(start = 20.dp),
-                        color = MaterialTheme.colors.onSurface.copy(0.7F)
+                        color = MaterialTheme.colors.onSurface
                     )
                     Text(
                         text = alertValueItems[index],

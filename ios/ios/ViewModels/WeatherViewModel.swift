@@ -5,6 +5,7 @@ class WeatherViewModel: ObservableObject {
     
     @Published var currentCityName: String? = nil
     @Published var currentCityRegion: String? = nil
+    @Published var cityServiceUrl: String? = nil
     
     @Published var currentWeatherData: WeatherDataResult? = nil
     @Published var currentWeatherIcon: String? = nil
@@ -24,6 +25,7 @@ class WeatherViewModel: ObservableObject {
         let cityEntries = database.cityStoreQueries.getAllCities().executeAsList()
         currentCityName = String(cityEntries[0].cityName.split(separator: ",")[0])
         currentCityRegion = String(cityEntries[0].stateName)
+        cityServiceUrl = String(cityEntries[0].serviceUrl)
         loadWeatherData(cityNameJson: cityEntries[0].serviceUrl)
     }
     

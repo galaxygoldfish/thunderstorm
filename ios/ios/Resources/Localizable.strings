@@ -34,3 +34,13 @@
 "weather_last_updated_template_%@" = "Last updated at %@";
 
 "alert_list_header_title" = "Weather alerts";
+"alert_detail_header_title" = "Alert details";
+"alert_detail_headline_title" = "Headline";
+"alert_detail_severity_title" = "Severity";
+"alert_detail_urgency_title" = "Urgency";
+"alert_detail_areas_title" = "Areas affected";
+"alert_detail_category_title" = "Category";
+"alert_detail_event_title" = "Event";
+"alert_detail_note_title" = "Notes";
+"alert_detail_desc_title" = "Description";
+"alert_detail_instruction_title" = "Instructions";
