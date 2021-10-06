@@ -1,14 +1,14 @@
 package com.thunderstorm.app.android.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -24,15 +24,14 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
@@ -43,10 +42,14 @@ import com.thunderstorm.app.android.view.weather.HourlyForecastView
 import com.thunderstorm.app.android.view.weather.QuickDetailView
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.valentinilk.shimmer.shimmer
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.concurrent.TimeoutException
 
+@ExperimentalAnimationApi
+@ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
@@ -118,7 +121,7 @@ fun WeatherView(
                         )
                     }
                     IconButton(
-                        onClick ={
+                        onClick = {
                              navController.navigate(NavigationDestination.SettingsView)
                         },
                         content = {
@@ -135,45 +138,134 @@ fun WeatherView(
             if (viewModel.forecastWeatherData.value != null) {
                 val currentWeatherData = viewModel.forecastWeatherData.value!!
                 val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(rememberScrollState())
+                AnimatedVisibility(
+                    visible = viewModel.showWeather.value,
+                    enter = fadeIn(
+                        initialAlpha = 0.5F,
+                        animationSpec = tween(
+                            durationMillis = 1000,
+                            delayMillis = 0,
+                            easing = LinearOutSlowInEasing
+                        )
+                    ),
+                    modifier = Modifier.fillMaxSize()
                 ) {
-                    CurrentWeatherView(
-                        weatherData = currentWeatherData,
-                        currentWeatherIcon = viewModel.currentIconResource.value,
-                        dataStore = dataStore
-                    )
-                    HourlyForecastView(
-                        weatherData = currentWeatherData,
-                        context = navController.context,
-                        dataStore = dataStore
-                    )
-                    QuickDetailView(
-                        weatherData = currentWeatherData,
-                        dataStore = dataStore
-                    )
-                    DailyForecastView(
-                        weatherData = currentWeatherData,
-                        context = navController.context,
-                        dataStore = dataStore
-                    )
-                    WeatherCreditFooter()
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        CurrentWeatherView(
+                            weatherData = currentWeatherData,
+                            currentWeatherIcon = viewModel.currentIconResource.value,
+                            dataStore = dataStore
+                        )
+                        HourlyForecastView(
+                            weatherData = currentWeatherData,
+                            context = navController.context,
+                            dataStore = dataStore
+                        )
+                        QuickDetailView(
+                            weatherData = currentWeatherData,
+                            dataStore = dataStore
+                        )
+                        DailyForecastView(
+                            weatherData = currentWeatherData,
+                            context = navController.context,
+                            dataStore = dataStore
+                        )
+                        WeatherCreditFooter()
+                    }
                 }
             } else {
-                LottieAnimation(
-                    rememberLottieComposition(
-                        spec = LottieCompositionSpec.RawRes(R.raw.loading_anim)
-                    ).value,
+                WeatherLoadingView()
+            }
+        }
+    }
+}
+
+@ExperimentalFoundationApi
+@Composable
+fun WeatherLoadingView() {
+    val commonBackground = Color.Gray.copy(0.4F)
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .shimmer()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Box(
+                modifier = Modifier
+                    .padding(top = 40.dp, start = 20.dp)
+                    .size(height = 100.dp, width = 120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(commonBackground)
+            )
+            Box(
+                modifier = Modifier
+                    .padding(top = 40.dp, end = 20.dp)
+                    .size(height = 110.dp, width = 120.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(commonBackground)
+            )
+        }
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp, start = 20.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .size(height = 20.dp, width = 90.dp)
+                .background(commonBackground)
+        )
+        Box(
+            modifier = Modifier
+                .padding(top = 5.dp, start = 20.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .size(height = 20.dp, width = 110.dp)
+                .background(commonBackground)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 35.dp, start = 20.dp, end = 20.dp)
+        ) {
+            repeat(4) {
+                Box(
                     modifier = Modifier
-                        .fillMaxHeight()
-                        .size(100.dp)
-                        .align(Alignment.CenterHorizontally)
-                        .size(100.dp)
+                        .padding(end = 10.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .size(height = 125.dp, width = 65.dp)
+                        .background(commonBackground)
                 )
             }
         }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(120.dp)
+                .padding(start = 20.dp, end = 20.dp, top = 25.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(commonBackground)
+        )
+        LazyVerticalGrid(
+            cells = GridCells.Fixed(2),
+            content = {
+                items(4) {
+                    Box(
+                        modifier = Modifier
+                            .height(100.dp)
+                            .padding(5.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                            .background(commonBackground)
+                    )
+                }
+            },
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp)
+        )
     }
 }
 

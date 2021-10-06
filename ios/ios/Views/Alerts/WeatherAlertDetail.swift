@@ -3,7 +3,7 @@ import SwiftUI
 
 struct WeatherAlertDetail: View {
     
-    var alertFields: [String]
+    var alertFields: [String?]
     
     init(alertInfo: AlertWeatherObject) {
         alertFields = [
@@ -40,16 +40,32 @@ struct WeatherAlertDetail: View {
             }
             .padding(.top, 25)
             .padding(.bottom, 20)
-            ScrollView {
-                VStack(alignment: .leading) {
-                    ForEach(1...alertFields.count, id: \.self) { index in
+                AlertDetailList(alertFields: alertFields!)
+            }
+        }
+        .navigationTitle("")
+        .navigationBarHidden(true)
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+struct AlertDetailList: View {
+    let alertFields: [String]
+    @EnvironmentObject var viewModel: AlertViewModel
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading) {
+                ForEach(0...alertFields.count, id: \.self) { index in
+                    if (alertFields[index + 1] != nil || alertFields[index + 1] != "") {
                         VStack(alignment: .leading) {
                             Text(
-                                LocalizedStringKey(viewModel.alertDetailKeys[index - 1])
+                                LocalizedStringKey(
+                                    viewModel.alertDetailKeys[index]
+                                )
                             )
                                 .font(.custom(ManropeBold, size: 20))
-                                
-                            Text(alertFields[index - 1])
+                            
+                            Text(alertFields[index + 1]!)
                                 .font(.custom(ManropeRegular, size: 18))
                         }
                         .frame(width: .infinity, alignment: .leading)
@@ -58,11 +74,9 @@ struct WeatherAlertDetail: View {
                         .padding(.bottom, 10)
                     }
                 }
-                .frame(width: .infinity)
             }
-        }
-        .navigationTitle("")
-        .navigationBarHidden(true)
-        .navigationBarBackButtonHidden(true)
+            .frame(width: .infinity)
     }
 }
+
+

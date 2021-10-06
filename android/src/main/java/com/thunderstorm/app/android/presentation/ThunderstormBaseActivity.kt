@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -47,6 +49,8 @@ class ThunderstormBaseActivity : ComponentActivity() {
     private val weatherAlertViewModel: WeatherAlertViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
 
+    @ExperimentalAnimationApi
+    @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
@@ -57,6 +61,8 @@ class ThunderstormBaseActivity : ComponentActivity() {
         }
     }
 
+    @ExperimentalAnimationApi
+    @ExperimentalFoundationApi
     @Composable
     fun ThunderstormNavHost() {
 

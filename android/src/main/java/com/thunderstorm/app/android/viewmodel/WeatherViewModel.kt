@@ -11,11 +11,7 @@ import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.database.DatabaseDriver
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.networking.NetworkingClient
-import com.thunderstorm.app.utils.WeatherIconCodes
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class WeatherViewModel : ViewModel() {
 
@@ -27,6 +23,8 @@ class WeatherViewModel : ViewModel() {
     val currentIconResource: MutableState<Int> = mutableStateOf(R.drawable.ic_cloudy_night)
 
     val weatherAlertAvailable: MutableState<Boolean> = mutableStateOf(false)
+
+    val showWeather: MutableState<Boolean> = mutableStateOf(false)
 
     fun loadDefaultCity(context: Context) {
         val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
@@ -51,12 +49,13 @@ class WeatherViewModel : ViewModel() {
                     )
                     forecastWeatherData.value = weatherResponse
                     weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
+                    delay(8L)
+                    showWeather.value = true
                 }
             }
         } catch (exception: Exception) {
 
         }
-
     }
 
 }

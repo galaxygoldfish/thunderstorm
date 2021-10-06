@@ -73,7 +73,7 @@ func parseWeekday(date: String) -> String {
     let dateFormat = DateFormatter()
     dateFormat.dateFormat = "yyyy-mm-dd"
     let parsedDate = dateFormat.date(from: date)!
-    return dateFormat.weekdaySymbols[Calendar.current.component(.weekday, from: parsedDate) - 3] // subtract 3 to get correctly formatted weekday
+    return dateFormat.weekdaySymbols[Calendar.current.component(.weekday, from: parsedDate) - 1]
 }
 
 func getCurrentTime() -> String {

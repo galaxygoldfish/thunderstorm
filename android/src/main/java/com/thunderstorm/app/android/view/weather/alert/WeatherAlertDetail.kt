@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
@@ -52,7 +53,8 @@ fun WeatherAlertDetail(
                         text = item,
                         style = MaterialTheme.typography.overline,
                         modifier = Modifier.padding(start = 20.dp),
-                        color = MaterialTheme.colors.onSurface
+                        color = MaterialTheme.colors.onSurface,
+                        fontSize = 17.sp
                     )
                     Text(
                         text = alertValueItems[index],
