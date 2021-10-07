@@ -1,9 +1,6 @@
 package com.thunderstorm.app.android.view
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.*
-import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,7 +19,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -36,17 +32,17 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
-import com.thunderstorm.app.android.view.weather.CurrentWeatherView
-import com.thunderstorm.app.android.view.weather.DailyForecastView
-import com.thunderstorm.app.android.view.weather.HourlyForecastView
-import com.thunderstorm.app.android.view.weather.QuickDetailView
+import com.thunderstorm.app.android.view.weather.*
+import com.thunderstorm.app.android.view.weather.detail.AstronomyDetailCard
+import com.thunderstorm.app.android.view.weather.detail.CurrentWeatherView
+import com.thunderstorm.app.android.view.weather.detail.DailyForecastView
+import com.thunderstorm.app.android.view.weather.detail.HourlyForecastView
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.valentinilk.shimmer.shimmer
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.util.concurrent.TimeoutException
 
 @ExperimentalAnimationApi
 @ExperimentalFoundationApi
@@ -122,7 +118,7 @@ fun WeatherView(
                     }
                     IconButton(
                         onClick = {
-                             navController.navigate(NavigationDestination.SettingsView)
+                            navController.navigate(NavigationDestination.SettingsView)
                         },
                         content = {
                             Icon(
@@ -134,51 +130,34 @@ fun WeatherView(
                     )
                 }
             }
-
-            if (viewModel.forecastWeatherData.value != null) {
-                val currentWeatherData = viewModel.forecastWeatherData.value!!
-                val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
-                AnimatedVisibility(
-                    visible = viewModel.showWeather.value,
-                    enter = fadeIn(
-                        initialAlpha = 0.5F,
-                        animationSpec = tween(
-                            durationMillis = 1000,
-                            delayMillis = 0,
-                            easing = LinearOutSlowInEasing
-                        )
-                    ),
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .verticalScroll(rememberScrollState())
-                    ) {
-                        CurrentWeatherView(
-                            weatherData = currentWeatherData,
-                            currentWeatherIcon = viewModel.currentIconResource.value,
-                            dataStore = dataStore
-                        )
-                        HourlyForecastView(
-                            weatherData = currentWeatherData,
-                            context = navController.context,
-                            dataStore = dataStore
-                        )
-                        QuickDetailView(
-                            weatherData = currentWeatherData,
-                            dataStore = dataStore
-                        )
-                        DailyForecastView(
-                            weatherData = currentWeatherData,
-                            context = navController.context,
-                            dataStore = dataStore
-                        )
-                        WeatherCreditFooter()
-                    }
-                }
-            } else {
-                WeatherLoadingView()
+            val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
+            ) {
+                CurrentWeatherView(
+                    viewModel = viewModel,
+                    dataStore = dataStore
+                )
+                HourlyForecastView(
+                    viewModel = viewModel,
+                    context = navController.context,
+                    dataStore = dataStore
+                )
+                AstronomyDetailCard(
+                    viewModel = viewModel //!
+                )
+                QuickDetailView(
+                    viewModel = viewModel,
+                    dataStore = dataStore
+                )
+                DailyForecastView(
+                    viewModel = viewModel,
+                    context = navController.context,
+                    dataStore = dataStore
+                )
+                WeatherCreditFooter()
             }
         }
     }

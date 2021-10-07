@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather
+package com.thunderstorm.app.android.view.weather.detail
 
 import android.content.Context
 import androidx.compose.foundation.Image
@@ -28,10 +28,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.fade
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
+import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
-import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -40,17 +44,18 @@ import kotlin.math.roundToInt
 
 @Composable
 fun HourlyForecastView(
-    weatherData: WeatherDataResult,
+    viewModel: WeatherViewModel,
     context: Context,
     dataStore: DataStore
 ) {
-    fun getWeatherData(day: Int): List<HourWeatherObject> = weatherData.forecast.forecastDay[day].hourDetails
+    val weatherData = viewModel.forecastWeatherData.value
+    fun getWeatherData(day: Int): List<HourWeatherObject>? = weatherData?.forecast?.forecastDay?.get(day)?.hourDetails
     Column {
         Box {
             val scrollState = rememberScrollState()
             Row(
                 content = {
-                    getWeatherData(0).forEachIndexed { _, item ->
+                    getWeatherData(0)?.forEachIndexed { _, item ->
                         ProcessHourListItem(
                             item = item,
                             context = context,
@@ -58,9 +63,9 @@ fun HourlyForecastView(
                         )
                     }
                     NextDayWeatherCard(
-                        localTime = getWeatherData(1)[0].localTime
+                        localTime = getWeatherData(1)?.get(0)?.localTime
                     )
-                    getWeatherData(1).forEachIndexed { _, item ->
+                    getWeatherData(1)?.forEachIndexed { _, item ->
                         HourlyListItem(
                             weatherData = item,
                             context = context,
@@ -72,6 +77,11 @@ fun HourlyForecastView(
                     .fillMaxWidth()
                     .padding(start = 20.dp, top = 35.dp, end = 10.dp)
                     .horizontalScroll(scrollState)
+                    .placeholder(
+                        visible = !viewModel.showWeatherData.value,
+                        shape = RoundedCornerShape(10.dp),
+                        highlight = PlaceholderHighlight.shimmer()
+                    )
             )
             Box(
                 modifier = Modifier
@@ -96,7 +106,7 @@ fun HourlyForecastView(
 
 @Composable
 fun NextDayWeatherCard(
-    localTime: String
+    localTime: String?
 ) {
     Column(
         modifier = Modifier
@@ -109,10 +119,10 @@ fun NextDayWeatherCard(
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val localTimeData = localTime.split("-")
+        val localTimeData = localTime?.split("-")
         Text(
-            text = """${localTimeData[1]} / ${
-                localTimeData[2].split(" ")[0]
+            text = """${localTimeData?.get(1)} / ${
+                localTimeData?.get(2)?.split(" ")?.get(0)
             }""",
             style = MaterialTheme.typography.body2,
             fontSize = 15.sp,

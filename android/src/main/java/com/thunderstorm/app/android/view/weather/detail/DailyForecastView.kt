@@ -1,7 +1,6 @@
-package com.thunderstorm.app.android.view.weather
+package com.thunderstorm.app.android.view.weather.detail
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,11 +24,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.fade
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.theme.TexGyreHeros
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
+import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
-import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -37,16 +40,22 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DailyForecastView(
-    weatherData: WeatherDataResult,
+    viewModel: WeatherViewModel,
     context: Context,
     dataStore: DataStore
 ) {
+    val weatherData = viewModel.forecastWeatherData.value
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp)
+            .placeholder(
+                visible = !viewModel.showWeatherData.value,
+                shape = RoundedCornerShape(10.dp),
+                highlight = PlaceholderHighlight.shimmer()
+            )
     ) {
-        weatherData.forecast.forecastDay.forEach { item ->
+        weatherData?.forecast?.forecastDay?.forEach { item ->
             DailyListItem(
                 weatherData = item,
                 isDay = weatherData.current.isDay,
@@ -64,9 +73,6 @@ fun DailyListItem(
     context: Context,
     dataStore: DataStore
 ) {
-
-    // Parse date so that SimpleDateFormat library actually gives us
-    // the right date ._.
     val parsedDate = weatherData.hourDetails[0].localTime.let { details ->
         val dayOfMonth = details.substring(8, 10)
         val parsedDay = dayOfMonth.toInt() - 2
