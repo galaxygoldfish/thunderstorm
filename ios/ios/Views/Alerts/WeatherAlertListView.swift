@@ -40,7 +40,6 @@ struct WeatherAlertListView: View {
                         ) {
                             AlertListItem(alertDetails: alert)
                         }
-                        
                     }
                 }
             }

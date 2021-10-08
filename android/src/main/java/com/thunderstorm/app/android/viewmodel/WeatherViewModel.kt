@@ -47,7 +47,7 @@ class WeatherViewModel : ViewModel() {
                         weatherResponse.current.condition.code
                     )
                     forecastWeatherData.value = weatherResponse
-                    delay(2000L)
+                    delay(550L)
                     showWeatherData.value = true
                     weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
                 }

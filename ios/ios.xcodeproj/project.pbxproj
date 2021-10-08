@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,6 +32,7 @@
 		9EC7E41A26E2F5CD0004BEB9 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC7E41926E2F5CD0004BEB9 /* SetupViewModel.swift */; };
 		9EC9B66626F818870028A51F /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EC9B66526F818870028A51F /* Utilities.swift */; };
 		9ECB140826E58C9800B9EF4F /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9ECC6824270E8ADE00D4E771 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 9ECC6823270E8ADE00D4E771 /* Shimmer */; };
 		9EF0B51A26EAFC280077FA52 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EF0B51926EAFC280077FA52 /* WeatherView.swift */; };
 		9EF40D9126F579A20068C377 /* loading_anim.json in Resources */ = {isa = PBXBuildFile; fileRef = 9EF40D9026F579A20068C377 /* loading_anim.json */; };
 		9EF8A26B2706A708000704AF /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1046807196FC6C10D1D752E9 /* Pods_ios.framework */; };
@@ -75,7 +76,7 @@
 		9E0BBD24270131AB00DFA4AB /* QuickDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickDetailView.swift; sourceTree = "<group>"; };
 		9E0BBD262701325900DFA4AB /* DailyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastView.swift; sourceTree = "<group>"; };
 		9E126DAA27054A2F0085DC76 /* AlertViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertViewModel.swift; sourceTree = "<group>"; };
-		9E24529B2706975C009D8A54 /* WeatherAlertDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAlertDetail.swift; sourceTree = "<group>"; };
+		9E24529B2706975C009D8A54 /* WeatherAlertDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAlertDetail.swift; sourceTree = "<group>"; tabWidth = 4; };
 		9E3F9B752702A780005496FC /* WeatherAlertListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAlertListView.swift; sourceTree = "<group>"; };
 		9E45190A26EEE13B00D9C15C /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
 		9E68A7FB26E97A9600DA7B3F /* CustomizationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationView.swift; sourceTree = "<group>"; };
@@ -93,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9ECC6824270E8ADE00D4E771 /* Shimmer in Frameworks */,
 				9EF8A26B2706A708000704AF /* Pods_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -270,6 +272,9 @@
 			dependencies = (
 			);
 			name = ios;
+			packageProductDependencies = (
+				9ECC6823270E8ADE00D4E771 /* Shimmer */,
+			);
 			productName = ios;
 			productReference = 7555FF7B242A565900829871 /* ios.app */;
 			productType = "com.apple.product-type.application";
@@ -298,6 +303,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				9ECC6822270E8ADE00D4E771 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -589,6 +597,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9ECC6822270E8ADE00D4E771 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9ECC6823270E8ADE00D4E771 /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9ECC6822270E8ADE00D4E771 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

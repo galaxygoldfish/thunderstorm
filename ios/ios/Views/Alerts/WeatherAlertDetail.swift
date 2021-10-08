@@ -1,5 +1,6 @@
 import shared
 import SwiftUI
+import Lottie
 
 struct WeatherAlertDetail: View {
     
@@ -40,43 +41,54 @@ struct WeatherAlertDetail: View {
             }
             .padding(.top, 25)
             .padding(.bottom, 20)
-                AlertDetailList(alertFields: alertFields!)
-            }
+            AlertDetailList(alertFields: alertFields)
         }
         .navigationTitle("")
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
     }
+    
 }
 
 struct AlertDetailList: View {
-    let alertFields: [String]
+    let alertFields: [String?]
     @EnvironmentObject var viewModel: AlertViewModel
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
                 ForEach(0...alertFields.count, id: \.self) { index in
                     if (alertFields[index + 1] != nil || alertFields[index + 1] != "") {
-                        VStack(alignment: .leading) {
-                            Text(
-                                LocalizedStringKey(
-                                    viewModel.alertDetailKeys[index]
-                                )
-                            )
-                                .font(.custom(ManropeBold, size: 20))
-                            
-                            Text(alertFields[index + 1]!)
-                                .font(.custom(ManropeRegular, size: 18))
-                        }
-                        .frame(width: .infinity, alignment: .leading)
-                        .padding(.leading, 15)
-                        .padding(.trailing, 20)
-                        .padding(.bottom, 10)
+                        AlertDetailItem(
+                            index: index,
+                            alertFields: alertFields
+                        )
                     }
                 }
             }
             .frame(width: .infinity)
+        }
     }
 }
 
-
+struct AlertDetailItem: View {
+    let index: Int
+    let alertFields: [String?]
+    @EnvironmentObject var viewModel: AlertViewModel
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(
+                LocalizedStringKey(
+                    viewModel.alertDetailKeys[index]
+                )
+            )
+                .font(.custom(ManropeBold, size: 20))
+            
+            Text(alertFields[index + 1]!)
+                .font(.custom(ManropeRegular, size: 18))
+        }
+        .frame(width: .infinity, alignment: .leading)
+        .padding(.leading, 15)
+        .padding(.trailing, 20)
+        .padding(.bottom, 10)
+    }
+}

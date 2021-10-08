@@ -21,7 +21,6 @@ struct WeatherView: View {
                                 .padding(.leading, 20)
                         }
                         Spacer()
-                        
                         HStack {
                             if (viewModel.weatherAlertAvailable) {
                                 NavigationLink(
@@ -73,7 +72,13 @@ struct WeatherView: View {
                         WeatherCreditFooter()
                     }
                 } else {
-                    FullscreenPlaceholder()
+                    Spacer()
+                    HStack(alignment: .center) {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    Spacer()
                 }
             }
             .navigationBarBackButtonHidden(true)
