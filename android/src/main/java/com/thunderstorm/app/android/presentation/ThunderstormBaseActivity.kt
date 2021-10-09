@@ -16,18 +16,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.theme.ThunderstormTheme
+import com.thunderstorm.app.android.view.CityListView
 import com.thunderstorm.app.android.view.SettingsView
 import com.thunderstorm.app.android.view.WeatherView
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
 import com.thunderstorm.app.android.view.WelcomeView
 import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
 import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
-import com.thunderstorm.app.android.viewmodel.SettingsViewModel
-import com.thunderstorm.app.android.viewmodel.SetupViewModel
-import com.thunderstorm.app.android.viewmodel.WeatherAlertViewModel
-import com.thunderstorm.app.android.viewmodel.WeatherViewModel
+import com.thunderstorm.app.android.viewmodel.*
 import com.thunderstorm.app.database.datastore.DataStore
-import com.thunderstorm.app.model.weather.WeatherDataResult
 
 object NavigationDestination {
     const val WelcomeView = "welcome"
@@ -36,6 +33,7 @@ object NavigationDestination {
     const val AlertView = "alert"
     const val AlertDetailView = "alertdetails"
     const val SettingsView = "settings"
+    const val CityListView = "cities"
 }
 
 @ExperimentalPagerApi
@@ -48,6 +46,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
     private val weatherViewModel: WeatherViewModel by viewModels()
     private val weatherAlertViewModel: WeatherAlertViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
+    private val cityListViewModel: CityListViewModel by viewModels()
 
     @ExperimentalAnimationApi
     @ExperimentalFoundationApi
@@ -114,6 +113,12 @@ class ThunderstormBaseActivity : ComponentActivity() {
                     SettingsView(
                         navController = navigationController,
                         viewModel = settingsViewModel
+                    )
+                }
+                composable(NavigationDestination.CityListView) {
+                    CityListView(
+                        viewModel = cityListViewModel,
+                        navController = navigationController
                     )
                 }
             }

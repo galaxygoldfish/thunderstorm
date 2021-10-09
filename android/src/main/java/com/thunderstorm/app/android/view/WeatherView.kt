@@ -61,7 +61,7 @@ fun WeatherView(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    
+                    navController.navigate(NavigationDestination.CityListView)
                 },
                 content = {
                     Icon(
@@ -72,7 +72,8 @@ fun WeatherView(
                     )
                 },
                 shape = RoundedCornerShape(10.dp),
-                backgroundColor = colorResource(id = R.color.thunderstorm_accent_color)
+                backgroundColor = colorResource(id = R.color.thunderstorm_accent_color),
+                modifier = Modifier.size(50.dp)
             )
         }
     ) {

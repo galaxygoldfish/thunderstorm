@@ -8,86 +8,97 @@ struct WeatherView: View {
     
     var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
-                if (viewModel.currentCityName != nil) {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(viewModel.currentCityName!)
-                                .font(.custom(TexGyreHerosBold, size: 40))
-                                .padding(.top, 20)
-                                .padding(.leading, 20)
-                            Text(viewModel.currentCityRegion!)
-                                .font(.custom(ManropeRegular, size: 14))
-                                .padding(.leading, 20)
-                        }
-                        Spacer()
+            ZStack(alignment: .bottomTrailing) {
+                VStack(alignment: .leading) {
+                    if (viewModel.currentCityName != nil) {
                         HStack {
-                            if (viewModel.weatherAlertAvailable) {
-                                NavigationLink(
-                                    destination: WeatherAlertListView()
-                                        .environmentObject(
-                                            AlertViewModel(cityUrl: viewModel.cityServiceUrl!)
-                                        )
+                            VStack(alignment: .leading) {
+                                Text(viewModel.currentCityName!)
+                                    .font(.custom(TexGyreHerosBold, size: 40))
+                                    .padding(.top, 20)
+                                    .padding(.leading, 20)
+                                Text(viewModel.currentCityRegion!)
+                                    .font(.custom(ManropeRegular, size: 14))
+                                    .padding(.leading, 20)
+                            }
+                            Spacer()
+                            HStack {
+                                if (viewModel.weatherAlertAvailable) {
+                                    NavigationLink(
+                                        destination: WeatherAlertListView()
+                                            .environmentObject(
+                                                AlertViewModel(cityUrl: viewModel.cityServiceUrl!)
+                                            )
+                                    ) {
+                                        Image("WarningIcon")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 24, height: 24)
+                                            .padding(.trailing, 15)
+                                            .foregroundColor(Color("AccentColor"))
+                                    }
+                                }
+                                Button(
+                                    action: {
+                                        
+                                    }
                                 ) {
-                                    Image("WarningIcon")
+                                    Image("SettingsIcon")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: 24, height: 24)
                                         .padding(.trailing, 15)
-                                        .foregroundColor(Color("AccentColor"))
                                 }
-                            }
-                            Button(
-                                action: {
-                                    
-                                }
-                            ) {
-                                Image("SettingsIcon")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 24, height: 24)
-                                    .padding(.trailing, 15)
                             }
                         }
+                        .frame(width: .infinity, alignment: .leading)
+                    }
+                    if (viewModel.currentWeatherData != nil) {
+                        let currentWeatherData = viewModel.currentWeatherData!
+                        ScrollView(showsIndicators: false) {
+                            CurrentWeatherView(
+                                weatherData: currentWeatherData,
+                                weatherIcon: viewModel.currentWeatherIcon!
+                            )
+                            HourlyForecastView(
+                                weatherData: currentWeatherData
+                            )
+                            QuickDetailView(
+                                weatherData: currentWeatherData
+                            )
+                            DailyForecastView(
+                                weatherData: currentWeatherData
+                            )
+                            WeatherCreditFooter()
+                        }
+                    } else {
+                        Spacer()
+                        HStack(alignment: .center) {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        Spacer()
+                    }
+                }
+                .navigationBarBackButtonHidden(true)
+                .navigationTitle("")
+                .navigationBarHidden(true)
+                Button(
+                    action: {
                         
                     }
-                    .frame(width: .infinity, alignment: .leading)
+                ) {
+                    Image("CitiesIcon")
+                        .colorMultiply(Color("AccentColorReverse"))
+                        .padding(10)
                 }
-                if (viewModel.currentWeatherData != nil) {
-                    let currentWeatherData = viewModel.currentWeatherData!
-                    ScrollView(showsIndicators: false) {
-                        CurrentWeatherView(
-                            weatherData: currentWeatherData,
-                            weatherIcon: viewModel.currentWeatherIcon!
-                        )
-                        HourlyForecastView(
-                            weatherData: currentWeatherData
-                        )
-                        QuickDetailView(
-                            weatherData: currentWeatherData
-                        )
-                        DailyForecastView(
-                            weatherData: currentWeatherData
-                        )
-                        WeatherCreditFooter()
-                    }
-                } else {
-                    Spacer()
-                    HStack(alignment: .center) {
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
-                    Spacer()
-                }
+                .background(Color("AccentColor"))
+                .cornerRadius(10)
+                .padding(.bottom, 15)
+                .padding(.trailing, 15)
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationTitle("")
-            .navigationBarHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationTitle("")
-        .navigationBarHidden(true)
     }
 }
 
