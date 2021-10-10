@@ -41,7 +41,9 @@ struct WeatherAlertDetail: View {
             }
             .padding(.top, 25)
             .padding(.bottom, 20)
-            AlertDetailList(alertFields: alertFields)
+            AlertDetailList(
+                alertFields: alertFields
+            )
         }
         .navigationTitle("")
         .navigationBarHidden(true)

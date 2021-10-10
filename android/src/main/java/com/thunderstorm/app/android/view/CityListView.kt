@@ -10,6 +10,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
@@ -87,7 +88,8 @@ fun CityListItem(
             .copy(0.5F)
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Column(
                 modifier = Modifier.padding(top = 10.dp, start = 15.dp)
@@ -115,20 +117,13 @@ fun CityListItem(
                     )
                 }
             }
-            Column {
-                Image(
-                    painter = painterResource(id = cityIcon),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .padding(end = 15.dp, top = 10.dp, bottom = 10.dp)
-                )
-                Text(
-                    text = cityDetails.weatherResponse.current.condition.text,
-                    style = MaterialTheme.typography.body2,
-                    fontSize = 17.sp
-                )
-            }
+            Image(
+                painter = painterResource(id = cityIcon),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(end = 15.dp, top = 10.dp, bottom = 10.dp)
+                    .size(110.dp)
+            )
         }
     }
 }

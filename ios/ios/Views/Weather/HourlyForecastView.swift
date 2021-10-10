@@ -6,9 +6,9 @@ struct HourlyForecastView: View {
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack {
-                ForEach(1...weatherData.forecast.forecastDay[0].hourDetails.count, id: \.self) { item in
+                ForEach(weatherData.forecast.forecastDay[0].hourDetails, id: \.self) { item in
                     processHourlyListItem(
-                        weatherData: weatherData.forecast.forecastDay[0].hourDetails[item - 1]
+                        weatherData: item
                     )
                 }
                 ZStack(alignment: .top) {
@@ -17,8 +17,9 @@ struct HourlyForecastView: View {
                         .opacity(0.5)
                     VStack {
                         let intermediateWeather = weatherData.forecast.forecastDay[1].hourDetails[0].localTime
-                        Text("\(intermediateWeather.split(separator: "-")[1]) / " +
-                             "\(intermediateWeather.split(separator: "-")[2].split(separator: " ")[0])"
+                        Text(
+                            "\(intermediateWeather.split(separator: "-")[1]) / " +
+                            "\(intermediateWeather.split(separator: "-")[2].split(separator: " ")[0])"
                         )
                             .font(.custom(ManropeSemiBold, size: 15))
                             .padding(.top, 16)
@@ -32,9 +33,9 @@ struct HourlyForecastView: View {
                     }
                 }
                 .padding(.trailing, 10)
-                ForEach(0...weatherData.forecast.forecastDay[1].hourDetails.count, id: \.self) { item in
+                ForEach(weatherData.forecast.forecastDay[1].hourDetails, id: \.self) { item in
                     HourlyListItem(
-                        weatherData: weatherData.forecast.forecastDay[0].hourDetails[item]
+                        weatherData: item
                     )
                 }
             }
@@ -57,11 +58,16 @@ func processHourlyListItem(weatherData: HourWeatherObject) -> HourlyListItem? {
     let currentAMPM = currentDateFull.split(separator: " ")[1]
     if (
         currentAMPM == targetAMPM &&
-        currentDateFull.split(separator: " ")[0] <= targetDateFull.split(separator: " ")[0]
+        targetDateFull.split(separator: " ")[0] >= currentDateFull.split(separator: " ")[0]
     ) {
-        if (targetDateFull != "12 \(currentAMPM)") {
+        if ((currentAMPM == "AM" && targetDateFull != "12 \(currentAMPM)") ||
+            (targetDateFull != "12 \(currentAMPM)")
+        ) {
             viewOrNil = HourlyListItem(weatherData: weatherData)
         }
+    }
+    if (currentAMPM == "AM" && targetAMPM == "PM") {
+        viewOrNil = HourlyListItem(weatherData: weatherData)
     }
     return viewOrNil
 }

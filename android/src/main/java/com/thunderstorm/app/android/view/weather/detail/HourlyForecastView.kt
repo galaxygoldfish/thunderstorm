@@ -148,6 +148,14 @@ private fun ProcessHourListItem(
     context: Context,
     dataStore: DataStore
 ) {
+    @Composable
+    fun hourListItem() {
+        HourlyListItem(
+            weatherData = item,
+            context = context,
+            dataStore = dataStore
+        )
+    }
     val usTimeFormat = SimpleDateFormat("h a", Locale.getDefault())
     val militaryTimeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     val targetTimeHour = usTimeFormat.format(militaryTimeFormat.parse(item.localTime.split(" ")[1])!!)
@@ -158,13 +166,14 @@ private fun ProcessHourListItem(
         targetAMPM == currentAMPM &&
         currentTimeHour.split(" ")[0].toInt() <= targetTimeHour.split(" ")[0].toInt()
     ) {
-        if (targetTimeHour != "12 $currentAMPM") {
-            HourlyListItem(
-                weatherData = item,
-                context = context,
-                dataStore = dataStore
-            )
+        if ((currentAMPM == "AM" && targetTimeHour != "12 $currentAMPM") ||
+            (targetTimeHour != "12 $currentAMPM")
+        ) {
+            hourListItem()
         }
+    }
+    if (currentAMPM == "AM" && targetAMPM == "PM") {
+        hourListItem()
     }
 }
 
