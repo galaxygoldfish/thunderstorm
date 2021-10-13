@@ -1,6 +1,7 @@
 package com.thunderstorm.app.android.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -15,20 +16,20 @@ import kotlinx.coroutines.launch
 
 class CityListViewModel : ViewModel() {
 
-    val cityList: MutableState<MutableList<SavedCityItem>> = mutableStateOf(mutableListOf())
+    private val cityListInternal = mutableListOf<SavedCityItem>()
+    val cityList: MutableState<MutableList<SavedCityItem>> = mutableStateOf(cityListInternal)
 
     fun loadSavedCities(context: Context) {
         val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
-        val savedCities = database.cityStoreQueries.getAllCities().executeAsList()
+        val savedCities = database.cityStoreQueries.getAllCities()
         val asyncScope = CoroutineScope(Dispatchers.IO)
         val mainScope = CoroutineScope(Dispatchers.Main)
         val weatherAPIClient = NetworkingClient()
-        val cityListTemp = cityList.value
-        savedCities.forEach { city ->
+        savedCities.executeAsList().forEach { city ->
             asyncScope.launch {
                 val weatherResponse = weatherAPIClient.getWeatherDataForCity(city.serviceUrl)
                 mainScope.launch {
-                    cityListTemp.add(
+                    cityListInternal.add(
                         SavedCityItem(
                             cityID = city.cityID,
                             cityName = city.cityName.split(",")[0],
@@ -38,7 +39,6 @@ class CityListViewModel : ViewModel() {
                             weatherResponse = weatherResponse
                         )
                     )
-                    cityList.value = cityListTemp
                 }
             }
         }

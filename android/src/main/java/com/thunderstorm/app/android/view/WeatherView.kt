@@ -40,6 +40,9 @@ import com.thunderstorm.app.android.view.weather.detail.HourlyForecastView
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.valentinilk.shimmer.shimmer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,7 +56,17 @@ fun WeatherView(
     viewModel: WeatherViewModel,
     navController: NavController
 ) {
-    viewModel.loadDefaultCity(navController.context)
+    viewModel.apply {
+        loadDefaultCity(navController.context)
+        currentCityServiceUrl.observeForever {
+            if (it != null) {
+                getCurrentData(
+                    context = navController.context,
+                    cityNameJson = it
+                )
+            }
+        }
+    }
     val scaffoldState = rememberScaffoldState()
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -85,17 +98,21 @@ fun WeatherView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    Text(
-                        text = viewModel.currentCityName.value.toString(),
-                        modifier = Modifier.padding(top = 20.dp, start = 20.dp),
-                        style = MaterialTheme.typography.h3
-                    )
-                    Text(
-                        text = viewModel.currentRegionName.value.toString(),
-                        style = MaterialTheme.typography.body1,
-                        modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
-                        fontSize = 14.sp
-                    )
+                    viewModel.currentCityName.value?.toString()?.let { city ->
+                        Text(
+                            text = city,
+                            modifier = Modifier.padding(top = 20.dp, start = 20.dp),
+                            style = MaterialTheme.typography.h3
+                        )
+                    }
+                    viewModel.currentRegionName.value?.toString()?.let { region ->
+                        Text(
+                            text = region,
+                            style = MaterialTheme.typography.body1,
+                            modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
+                            fontSize = 14.sp
+                        )
+                    }
                 }
                 Row(
                     modifier = Modifier.padding(top = 20.dp, end = 15.dp)

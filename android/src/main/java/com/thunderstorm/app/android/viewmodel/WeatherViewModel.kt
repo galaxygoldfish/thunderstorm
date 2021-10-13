@@ -25,19 +25,23 @@ class WeatherViewModel : ViewModel() {
     val weatherAlertAvailable: MutableState<Boolean> = mutableStateOf(false)
     val showWeatherData: MutableState<Boolean> = mutableStateOf(false)
 
+    private val asyncScope = CoroutineScope(Dispatchers.IO + Job())
+    private val mainScope = CoroutineScope(Dispatchers.Main + Job())
+
     fun loadDefaultCity(context: Context) {
-        val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
-        val cityName = database.cityStoreQueries.getAllCities().executeAsList()[0]
-        currentCityName.value = cityName.cityName.split(",")[0]
-        currentRegionName.value = cityName.stateName
-        currentCityServiceUrl.value = cityName.serviceUrl
-        getCurrentData(context, cityName.serviceUrl)
+        asyncScope.launch {
+            val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
+            val cityName = database.cityStoreQueries.getAllCities().executeAsList()[0]
+            mainScope.launch {
+                currentCityName.value = cityName.cityName.split(",")[0]
+                currentRegionName.value = cityName.stateName
+                currentCityServiceUrl.value = cityName.serviceUrl
+            }
+        }
     }
 
-    private fun getCurrentData(context: Context, cityNameJson: String) {
+    fun getCurrentData(context: Context, cityNameJson: String) {
         val weatherAPIClient = NetworkingClient()
-        val asyncScope = CoroutineScope(Dispatchers.IO + Job())
-        val mainScope = CoroutineScope(Dispatchers.Main + Job())
         try {
             asyncScope.launch {
                 val weatherResponse = weatherAPIClient.getWeatherDataForCity(cityNameJson)
