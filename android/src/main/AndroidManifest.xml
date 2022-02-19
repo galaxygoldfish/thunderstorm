@@ -2,15 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.thunderstorm.app.android">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher_icon"
+        android:label="@string/thunderstorm_launcher_name"
+        android:roundIcon="@mipmap/ic_launcher_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Thunderstorm"
-        android:label="@string/thunderstorm_launcher_name"
-        android:icon="@mipmap/ic_launcher_icon"
-        android:roundIcon="@mipmap/ic_launcher_icon"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".presentation.ThunderstormBaseActivity"

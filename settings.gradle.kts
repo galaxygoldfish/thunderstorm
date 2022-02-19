@@ -13,3 +13,4 @@ pluginManagement {
 rootProject.name = "Thunderstorm"
 include(":android")
 include(":shared")
+include(":wear")

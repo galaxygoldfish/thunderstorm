@@ -37,7 +37,6 @@ struct WeatherAlertDetail: View {
                 }
                 Text(LocalizedStringKey("alert_detail_header_title"))
                     .font(.custom(TexGyreHerosBold, size: 22))
-                    .padding(.leading, 15)
             }
             .padding(.top, 25)
             .padding(.bottom, 20)
