@@ -48,8 +48,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
     private val settingsViewModel: SettingsViewModel by viewModels()
     private val cityListViewModel: CityListViewModel by viewModels()
 
-    @ExperimentalAnimationApi
-    @ExperimentalFoundationApi
+    @OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
