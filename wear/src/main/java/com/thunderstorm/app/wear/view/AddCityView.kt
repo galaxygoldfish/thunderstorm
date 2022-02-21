@@ -3,37 +3,27 @@ package com.thunderstorm.app.wear.view
 import android.app.RemoteInput
 import android.content.Intent
 import android.os.Bundle
-import android.view.inputmethod.EditorInfo
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.TabRowDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.wear.compose.material.*
 import androidx.wear.input.RemoteInputIntentHelper
 import com.google.accompanist.pager.*
-import com.thunderstorm.app.wear.NavigationDestination
 import com.thunderstorm.app.wear.R
 import com.thunderstorm.app.wear.utilities.getViewModel
 import com.thunderstorm.app.wear.viewmodel.AddCityViewModel
@@ -192,41 +182,52 @@ fun CityResultView(
             PositionIndicator(scalingLazyListState = lazyColumnState)
         }
     ) {
-        ScalingLazyColumn(
-            state = lazyColumnState,
-            modifier = Modifier.padding(end = 5.dp)
-        ) {
-            itemsIndexed(viewModel.cityResultList) { index, item ->
-                Row(
-                    modifier = Modifier
-                        .padding(top = 2.dp)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(15.dp))
-                        .background(
-                            color = MaterialTheme.colors.primaryVariant,
-                            shape = RoundedCornerShape(15.dp)
-                        )
-                        .clickable {
-                                   
-                        },
-                    verticalAlignment = Alignment.CenterVertically
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (viewModel.isLoadingCityResult) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            } else {
+                ScalingLazyColumn(
+                    state = lazyColumnState,
+                    modifier = Modifier.padding(end = 5.dp)
                 ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_gps_location),
-                        contentDescription = stringResource(id = R.string.ic_gps_location_content_desc),
-                        modifier = Modifier.padding(10.dp)
-                    )
-                    Column(
-                        modifier = Modifier.padding(top = 5.dp, bottom = 7.dp, end = 7.dp)
-                    ) {
-                        Text(
-                            text = item.name,
-                            style = MaterialTheme.typography.body2
-                        )
-                        Text(
-                            text = item.region,
-                            style = MaterialTheme.typography.body1
-                        )
+                    itemsIndexed(viewModel.cityResultList) { index, item ->
+                        Row(
+                            modifier = Modifier
+                                .padding(top = 2.dp)
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(15.dp))
+                                .background(
+                                    color = MaterialTheme.colors.primaryVariant,
+                                    shape = RoundedCornerShape(15.dp)
+                                )
+                                .clickable {
+                                    viewModel.apply {
+                                        selectedCity = item
+                                        navigateToWeather(navController)
+                                    }
+                                },
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_gps_location),
+                                contentDescription = stringResource(id = R.string.ic_gps_location_content_desc),
+                                modifier = Modifier.padding(10.dp)
+                            )
+                            Column(
+                                modifier = Modifier.padding(top = 5.dp, bottom = 7.dp, end = 7.dp)
+                            ) {
+                                Text(
+                                    text = item.name,
+                                    style = MaterialTheme.typography.body2
+                                )
+                                Text(
+                                    text = item.region,
+                                    style = MaterialTheme.typography.body1
+                                )
+                            }
+                        }
                     }
                 }
             }
