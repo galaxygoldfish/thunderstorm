@@ -14,11 +14,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.wear.compose.material.Button
-import androidx.wear.compose.material.MaterialTheme
-import androidx.wear.compose.material.Text
+import androidx.wear.compose.material.*
+import com.thunderstorm.app.wear.NavigationDestination
 import com.thunderstorm.app.wear.R
 
+@ExperimentalWearMaterialApi
 @Composable
 fun WelcomeView(navController: NavController) {
     Column {
@@ -40,6 +40,7 @@ fun WelcomeView(navController: NavController) {
         )
         Button(
             onClick = {
+                navController.navigate(NavigationDestination.AddCityView)
             },
             content = @Composable {
                 Text(

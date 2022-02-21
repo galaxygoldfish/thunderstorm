@@ -4,6 +4,7 @@ plugins {
 }
 
 dependencies {
+    implementation("androidx.wear:wear-input:1.1.0")
     wearApp(project(":wear"))
     implementation(project(":shared"))
     implementation("androidx.core:core-ktx:1.7.0")
@@ -15,14 +16,16 @@ dependencies {
     implementation("androidx.wear.compose:compose-material:1.0.0-alpha16")
     implementation("androidx.wear.compose:compose-foundation:1.0.0-alpha16")
     implementation("androidx.wear.compose:compose-navigation:1.0.0-alpha16")
+    implementation("com.google.accompanist:accompanist-pager:0.20.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.24.2-alpha")
 }
 
 android {
-    compileSdkVersion(32)
+    compileSdk = 32
     defaultConfig {
         applicationId = "com.thunderstorm.app.wear"
-        minSdkVersion(26)
-        targetSdkVersion(32)
+        minSdk = 26
+        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
         vectorDrawables {
@@ -35,11 +38,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         compose = true

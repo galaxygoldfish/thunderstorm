@@ -10,11 +10,13 @@ import androidx.wear.compose.navigation.SwipeDismissableNavHost
 import androidx.wear.compose.navigation.composable
 import androidx.wear.compose.navigation.rememberSwipeDismissableNavController
 import com.thunderstorm.app.android.theme.ThunderstormTheme
+import com.thunderstorm.app.wear.view.AddCityView
 import com.thunderstorm.app.wear.view.WelcomeView
 
 
 object NavigationDestination {
     const val WelcomeView = "welcome"
+    const val AddCityView = "add-city"
 }
 
 @OptIn(ExperimentalWearMaterialApi::class)
@@ -41,6 +43,9 @@ class ThunderstormBaseActivity : ComponentActivity() {
         ) {
             composable(NavigationDestination.WelcomeView) {
                 WelcomeView(navController = navigationController)
+            }
+            composable(NavigationDestination.AddCityView) {
+                AddCityView(navController = navigationController)
             }
         }
     }

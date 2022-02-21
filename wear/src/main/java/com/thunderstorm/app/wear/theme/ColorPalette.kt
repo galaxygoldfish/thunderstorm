@@ -7,7 +7,7 @@ import androidx.wear.compose.material.Colors
 @Composable
 fun colors() = Colors(
     primary = Color.White,
-    primaryVariant = Color.White,
+    primaryVariant = Color(0XFF252525),
     secondary = Color.White,
     background = Color.Black,
     surface = Color.Black,

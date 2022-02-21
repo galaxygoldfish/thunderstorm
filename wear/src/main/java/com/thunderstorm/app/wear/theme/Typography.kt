@@ -38,15 +38,21 @@ fun typography() = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 20.sp
     ),
+    title3 = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp
+    ),
     body1 = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontSize = 15.sp
     ),
     body2 = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 17.sp
+        fontSize = 17.sp,
+        letterSpacing = 0.sp
     ),
     button = TextStyle(
         fontFamily = Manrope,
