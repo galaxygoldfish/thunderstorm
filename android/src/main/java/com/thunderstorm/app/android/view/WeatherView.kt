@@ -1,5 +1,6 @@
 package com.thunderstorm.app.android.view
 
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -19,9 +20,11 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.D
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,10 +36,10 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.view.weather.*
-import com.thunderstorm.app.android.view.weather.detail.AstronomyDetailCard
-import com.thunderstorm.app.android.view.weather.detail.CurrentWeatherView
-import com.thunderstorm.app.android.view.weather.detail.DailyForecastView
-import com.thunderstorm.app.android.view.weather.detail.HourlyForecastView
+import com.thunderstorm.app.android.theme.weather.detail.AstronomyDetailCard
+import com.thunderstorm.app.android.theme.weather.detail.CurrentWeatherView
+import com.thunderstorm.app.android.theme.weather.detail.DailyForecastView
+import com.thunderstorm.app.android.theme.weather.detail.HourlyForecastView
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.valentinilk.shimmer.shimmer
@@ -56,14 +59,14 @@ fun WeatherView(
     viewModel: WeatherViewModel,
     navController: NavController
 ) {
-    viewModel.apply {
-        loadDefaultCity(navController.context)
-        currentCityServiceUrl.observeForever {
-            if (it != null) {
-                getCurrentData(
-                    context = navController.context,
-                    cityNameJson = it
-                )
+    LaunchedEffect(true) {
+        viewModel.apply {
+            if (currentCityName == null) {
+                loadDefaultCity(navController.context)
+            }
+            if (viewModel.forecastWeatherData.value == null) {
+                Log.e("d", "d")
+                getCurrentData(navController.context, "seattle-us")
             }
         }
     }
@@ -98,14 +101,14 @@ fun WeatherView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    viewModel.currentCityName.value?.toString()?.let { city ->
+                    viewModel.currentCityName?.let { city ->
                         Text(
                             text = city,
                             modifier = Modifier.padding(top = 20.dp, start = 20.dp),
                             style = MaterialTheme.typography.h3
                         )
                     }
-                    viewModel.currentRegionName.value?.toString()?.let { region ->
+                    viewModel.currentRegionName?.let { region ->
                         Text(
                             text = region,
                             style = MaterialTheme.typography.body1,
@@ -121,7 +124,7 @@ fun WeatherView(
                         IconButton(
                             onClick = {
                                 navController.navigate(
-                                    """${NavigationDestination.AlertView}/${viewModel.currentCityServiceUrl.value}"""
+                                    """${NavigationDestination.AlertView}/${viewModel.currentCityServiceUrl}"""
                                 )
                             },
                             content = {
@@ -148,33 +151,18 @@ fun WeatherView(
                     )
                 }
             }
-            val dataStore = DataStore(navController.context as ThunderstormBaseActivity)
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {
-                CurrentWeatherView(
-                    viewModel = viewModel,
-                    dataStore = dataStore
-                )
-                HourlyForecastView(
-                    viewModel = viewModel,
-                    context = navController.context,
-                    dataStore = dataStore
-                )
-                AstronomyDetailCard(
-                    viewModel = viewModel //!
-                )
-                QuickDetailView(
-                    viewModel = viewModel,
-                    dataStore = dataStore
-                )
-                DailyForecastView(
-                    viewModel = viewModel,
-                    context = navController.context,
-                    dataStore = dataStore
-                )
+                val activity = navController.context as ThunderstormBaseActivity
+                CurrentWeatherView(viewModel, activity)
+                HourlyForecastView(viewModel, activity)
+                AstronomyDetailCard(viewModel)
+                QuickDetailView(viewModel, activity)
+                DailyForecastView(viewModel, activity)
                 WeatherCreditFooter()
             }
         }

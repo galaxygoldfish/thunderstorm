@@ -1,5 +1,6 @@
-package com.thunderstorm.app.android.view.weather.detail
+package com.thunderstorm.app.android.theme.weather.detail
 
+import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -23,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,11 +47,12 @@ import kotlin.math.roundToInt
 @Composable
 fun HourlyForecastView(
     viewModel: WeatherViewModel,
-    context: Context,
-    dataStore: DataStore
+    context: Activity
 ) {
     val weatherData = viewModel.forecastWeatherData.value
-    fun getWeatherData(day: Int): List<HourWeatherObject>? = weatherData?.forecast?.forecastDay?.get(day)?.hourDetails
+    val dataStore = DataStore(context)
+    fun getWeatherData(day: Int): List<HourWeatherObject>?
+        = weatherData?.forecast?.forecastDay?.get(day)?.hourDetails
     Column {
         Box {
             val scrollState = rememberScrollState()

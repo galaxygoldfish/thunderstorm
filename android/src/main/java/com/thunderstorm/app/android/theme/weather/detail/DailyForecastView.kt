@@ -1,5 +1,6 @@
-package com.thunderstorm.app.android.view.weather.detail
+package com.thunderstorm.app.android.theme.weather.detail
 
+import android.app.Activity
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -39,12 +41,9 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
-fun DailyForecastView(
-    viewModel: WeatherViewModel,
-    context: Context,
-    dataStore: DataStore
-) {
+fun DailyForecastView(viewModel: WeatherViewModel, context: Activity) {
     val weatherData = viewModel.forecastWeatherData.value
+    val dataStore = DataStore(context)
     Column(
         modifier = Modifier
             .fillMaxWidth()

@@ -26,7 +26,9 @@ class NetworkingClient {
     ) {
         if (query != null) {
             CoroutineScope(Dispatchers.Default).launch {
-                val result = httpClient.get<List<SearchCityResult>>("""${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_SEARCH}""") {
+                val result = httpClient.get<List<SearchCityResult>>(
+                    """${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_SEARCH}"""
+                ) {
                     parameter("q", query)
                     parameter("key", Keystore.WeatherAPIKey)
                 }
@@ -38,7 +40,9 @@ class NetworkingClient {
     }
 
     suspend fun getWeatherDataForCity(query: String) : WeatherDataResult {
-        return httpClient.get("""${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_FORECAST}""") {
+        return httpClient.get(
+            """${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_FORECAST}"""
+        ) {
             parameter("q", query)
             parameter("key", Keystore.WeatherAPIKey)
             parameter("aqi", "yes")

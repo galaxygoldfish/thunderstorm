@@ -21,8 +21,8 @@ import com.thunderstorm.app.android.view.SettingsView
 import com.thunderstorm.app.android.view.WeatherView
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
 import com.thunderstorm.app.android.view.WelcomeView
-import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
-import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
+import com.thunderstorm.app.android.theme.weather.alert.WeatherAlertDetail
+import com.thunderstorm.app.android.theme.weather.alert.WeatherAlertList
 import com.thunderstorm.app.android.viewmodel.*
 import com.thunderstorm.app.database.datastore.DataStore
 

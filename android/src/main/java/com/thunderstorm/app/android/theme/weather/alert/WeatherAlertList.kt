@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather.alert
+package com.thunderstorm.app.android.theme.weather.alert
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,7 +45,7 @@ fun WeatherAlertList(
         ActionBar(
             text = stringResource(id = R.string.alerts_actionbar_title),
             backAction = {
-                navController.navigate(NavigationDestination.WeatherView)
+                navController.popBackStack()
             }
         )
         LazyColumn(

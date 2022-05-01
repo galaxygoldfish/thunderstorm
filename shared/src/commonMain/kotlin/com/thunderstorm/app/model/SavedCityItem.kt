@@ -7,6 +7,5 @@ data class SavedCityItem(
     var cityName: String,
     var stateName: String,
     var countryName: String,
-    var serviceUrl: String,
-    var weatherResponse: WeatherDataResult
+    var serviceUrl: String
 )

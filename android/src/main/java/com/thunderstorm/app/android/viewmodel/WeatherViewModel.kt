@@ -2,7 +2,9 @@ package com.thunderstorm.app.android.viewmodel
 
 import android.content.Context
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.thunderstorm.app.ThunderstormDatabase
@@ -15,9 +17,9 @@ import kotlinx.coroutines.*
 
 class WeatherViewModel : ViewModel() {
 
-    val currentCityName: MutableLiveData<String> = MutableLiveData()
-    val currentRegionName: MutableLiveData<String> = MutableLiveData()
-    val currentCityServiceUrl: MutableLiveData<String> = MutableLiveData()
+    var currentCityName by mutableStateOf<String?>(null)
+    var currentRegionName by mutableStateOf<String?>(null)
+    var currentCityServiceUrl by mutableStateOf<String?>(null)
 
     val forecastWeatherData: MutableState<WeatherDataResult?> = mutableStateOf(null)
     val currentIconResource: MutableState<Int> = mutableStateOf(R.drawable.ic_cloudy_night)
@@ -25,17 +27,17 @@ class WeatherViewModel : ViewModel() {
     val weatherAlertAvailable: MutableState<Boolean> = mutableStateOf(false)
     val showWeatherData: MutableState<Boolean> = mutableStateOf(false)
 
-    private val asyncScope = CoroutineScope(Dispatchers.IO + Job())
-    private val mainScope = CoroutineScope(Dispatchers.Main + Job())
+    private val asyncScope = CoroutineScope(Dispatchers.Default)
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     fun loadDefaultCity(context: Context) {
         asyncScope.launch {
             val database = ThunderstormDatabase(DatabaseDriver(context).createDriver())
             val cityName = database.cityStoreQueries.getAllCities().executeAsList()[0]
             mainScope.launch {
-                currentCityName.value = cityName.cityName.split(",")[0]
-                currentRegionName.value = cityName.stateName
-                currentCityServiceUrl.value = cityName.serviceUrl
+                currentCityName = cityName.cityName.split(",")[0]
+                currentRegionName = cityName.stateName
+                currentCityServiceUrl = cityName.serviceUrl
             }
         }
     }
@@ -51,12 +53,11 @@ class WeatherViewModel : ViewModel() {
                         weatherResponse.current.condition.code
                     )
                     forecastWeatherData.value = weatherResponse
-                    delay(550L)
                     showWeatherData.value = true
                     weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
                 }
             }
-        } catch (exception: Exception) {
+        } catch (_: Exception) {
 
         }
     }

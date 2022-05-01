@@ -1,5 +1,6 @@
 package com.thunderstorm.app.android.view.weather
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
@@ -23,14 +25,13 @@ import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.DataStoreName
 import kotlin.math.roundToInt
 
 @Composable
-fun QuickDetailView(
-    viewModel: WeatherViewModel,
-    dataStore: DataStore
-) {
+fun QuickDetailView(viewModel: WeatherViewModel, context: Activity) {
     val weatherData = viewModel.forecastWeatherData.value
+    val dataStore = DataStore(context)
     Column(
         modifier = Modifier.padding(top = 10.dp)
     ) {

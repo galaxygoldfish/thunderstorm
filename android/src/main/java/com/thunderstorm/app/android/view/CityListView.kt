@@ -8,12 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -21,6 +20,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
@@ -29,7 +31,9 @@ import com.thunderstorm.app.android.viewmodel.CityListViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.DataStoreName
 import com.thunderstorm.app.model.SavedCityItem
+import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.networking.NetworkingClient
+import com.valentinilk.shimmer.shimmer
 import kotlin.math.roundToInt
 
 @ExperimentalPagerApi
@@ -39,24 +43,25 @@ fun CityListView(
     viewModel: CityListViewModel,
     navController: NavController
 ) {
+    LaunchedEffect(true) {
+        viewModel.loadSavedCities(navController.context)
+    }
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
         ActionBar(
             text = stringResource(id = R.string.city_list_actionbar_title),
             backAction = {
-                val listValueTemp = viewModel.cityList.value
-                listValueTemp.clear()
-                viewModel.cityList.value = listValueTemp
                 navController.popBackStack()
             }
         )
         LazyColumn(
             content = {
-                itemsIndexed(viewModel.cityList.value) { _, item ->
+                itemsIndexed(viewModel.savedCityList) { _, item ->
                     CityListItem(
                         cityDetails = item,
-                        context = navController.context
+                        context = navController.context,
+                        viewModel = viewModel
                     )
                 }
             }
@@ -69,23 +74,37 @@ fun CityListView(
 @Composable
 fun CityListItem(
     cityDetails: SavedCityItem,
-    context: Context
+    context: Context,
+    viewModel: CityListViewModel
 ) {
     val dataStore = DataStore(context = context as ThunderstormBaseActivity)
-    val cityIcon = context.getIconForNameAndCode(
-        cityDetails.weatherResponse.current.isDay,
-        cityDetails.weatherResponse.current.condition.code
-    )
+    var cityIcon by remember { mutableStateOf<Int?>(null) }
+    var weatherResponse by remember { mutableStateOf<WeatherDataResult?>(null) }
+    LaunchedEffect(true) {
+        viewModel.fetchDataForCard(cityDetails.serviceUrl).let {
+            weatherResponse = it
+            cityIcon = context.getIconForNameAndCode(
+                it.current.isDay,
+                it.current.condition.code
+            )
+        }
+    }
     Card(
         onClick = {
 
         },
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 20.dp, end = 20.dp, bottom = 10.dp),
+            .defaultMinSize(minHeight = 145.dp)
+            .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
+            .placeholder(
+                visible = weatherResponse == null,
+                shape = RoundedCornerShape(10.dp),
+                highlight = PlaceholderHighlight.shimmer()
+            ),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = colorResource(id = R.color.interface_gray)
-            .copy(0.5F)
+        backgroundColor = colorResource(id = R.color.interface_gray_alt)
+
     ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -101,7 +120,7 @@ fun CityListItem(
                 Text(
                     text = cityDetails.stateName
                 )
-                cityDetails.weatherResponse.current.apply {
+                weatherResponse?.current?.apply {
                     Text(
                         text = String.format(
                             stringResource(id = R.string.weather_temperature_template),
@@ -117,13 +136,15 @@ fun CityListItem(
                     )
                 }
             }
-            Image(
-                painter = painterResource(id = cityIcon),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(end = 15.dp, top = 10.dp, bottom = 10.dp)
-                    .size(110.dp)
-            )
+            cityIcon?.let {
+                Image(
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(end = 15.dp, top = 10.dp, bottom = 10.dp)
+                        .size(110.dp)
+                )
+            }
         }
     }
 }

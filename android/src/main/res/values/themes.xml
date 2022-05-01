@@ -5,7 +5,7 @@
         <item name="colorPrimaryDark">@color/thunderstorm_accent_color</item>
         <item name="colorAccent">@color/thunderstorm_accent_color</item>
         <item name="colorControlNormal">#FFFFFFFF</item>
-        <item name="android:statusBarColor" tools:targetApi="l">@android:color/white</item>
+        <item name="android:statusBarColor">@android:color/white</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>

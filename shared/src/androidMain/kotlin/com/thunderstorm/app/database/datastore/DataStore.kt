@@ -1,6 +1,7 @@
 package com.thunderstorm.app.database.datastore
 
 import android.app.Activity
+import android.content.Context
 import android.content.Context.MODE_PRIVATE
 
 val DataStoreName = "com.thunderstorm.app.preferences"
