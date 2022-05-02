@@ -18,11 +18,9 @@ class WeatherAlertViewModel : ViewModel() {
     fun fetchAllAlerts(cityToFetch: String) {
         currentCity.value = cityToFetch
         val weatherAPIClient = NetworkingClient()
-        val asyncScope = CoroutineScope(Dispatchers.IO + Job())
-        val mainScope = CoroutineScope(Dispatchers.Main + Job())
+        val asyncScope = CoroutineScope(Dispatchers.IO)
         asyncScope.launch {
-            val alertResult = weatherAPIClient.getWeatherDataForCity(cityToFetch)
-            mainScope.launch {
+            weatherAPIClient.getWeatherDataForCity(cityToFetch) { alertResult ->
                 weatherAlertList.value = alertResult.alerts.alert!!
             }
         }

@@ -36,7 +36,12 @@ class CityListViewModel : ViewModel() {
 
     suspend fun fetchDataForCard(cityName: String) : WeatherDataResult {
         val weatherAPIClient = NetworkingClient()
-        return weatherAPIClient.getWeatherDataForCity(cityName)
+        val completableDeferred = CompletableDeferred<WeatherDataResult>()
+        weatherAPIClient.getWeatherDataForCity(cityName) {
+            completableDeferred.complete(it)
+        }
+        return completableDeferred.await()
+
     }
 
 }

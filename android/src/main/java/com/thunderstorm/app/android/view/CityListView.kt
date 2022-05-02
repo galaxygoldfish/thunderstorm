@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavDeepLink
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
@@ -81,7 +82,7 @@ fun CityListView(
                 itemsIndexed(viewModel.savedCityList) { _, item ->
                     CityListItem(
                         cityDetails = item,
-                        context = navController.context,
+                        navController = navController,
                         viewModel = viewModel
                     )
                 }
@@ -95,16 +96,16 @@ fun CityListView(
 @Composable
 fun CityListItem(
     cityDetails: SavedCityItem,
-    context: Context,
-    viewModel: CityListViewModel
+    viewModel: CityListViewModel,
+    navController: NavController
 ) {
-    val dataStore = DataStore(context = context as ThunderstormBaseActivity)
+    val dataStore = DataStore(context = navController.context as ThunderstormBaseActivity)
     var cityIcon by remember { mutableStateOf<Int?>(null) }
     var weatherResponse by remember { mutableStateOf<WeatherDataResult?>(null) }
     LaunchedEffect(true) {
         viewModel.fetchDataForCard(cityDetails.serviceUrl).let {
             weatherResponse = it
-            cityIcon = context.getIconForNameAndCode(
+            cityIcon = navController.context.getIconForNameAndCode(
                 it.current.isDay,
                 it.current.condition.code
             )
@@ -112,7 +113,7 @@ fun CityListItem(
     }
     Card(
         onClick = {
-
+            navController.navigate("${NavigationDestination.WeatherView}/${cityDetails.serviceUrl}")
         },
         modifier = Modifier
             .fillMaxWidth()

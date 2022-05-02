@@ -1,6 +1,7 @@
 package com.thunderstorm.app.android.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,23 +39,28 @@ class WeatherViewModel : ViewModel() {
                 currentCityName = cityName.cityName.split(",")[0]
                 currentRegionName = cityName.stateName
                 currentCityServiceUrl = cityName.serviceUrl
+                getCurrentData(context)
             }
+
         }
     }
 
-    fun getCurrentData(context: Context, cityNameJson: String) {
+    fun getCurrentData(context: Context) {
         val weatherAPIClient = NetworkingClient()
         try {
             asyncScope.launch {
-                val weatherResponse = weatherAPIClient.getWeatherDataForCity(cityNameJson)
-                mainScope.launch {
-                    currentIconResource.value = context.getIconForNameAndCode(
-                        weatherResponse.current.isDay,
-                        weatherResponse.current.condition.code
-                    )
-                    forecastWeatherData.value = weatherResponse
-                    showWeatherData.value = true
-                    weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
+                currentCityServiceUrl?.let {
+                    weatherAPIClient.getWeatherDataForCity(it) { weatherResponse ->
+                        currentIconResource.value = context.getIconForNameAndCode(
+                            weatherResponse.current.isDay,
+                            weatherResponse.current.condition.code
+                        )
+                        forecastWeatherData.value = weatherResponse
+                        showWeatherData.value = true
+                        weatherAlertAvailable.value = weatherResponse.alerts.alert!!.isNotEmpty()
+                        currentCityName = weatherResponse.location.name.split(",")[0]
+                        currentRegionName = weatherResponse.location.region
+                    }
                 }
             }
         } catch (_: Exception) {

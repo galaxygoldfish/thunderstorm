@@ -13,7 +13,6 @@ import com.thunderstorm.app.model.SearchCityResult
 import com.thunderstorm.app.networking.NetworkingClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CityAddViewModel : ViewModel() {
@@ -43,7 +42,7 @@ class CityAddViewModel : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             city.apply {
                 val cityDatabase = ThunderstormDatabase(DatabaseDriver(context).createDriver())
-                cityDatabase.cityStoreQueries.insertNewCity(name, region, country, url)
+                cityDatabase.cityStoreQueries.insertNewCity(name, region, country, url!!)
             }
         }
         showDoneDialog = false

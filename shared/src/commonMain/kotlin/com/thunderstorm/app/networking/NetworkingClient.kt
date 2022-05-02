@@ -39,15 +39,23 @@ class NetworkingClient {
         }
     }
 
-    suspend fun getWeatherDataForCity(query: String) : WeatherDataResult {
-        return httpClient.get(
-            """${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_FORECAST}"""
-        ) {
-            parameter("q", query)
-            parameter("key", Keystore.WeatherAPIKey)
-            parameter("aqi", "yes")
-            parameter("days", 4)
-            parameter("alerts", "yes")
+    suspend fun getWeatherDataForCity(
+        query: String,
+        onResultAvailable: (WeatherDataResult) -> Unit
+    ) {
+        CoroutineScope(Dispatchers.Default).launch {
+            val result = httpClient.get<WeatherDataResult>(
+                """${WeatherAPIEndpoints.BASE_URL}${WeatherAPIEndpoints.EXTENSION_FORECAST}"""
+            ) {
+                parameter("q", query)
+                parameter("key", Keystore.WeatherAPIKey)
+                parameter("aqi", "yes")
+                parameter("days", 4)
+                parameter("alerts", "yes")
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                onResultAvailable.invoke(result)
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.thunderstorm.app.model.weather
 
+import com.thunderstorm.app.model.SearchCityResult
 import com.thunderstorm.app.model.weather.current.CurrentWeatherObject
 import com.thunderstorm.app.model.weather.forecast.ForecastWeatherObject
 import com.thunderstorm.app.model.weather.special.AlertWeatherObject
@@ -10,5 +11,6 @@ import kotlinx.serialization.Serializable
 data class WeatherDataResult(
     var current: CurrentWeatherObject,
     var forecast: ForecastWeatherObject,
-    var alerts: AlertWeatherResult
+    var alerts: AlertWeatherResult,
+    var location: SearchCityResult
 )

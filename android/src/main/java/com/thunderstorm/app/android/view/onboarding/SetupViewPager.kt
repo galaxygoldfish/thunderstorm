@@ -153,7 +153,7 @@ fun SetupViewPager(
                                 val cityDatabase = ThunderstormDatabase(DatabaseDriver(navController.context).createDriver())
                                 viewModel.apply {
                                     selectedCity.value?.apply {
-                                        cityDatabase.cityStoreQueries.insertNewCity(name, region, country, url)
+                                        cityDatabase.cityStoreQueries.insertNewCity(name, region, country, url!!)
                                     }
                                     dataStore.apply {
                                         putInteger("PREF_TEMP_UNITS", selectionTemperature.value)

@@ -35,6 +35,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
+import com.thunderstorm.app.android.utils.getViewModel
 import com.thunderstorm.app.android.view.weather.*
 import com.thunderstorm.app.android.view.weather.detail.AstronomyDetailCard
 import com.thunderstorm.app.android.view.weather.detail.CurrentWeatherView
@@ -45,6 +46,7 @@ import com.thunderstorm.app.database.datastore.DataStore
 import com.valentinilk.shimmer.shimmer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -56,18 +58,20 @@ import java.util.Locale
 @ExperimentalPagerApi
 @Composable
 fun WeatherView(
-    viewModel: WeatherViewModel,
-    navController: NavController
+    navController: NavController,
+    weatherCity: String? = null
 ) {
+    val viewModel = navController.context.getViewModel(WeatherViewModel::class.java)
     LaunchedEffect(true) {
+        delay(2L)
         viewModel.apply {
-            if (currentCityName == null) {
+            if (weatherCity == null) {
                 loadDefaultCity(navController.context)
+            } else {
+                currentCityServiceUrl = weatherCity
+                getCurrentData(navController.context)
             }
-            if (viewModel.forecastWeatherData.value == null) {
-                Log.e("d", "d")
-                getCurrentData(navController.context, "seattle-us")
-            }
+
         }
     }
     val scaffoldState = rememberScaffoldState()
