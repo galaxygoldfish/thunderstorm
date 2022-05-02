@@ -36,10 +36,10 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.view.weather.*
-import com.thunderstorm.app.android.theme.weather.detail.AstronomyDetailCard
-import com.thunderstorm.app.android.theme.weather.detail.CurrentWeatherView
-import com.thunderstorm.app.android.theme.weather.detail.DailyForecastView
-import com.thunderstorm.app.android.theme.weather.detail.HourlyForecastView
+import com.thunderstorm.app.android.view.weather.detail.AstronomyDetailCard
+import com.thunderstorm.app.android.view.weather.detail.CurrentWeatherView
+import com.thunderstorm.app.android.view.weather.detail.DailyForecastView
+import com.thunderstorm.app.android.view.weather.detail.HourlyForecastView
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.valentinilk.shimmer.shimmer

@@ -18,6 +18,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.16.1")
     implementation("com.google.accompanist:accompanist-placeholder-material:0.19.0")
     implementation("com.valentinilk.shimmer:compose-shimmer:1.0.0")
+    implementation("com.airbnb.android:lottie:5.0.3")
 }
 
 android {

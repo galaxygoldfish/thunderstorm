@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.theme.weather.detail
+package com.thunderstorm.app.android.view.weather.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

@@ -47,6 +47,12 @@ fun typography() = Typography(
         fontSize = 30.sp,
         color = colorResource(id = R.color.text_color)
     ),
+    h5 = TextStyle(
+        fontFamily = TexGyreHeros,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        color = colorResource(id = R.color.text_color)
+    ),
     h6 = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.ExtraBold,

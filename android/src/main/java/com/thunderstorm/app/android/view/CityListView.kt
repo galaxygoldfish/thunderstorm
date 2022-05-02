@@ -25,6 +25,7 @@ import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
+import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.CityListViewModel
@@ -46,15 +47,35 @@ fun CityListView(
     LaunchedEffect(true) {
         viewModel.loadSavedCities(navController.context)
     }
-    Column(
+    Scaffold(
+        topBar = {
+            ActionBar(
+                text = stringResource(id = R.string.city_list_actionbar_title),
+                backAction = {
+                    navController.popBackStack()
+                }
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(NavigationDestination.CityAddView)
+                },
+                content = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_search_glyph),
+                        contentDescription = stringResource(id = R.string.search_glyph_content_desc),
+                        tint = MaterialTheme.colors.background,
+                        modifier = Modifier.padding(10.dp)
+                    )
+                },
+                shape = RoundedCornerShape(10.dp),
+                backgroundColor = colorResource(id = R.color.thunderstorm_accent_color),
+                modifier = Modifier.size(50.dp)
+            )
+        },
         modifier = Modifier.fillMaxSize()
     ) {
-        ActionBar(
-            text = stringResource(id = R.string.city_list_actionbar_title),
-            backAction = {
-                navController.popBackStack()
-            }
-        )
         LazyColumn(
             content = {
                 itemsIndexed(viewModel.savedCityList) { _, item ->

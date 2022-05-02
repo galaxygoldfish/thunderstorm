@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.theme.weather.alert
+package com.thunderstorm.app.android.view.weather.alert
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

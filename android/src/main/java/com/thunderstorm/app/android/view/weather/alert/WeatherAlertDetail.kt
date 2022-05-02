@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.theme.weather.alert
+package com.thunderstorm.app.android.view.weather.alert
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

@@ -1,6 +1,9 @@
 package com.thunderstorm.app.android.utils
 
 import android.content.Context
+import androidx.activity.ComponentActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.thunderstorm.app.utils.WeatherIconCodes
 
 fun Context.getIconForNameAndCode(isDay: Int, code: Long) : Int {
@@ -12,3 +15,6 @@ fun Context.getIconForNameAndCode(isDay: Int, code: Long) : Int {
         packageName
     )
 }
+
+fun <T : ViewModel> Context.getViewModel(type: Class<T>) : T
+        = ViewModelProvider(this as ComponentActivity).get(type)

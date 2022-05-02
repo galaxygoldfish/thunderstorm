@@ -41,9 +41,7 @@ import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.database.DatabaseDriver
 import com.thunderstorm.app.database.datastore.DataStore
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
@@ -112,7 +110,7 @@ fun SetupViewPager(
                 modifier = Modifier.fillMaxHeight(0.9F),
                 content = { page ->
                     when (page) {
-                        0 -> AddCityView(viewModel = viewModel)
+                        0 -> AddCityOnboarding(viewModel = viewModel)
                         1 -> CustomizationView(viewModel = viewModel, sheetState = bottomSheetState)
                     }
                 }

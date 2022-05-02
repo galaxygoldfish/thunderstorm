@@ -12,6 +12,7 @@
     <string name="search_glyph_content_desc">Search magnifier</string>
     <string name="gps_location_content_desc">GPS icon</string>
     <string name="nothing_here_content_desc">Nothing here…</string>
+    <string name="explore_world_content_desc">Explore the world</string>
     <string name="check_circle_content_desc">Check mark</string>
     <string name="person_icon_content_desc">Feels like</string>
     <string name="rain_cloud_icon_content_desc">Precipitation</string>
@@ -61,4 +62,11 @@
     <string name="settings_actionbar_title">Settings</string>
 
     <string name="city_list_actionbar_title">Saved cities</string>
+
+    <string name="city_add_placeholder_text">Discover somewhere new</string>
+    <string name="city_add_dialog_title_template">Save %1$s?</string>
+    <string name="city_add_dialog_subtitle">Do you wish to add this city to your saved cities list?</string>
+    <string name="city_add_dialog_confirm">Confirm</string>
+    <string name="city_add_dialog_cancel">Cancel</string>
+
 </resources>

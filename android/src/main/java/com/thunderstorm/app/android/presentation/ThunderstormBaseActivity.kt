@@ -16,13 +16,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.theme.ThunderstormTheme
-import com.thunderstorm.app.android.view.CityListView
-import com.thunderstorm.app.android.view.SettingsView
-import com.thunderstorm.app.android.view.WeatherView
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
-import com.thunderstorm.app.android.view.WelcomeView
-import com.thunderstorm.app.android.theme.weather.alert.WeatherAlertDetail
-import com.thunderstorm.app.android.theme.weather.alert.WeatherAlertList
+import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
+import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
+import com.thunderstorm.app.android.view.*
 import com.thunderstorm.app.android.viewmodel.*
 import com.thunderstorm.app.database.datastore.DataStore
 
@@ -34,6 +31,7 @@ object NavigationDestination {
     const val AlertDetailView = "alertdetails"
     const val SettingsView = "settings"
     const val CityListView = "cities"
+    const val CityAddView = "cityadd"
 }
 
 @ExperimentalPagerApi
@@ -119,6 +117,9 @@ class ThunderstormBaseActivity : ComponentActivity() {
                         viewModel = cityListViewModel,
                         navController = navigationController
                     )
+                }
+                composable(NavigationDestination.CityAddView) {
+                    CityAddView(navController = navigationController)
                 }
             }
         )

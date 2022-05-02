@@ -31,12 +31,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.InputFieldWithHint
+import com.thunderstorm.app.android.viewmodel.CityAddViewModel
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.model.SearchCityResult
 
 @ExperimentalMaterialApi
 @Composable
-fun AddCityView(
+fun AddCityOnboarding(
     viewModel: SetupViewModel
 ) {
     Column {
@@ -122,8 +123,7 @@ fun AddCityView(
                             itemsIndexed(viewModel.cityAutocompleteItems.value) { _, searchResult ->
                                 CityResultListItem(
                                     searchResult = searchResult,
-                                    selectedCardState = viewModel.selectedCity,
-                                    viewModel = viewModel
+                                    viewModelSetup = viewModel
                                 )
                             }
                         },
@@ -141,8 +141,8 @@ fun AddCityView(
 @Composable
 fun CityResultListItem(
     searchResult: SearchCityResult,
-    selectedCardState: MutableState<SearchCityResult?>,
-    viewModel: SetupViewModel
+    viewModelSetup: SetupViewModel? = null,
+    viewModel: CityAddViewModel? = null
 ) {
     Card(
         modifier = Modifier
@@ -152,8 +152,14 @@ fun CityResultListItem(
         backgroundColor = colorResource(id = R.color.interface_gray_alt),
         elevation = 0.dp,
         onClick = {
-            selectedCardState.value = searchResult
-            viewModel.allowNavigateNext.value = true
+            viewModelSetup?.let {
+                it.selectedCity.value = searchResult
+                viewModelSetup.allowNavigateNext.value = true
+            }
+            viewModel?.apply {
+                showDoneDialog = true
+                currentSelectedCity = searchResult
+            }
         }
     ) {
         Box (modifier = Modifier.fillMaxWidth()) {
@@ -193,15 +199,17 @@ fun CityResultListItem(
                     )
                 }
             }
-            if (selectedCardState.value != null && selectedCardState.value == searchResult) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_check_circle),
-                    contentDescription = stringResource(id = R.string.check_circle_content_desc),
-                    modifier = Modifier
-                        .align(Alignment.CenterEnd)
-                        .padding(end = 15.dp),
-                    tint = colorResource(id = R.color.affirmative_green)
-                )
+            viewModelSetup?.let {
+                if (it.selectedCity.value != null && it.selectedCity.value == searchResult) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_check_circle),
+                        contentDescription = stringResource(id = R.string.check_circle_content_desc),
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 15.dp),
+                        tint = colorResource(id = R.color.affirmative_green)
+                    )
+                }
             }
         }
     }
