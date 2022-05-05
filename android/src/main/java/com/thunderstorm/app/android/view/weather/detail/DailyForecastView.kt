@@ -131,10 +131,10 @@ fun DailyListItem(
                         ) {
                             append(
                                 """${
-                                    if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                                        data.highTempCelsius.roundToInt()
-                                    } else {
+                                    if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                                         data.highTempFahrenheit.roundToInt()
+                                    } else {
+                                        data.highTempCelsius.roundToInt()
                                     }
                                 }° """
                             )
@@ -148,10 +148,10 @@ fun DailyListItem(
                             )
                         ) {
                             append("""${
-                                if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                                    data.lowTempCelsius.roundToInt()
-                                } else {
+                                if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                                     data.lowTempFahrenheit.roundToInt()
+                                } else {
+                                    data.lowTempCelsius.roundToInt()
                                 }
                             }°""")
                         }

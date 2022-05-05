@@ -41,10 +41,10 @@ fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
         Text(
             text = String.format(
                 stringResource(id = R.string.weather_temperature_template),
-                if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                    weatherData?.current?.tempCelsius?.roundToInt()
-                } else {
+                if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                     weatherData?.current?.tempFarenheit?.roundToInt()
+                } else {
+                    weatherData?.current?.tempCelsius?.roundToInt()
                 }
             ),
             style = MaterialTheme.typography.h1,
@@ -85,10 +85,10 @@ fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
     Text(
         text = String.format(
             format = stringResource(id = R.string.weather_feels_like_template),
-            if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                weatherData?.current?.feelsLikeCelsius?.roundToInt() ?: "\t\t\t"
-            } else {
+            if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                 weatherData?.current?.feelsLikeFarenheit?.roundToInt() ?: "\t\t\t"
+            } else {
+                weatherData?.current?.feelsLikeCelsius?.roundToInt() ?: "\t\t\t"
             }
         ),
         style = MaterialTheme.typography.body1,

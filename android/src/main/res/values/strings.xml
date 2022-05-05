@@ -69,4 +69,7 @@
     <string name="city_add_dialog_confirm">Confirm</string>
     <string name="city_add_dialog_cancel">Cancel</string>
 
+    <string name="settings_imperial_title">Use imperial system</string>
+    <string name="settings_imperial_subtitle">Use fahrenheit, miles, and inches to measure units</string>
+
 </resources>

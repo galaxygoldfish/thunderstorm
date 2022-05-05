@@ -44,5 +44,5 @@ data class CurrentWeatherObject(
     var visibilityMi: Double,
     var uv: Double,
     @SerialName("air_quality")
-    var airQuality: AirQualityWeatherObject
+    var airQuality: AirQualityWeatherObject? = null
 )

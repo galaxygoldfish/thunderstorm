@@ -223,10 +223,10 @@ fun HourlyListItem(
         Text(
             text = String.format(
                 stringResource(id = R.string.weather_temperature_template),
-                if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                    weatherData.temperatureCelsius.roundToInt()
-                } else {
+                if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                     weatherData.temperatureFahrenheit.roundToInt()
+                } else {
+                    weatherData.temperatureCelsius.roundToInt()
                 }
             ),
             style = MaterialTheme.typography.body2,

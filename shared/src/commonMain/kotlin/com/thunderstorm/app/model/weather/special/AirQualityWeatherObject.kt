@@ -5,14 +5,14 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AirQualityWeatherObject(
-    var co: Double,
-    var no2: Double,
-    var o3: Double,
-    var so2: Double,
-    var pm2_5: Double,
-    var pm10: Double,
+    var co: Double? = null,
+    var no2: Double? = null,
+    var o3: Double? = null,
+    var so2: Double? = null,
+    var pm2_5: Double? = null,
+    var pm10: Double? = null,
     @SerialName("us-epa-index")
-    var usEpaIndex: Long,
+    var usEpaIndex: Long = 0,
     @SerialName("gb-defra-index")
-    var gbDefraIndex: Long
+    var gbDefraIndex: Long = 0
 )

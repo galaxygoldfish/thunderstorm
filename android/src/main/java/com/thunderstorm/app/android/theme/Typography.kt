@@ -71,6 +71,12 @@ fun typography() = Typography(
         fontSize = 17.sp,
         color = colorResource(id = R.color.text_color)
     ),
+    subtitle2 = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.Bold,
+        fontSize = 15.sp,
+        color = colorResource(id = R.color.text_color)
+    ),
     subtitle1 = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.Normal,

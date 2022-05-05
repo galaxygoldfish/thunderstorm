@@ -28,6 +28,8 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.DataStoreName
+import java.lang.Integer.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Composable
@@ -58,20 +60,19 @@ fun QuickDetailView(viewModel: WeatherViewModel, context: Activity) {
         ) {
             val airQualityLevel = weatherData?.current?.airQuality?.usEpaIndex?.toInt()
             QuickDetailCard(
-                mainText = stringArrayResource(id = R.array.air_quality_units_epa)[airQualityLevel?.minus(1) ?: 0],
+                mainText = stringArrayResource(id = R.array.air_quality_units_epa)
+                    .get(airQualityLevel?.let { max(it - 1, 0) } ?: 0),
                 subtitle = stringResource(id = R.string.weather_air_quality_detail_text),
                 position = true,
                 airQualityText = true,
                 viewModel = viewModel
             )
             QuickDetailCard(
-                mainText = """${
-                    if (dataStore.getInteger("PREF_SPEED_UNITS") == 0) {
-                        weatherData?.current?.visibilityMi?.roundToInt()
-                    } else {
-                        weatherData?.current?.visibilityKm?.roundToInt()
-                    }
-                } mi""",
+                mainText = if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
+                    "${weatherData?.current?.visibilityMi?.roundToInt()} mi"
+                } else {
+                    "${weatherData?.current?.visibilityKm?.roundToInt()} km"
+                },
                 subtitle = stringResource(id = R.string.weather_visibility_detail_text),
                 position = false,
                 viewModel = viewModel
