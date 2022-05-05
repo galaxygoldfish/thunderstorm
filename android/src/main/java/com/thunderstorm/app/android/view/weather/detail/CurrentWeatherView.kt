@@ -29,7 +29,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
-    val weatherData = viewModel.forecastWeatherData.value
+    val weatherData = viewModel.forecastWeatherData
     val dataStore = DataStore(context)
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -52,20 +52,20 @@ fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
                 .padding(start = 20.dp)
                 .align(Alignment.CenterVertically)
                 .placeholder(
-                    visible = !viewModel.showWeatherData.value,
+                    visible = !viewModel.showWeatherData,
                     shape = RoundedCornerShape(10.dp),
                     highlight = PlaceholderHighlight.shimmer()
                 )
         )
         Image(
-            painter = painterResource(id = viewModel.currentIconResource.value),
+            painter = painterResource(id = viewModel.currentIconResource),
             contentDescription = null,
             modifier = Modifier
                 .padding(end = 20.dp)
                 .size(120.dp)
                 .align(Alignment.CenterVertically)
                 .placeholder(
-                    visible = !viewModel.showWeatherData.value,
+                    visible = !viewModel.showWeatherData,
                     shape = RoundedCornerShape(10.dp),
                     highlight = PlaceholderHighlight.shimmer()
                 )
@@ -76,7 +76,7 @@ fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
         modifier = Modifier
             .padding(start = 22.dp)
             .placeholder(
-                visible = !viewModel.showWeatherData.value,
+                visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
             ),
@@ -97,7 +97,7 @@ fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
         modifier = Modifier
             .padding(start = 22.dp)
             .placeholder(
-                visible = !viewModel.showWeatherData.value,
+                visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
             )

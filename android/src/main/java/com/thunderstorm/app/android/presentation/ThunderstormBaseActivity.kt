@@ -41,7 +41,6 @@ class ThunderstormBaseActivity : ComponentActivity() {
     private lateinit var navigationController: NavHostController
 
     private val setupViewModel: SetupViewModel by viewModels()
-    private val weatherViewModel: WeatherViewModel by viewModels()
     private val weatherAlertViewModel: WeatherAlertViewModel by viewModels()
     private val settingsViewModel: SettingsViewModel by viewModels()
     private val cityListViewModel: CityListViewModel by viewModels()
@@ -91,11 +90,13 @@ class ThunderstormBaseActivity : ComponentActivity() {
                         navController = navigationController
                     )
                 }
-                composable("${NavigationDestination.WeatherView}/{weatherCity}") {
-                    WeatherView(
-                        navController = navigationController,
-                        weatherCity = it.arguments!!.getString("weatherCity")!!
-                    )
+                composable("${NavigationDestination.WeatherView}/{weatherCity}/{displayCity}/{displayRegion}") {
+                    it.arguments!!.apply {
+                        WeatherView(
+                            navController = navigationController,
+                            weatherCity = getString("weatherCity")
+                        )
+                    }
                 }
                 composable("""${NavigationDestination.AlertView}/{weatherCity}""") {
                     WeatherAlertList(

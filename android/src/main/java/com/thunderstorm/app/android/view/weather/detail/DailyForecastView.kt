@@ -42,14 +42,14 @@ import kotlin.math.roundToInt
 
 @Composable
 fun DailyForecastView(viewModel: WeatherViewModel, context: Activity) {
-    val weatherData = viewModel.forecastWeatherData.value
+    val weatherData = viewModel.forecastWeatherData
     val dataStore = DataStore(context)
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 20.dp)
             .placeholder(
-                visible = !viewModel.showWeatherData.value,
+                visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
             )

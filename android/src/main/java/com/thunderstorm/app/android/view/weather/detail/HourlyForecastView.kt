@@ -49,7 +49,7 @@ fun HourlyForecastView(
     viewModel: WeatherViewModel,
     context: Activity
 ) {
-    val weatherData = viewModel.forecastWeatherData.value
+    val weatherData = viewModel.forecastWeatherData
     val dataStore = DataStore(context)
     fun getWeatherData(day: Int): List<HourWeatherObject>?
         = weatherData?.forecast?.forecastDay?.get(day)?.hourDetails
@@ -81,7 +81,7 @@ fun HourlyForecastView(
                     .padding(start = 20.dp, top = 35.dp, end = 10.dp)
                     .horizontalScroll(scrollState)
                     .placeholder(
-                        visible = !viewModel.showWeatherData.value,
+                        visible = !viewModel.showWeatherData,
                         shape = RoundedCornerShape(10.dp),
                         highlight = PlaceholderHighlight.shimmer()
                     )

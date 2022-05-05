@@ -113,7 +113,9 @@ fun CityListItem(
     }
     Card(
         onClick = {
-            navController.navigate("${NavigationDestination.WeatherView}/${cityDetails.serviceUrl}")
+            navController.navigate(
+                "${NavigationDestination.WeatherView}/${cityDetails.serviceUrl}/${cityDetails.cityName}/${cityDetails.stateName}"
+            )
         },
         modifier = Modifier
             .fillMaxWidth()

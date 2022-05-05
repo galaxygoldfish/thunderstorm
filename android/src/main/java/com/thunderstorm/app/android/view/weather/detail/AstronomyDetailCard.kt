@@ -28,7 +28,7 @@ import java.util.*
 fun AstronomyDetailCard(
     viewModel: WeatherViewModel
 ) {
-    val weatherData = viewModel.forecastWeatherData.value
+    val weatherData = viewModel.forecastWeatherData
     val initialAstroTime = SimpleDateFormat("hh:mm a", Locale.getDefault())
     val targetAstroTime = SimpleDateFormat("h:mm a", Locale.getDefault())
     Row(
@@ -40,7 +40,7 @@ fun AstronomyDetailCard(
                 colorResource(id = R.color.interface_gray).copy(0.5F)
             )
             .placeholder(
-                visible = !viewModel.showWeatherData.value,
+                visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
             ),

@@ -1,15 +1,15 @@
 package com.thunderstorm.app.android.view
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.Key.Companion.D
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -32,6 +33,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.placeholder.PlaceholderHighlight
+import com.google.accompanist.placeholder.material.placeholder
+import com.google.accompanist.placeholder.material.shimmer
+import com.google.accompanist.placeholder.placeholder
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
@@ -59,19 +64,17 @@ import java.util.Locale
 @Composable
 fun WeatherView(
     navController: NavController,
-    weatherCity: String? = null
+    weatherCity: String? = null,
 ) {
     val viewModel = navController.context.getViewModel(WeatherViewModel::class.java)
     LaunchedEffect(true) {
-        delay(2L)
         viewModel.apply {
             if (weatherCity == null) {
                 loadDefaultCity(navController.context)
             } else {
-                currentCityServiceUrl = weatherCity
-                getCurrentData(navController.context)
+                showWeatherData = false
+                getCurrentData(navController.context, weatherCity)
             }
-
         }
     }
     val scaffoldState = rememberScaffoldState()
@@ -105,18 +108,28 @@ fun WeatherView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column {
-                    viewModel.currentCityName?.let { city ->
+                    viewModel.apply {
                         Text(
-                            text = city,
-                            modifier = Modifier.padding(top = 20.dp, start = 20.dp),
+                            text = currentCity?.cityName?.split(",")?.get(0).toString(),
+                            modifier = Modifier
+                                .padding(top = 20.dp, start = 20.dp)
+                                .placeholder(
+                                    visible = !viewModel.showWeatherData,
+                                    shape = RoundedCornerShape(10.dp),
+                                    highlight = PlaceholderHighlight.shimmer()
+                                ),
                             style = MaterialTheme.typography.h3
                         )
-                    }
-                    viewModel.currentRegionName?.let { region ->
                         Text(
-                            text = region,
+                            text = currentCity?.stateName.toString(),
                             style = MaterialTheme.typography.body1,
-                            modifier = Modifier.padding(top = 1.dp, start = 20.dp, bottom = 10.dp),
+                            modifier = Modifier
+                                .padding(top = 1.dp, start = 20.dp, bottom = 10.dp)
+                                .placeholder(
+                                    visible = !viewModel.showWeatherData,
+                                    shape = RoundedCornerShape(10.dp),
+                                    highlight = PlaceholderHighlight.shimmer()
+                                ),
                             fontSize = 14.sp
                         )
                     }
@@ -124,11 +137,11 @@ fun WeatherView(
                 Row(
                     modifier = Modifier.padding(top = 20.dp, end = 15.dp)
                 ) {
-                    if (viewModel.weatherAlertAvailable.value) {
+                    if (viewModel.weatherAlertAvailable) {
                         IconButton(
                             onClick = {
                                 navController.navigate(
-                                    """${NavigationDestination.AlertView}/${viewModel.currentCityServiceUrl}"""
+                                    """${NavigationDestination.AlertView}/${viewModel.currentCity!!.serviceUrl}"""
                                 )
                             },
                             content = {
@@ -173,93 +186,9 @@ fun WeatherView(
     }
 }
 
-@ExperimentalFoundationApi
-@Composable
-fun WeatherLoadingView() {
-    val commonBackground = Color.Gray.copy(0.4F)
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .shimmer()
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Box(
-                modifier = Modifier
-                    .padding(top = 40.dp, start = 20.dp)
-                    .size(height = 100.dp, width = 120.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(commonBackground)
-            )
-            Box(
-                modifier = Modifier
-                    .padding(top = 40.dp, end = 20.dp)
-                    .size(height = 110.dp, width = 120.dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(commonBackground)
-            )
-        }
-        Box(
-            modifier = Modifier
-                .padding(top = 5.dp, start = 20.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .size(height = 20.dp, width = 90.dp)
-                .background(commonBackground)
-        )
-        Box(
-            modifier = Modifier
-                .padding(top = 5.dp, start = 20.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .size(height = 20.dp, width = 110.dp)
-                .background(commonBackground)
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 35.dp, start = 20.dp, end = 20.dp)
-        ) {
-            repeat(4) {
-                Box(
-                    modifier = Modifier
-                        .padding(end = 10.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .size(height = 125.dp, width = 65.dp)
-                        .background(commonBackground)
-                )
-            }
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(120.dp)
-                .padding(start = 20.dp, end = 20.dp, top = 25.dp)
-                .clip(RoundedCornerShape(10.dp))
-                .background(commonBackground)
-        )
-        LazyVerticalGrid(
-            cells = GridCells.Fixed(2),
-            content = {
-                items(4) {
-                    Box(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .padding(5.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                            .background(commonBackground)
-                    )
-                }
-            },
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(15.dp)
-        )
-    }
-}
-
 @Composable
 fun WeatherCreditFooter() {
+    val context = LocalContext.current
     Column(
         modifier = Modifier
             .height(80.dp)
@@ -269,7 +198,13 @@ fun WeatherCreditFooter() {
         Text(
             text = stringResource(id = R.string.weather_service_credit_text),
             style = MaterialTheme.typography.body2,
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            modifier = Modifier.clickable {
+                Intent(Intent.ACTION_VIEW).apply {
+                    data = Uri.parse("https://weatherapi.com")
+                    context.startActivity(this)
+                }
+            }
         )
         Text(
             text = String.format(

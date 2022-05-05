@@ -30,7 +30,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun QuickDetailView(viewModel: WeatherViewModel, context: Activity) {
-    val weatherData = viewModel.forecastWeatherData.value
+    val weatherData = viewModel.forecastWeatherData
     val dataStore = DataStore(context)
     Column(
         modifier = Modifier.padding(top = 10.dp)
@@ -97,7 +97,7 @@ fun QuickDetailCard(
                 colorResource(id = R.color.interface_gray).copy(0.5F)
             )
             .placeholder(
-                visible = !viewModel.showWeatherData.value,
+                visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
             )

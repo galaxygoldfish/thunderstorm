@@ -14,3 +14,6 @@ SELECT * FROM CityStore;
 
 insertNewCity:
 INSERT INTO CityStore(cityName, stateName, countryName, serviceUrl) VALUES(?, ?, ?, ?);
+
+findCityByServiceUrl:
+SELECT * FROM CityStore WHERE serviceUrl = ?;
