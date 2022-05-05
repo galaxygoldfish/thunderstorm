@@ -2,9 +2,7 @@ package com.thunderstorm.app.android.view.weather.detail
 
 import android.app.Activity
 import android.content.Context
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -119,6 +116,10 @@ fun NextDayWeatherCard(
                 colorResource(id = R.color.interface_gray_alt).copy(
                     0.5F
                 )
+            )
+            .border(
+                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                shape = RoundedCornerShape(10.dp)
             ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -199,7 +200,11 @@ fun HourlyListItem(
         modifier = Modifier
             .padding(end = 15.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(colorResource(id = R.color.interface_gray).copy(0.5F)),
+            .background(colorResource(id = R.color.interface_gray).copy(0.5F))
+            .border(
+                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                shape = RoundedCornerShape(10.dp)
+            ),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(

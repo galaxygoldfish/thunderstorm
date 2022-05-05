@@ -1,7 +1,9 @@
 package com.thunderstorm.app.android.view.onboarding
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -151,6 +153,7 @@ fun CityResultListItem(
         shape = RoundedCornerShape(10.dp),
         backgroundColor = colorResource(id = R.color.interface_gray_alt),
         elevation = 0.dp,
+        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
         onClick = {
             viewModelSetup?.let {
                 it.selectedCity.value = searchResult

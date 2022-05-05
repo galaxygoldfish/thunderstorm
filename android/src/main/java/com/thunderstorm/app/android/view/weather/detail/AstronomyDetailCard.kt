@@ -1,6 +1,8 @@
 package com.thunderstorm.app.android.view.weather.detail
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -43,6 +45,10 @@ fun AstronomyDetailCard(
                 visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
+            )
+            .border(
+                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                shape = RoundedCornerShape(10.dp)
             ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween

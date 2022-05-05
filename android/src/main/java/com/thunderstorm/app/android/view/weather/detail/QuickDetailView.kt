@@ -1,7 +1,9 @@
 package com.thunderstorm.app.android.view.weather
 
 import android.app.Activity
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -100,6 +102,10 @@ fun QuickDetailCard(
                 visible = !viewModel.showWeatherData,
                 shape = RoundedCornerShape(10.dp),
                 highlight = PlaceholderHighlight.shimmer()
+            )
+            .border(
+                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                shape = RoundedCornerShape(10.dp)
             )
     ) {
         Text(

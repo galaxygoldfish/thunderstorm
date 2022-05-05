@@ -7,6 +7,7 @@ import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -32,7 +33,8 @@ import com.thunderstorm.app.android.utils.getViewModel
 import com.thunderstorm.app.android.view.onboarding.CityResultListItem
 import com.thunderstorm.app.android.viewmodel.CityAddViewModel
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterialApi::class,
+    ExperimentalAnimationApi::class)
 @Composable
 fun CityAddView(navController: NavController) {
     val viewModel = LocalContext.current.getViewModel(CityAddViewModel::class.java)
@@ -60,7 +62,11 @@ fun CityAddView(navController: NavController) {
                     .padding(top = 20.dp, end = 20.dp)
                     .height(50.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(colorResource(id = R.color.interface_gray))
+                    .background(colorResource(id = R.color.interface_gray_alt))
+                    .border(
+                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        shape = RoundedCornerShape(10.dp)
+                    )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search_glyph),
@@ -138,8 +144,18 @@ fun AddCityDialog(viewModel: CityAddViewModel) {
         Column(
             modifier = Modifier
                 .clip(RoundedCornerShape(10.dp))
-                .background(MaterialTheme.colors.background)
+                .background(
+                    if (MaterialTheme.colors.isLight) {
+                        MaterialTheme.colors.background
+                    } else {
+                        colorResource(id = R.color.interface_gray_alt)
+                    }
+                )
                 .fillMaxWidth(1.0F)
+                .border(
+                    border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                    shape = RoundedCornerShape(10.dp)
+                )
         ) {
             Text(
                 text = String.format(
@@ -147,11 +163,11 @@ fun AddCityDialog(viewModel: CityAddViewModel) {
                     currentCityCached.name.split(",")[0]
                 ),
                 style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(start = 15.dp, top = 10.dp, end = 15.dp)
+                modifier = Modifier.padding(start = 20.dp, top = 15.dp, end = 15.dp)
             )
             Text(
                 text = stringResource(id = R.string.city_add_dialog_subtitle),
-                modifier = Modifier.padding(start = 15.dp, top = 5.dp, end = 15.dp)
+                modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 15.dp)
             )
             Row {
                 val context = LocalContext.current
@@ -160,8 +176,8 @@ fun AddCityDialog(viewModel: CityAddViewModel) {
                         viewModel.saveCity(viewModel.currentSelectedCity!!, context)
                     },
                     modifier = Modifier
-                        .padding(15.dp)
-                        .clip(RoundedCornerShape(50.dp))
+                        .padding(20.dp)
+                        .clip(RoundedCornerShape(80.dp))
                         .background(MaterialTheme.colors.primary)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -171,7 +187,9 @@ fun AddCityDialog(viewModel: CityAddViewModel) {
                         )
                         AnimatedVisibility(visible = viewModel.saveCityInProgress) {
                             CircularProgressIndicator(
-                                modifier = Modifier.padding(start = 10.dp).size(12.dp),
+                                modifier = Modifier
+                                    .padding(start = 10.dp)
+                                    .size(12.dp),
                                 color = MaterialTheme.colors.background,
                                 strokeWidth = 1.dp
                             )
@@ -183,10 +201,14 @@ fun AddCityDialog(viewModel: CityAddViewModel) {
                         viewModel.showDoneDialog = false
                     },
                     modifier = Modifier
-                        .padding(bottom = 15.dp, top = 15.dp)
+                        .padding(bottom = 20.dp, top = 20.dp)
                         .clip(RoundedCornerShape(50.dp)),
                     colors = ButtonDefaults
-                        .buttonColors(backgroundColor = MaterialTheme.colors.background)
+                        .buttonColors(backgroundColor = if (MaterialTheme.colors.isLight) {
+                            MaterialTheme.colors.background
+                        } else {
+                            colorResource(id = R.color.interface_gray_alt)
+                        })
                 ) {
                     Text(
                         text = stringResource(id = R.string.city_add_dialog_cancel),

@@ -1,6 +1,7 @@
 package com.thunderstorm.app.android.view
 
 import android.content.Context
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -127,7 +128,8 @@ fun CityListItem(
                 highlight = PlaceholderHighlight.shimmer()
             ),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = colorResource(id = R.color.interface_gray_alt)
+        backgroundColor = colorResource(id = R.color.interface_gray_alt),
+        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray))
 
     ) {
         Row(
