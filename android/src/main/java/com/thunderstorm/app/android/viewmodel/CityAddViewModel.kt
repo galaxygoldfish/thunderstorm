@@ -47,6 +47,8 @@ class CityAddViewModel : ViewModel() {
         }
         showDoneDialog = false
         saveCityInProgress = false
+        currentSearchQuery = TextFieldValue(" ")
+        currentSearchQuery = TextFieldValue("")
         currentSelectedCity = null
     }
 

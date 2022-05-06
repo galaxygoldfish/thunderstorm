@@ -43,7 +43,6 @@ fun SettingsView(
                     switchPreference = true,
                     onClick = {
                         dataStore.putBoolean("USE_IMPERIAL_UNITS", switchState.value)
-                        Log.e("TAG", "USE_IMPERIAL_UNITS + ${switchState.value}")
                     },
                     checkState = switchState
                 )

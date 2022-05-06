@@ -26,6 +26,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -68,7 +69,11 @@ fun AddCityOnboarding(
                     .padding(top = 20.dp, start = 20.dp, end = 20.dp)
                     .height(50.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(colorResource(id = R.color.interface_gray))
+                    .background(colorResource(id = R.color.interface_gray_alt))
+                    .border(
+                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        shape = RoundedCornerShape(10.dp)
+                    )
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_search_glyph),

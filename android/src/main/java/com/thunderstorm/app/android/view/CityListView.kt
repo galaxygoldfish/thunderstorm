@@ -1,6 +1,8 @@
 package com.thunderstorm.app.android.view
 
 import android.content.Context
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,6 +11,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -80,12 +85,47 @@ fun CityListView(
     ) {
         LazyColumn(
             content = {
-                itemsIndexed(viewModel.savedCityList) { _, item ->
-                    CityListItem(
-                        cityDetails = item,
-                        navController = navController,
-                        viewModel = viewModel
+                itemsIndexed(viewModel.savedCityList) { index, item ->
+                    val dismissState = rememberDismissState(
+                        confirmStateChange = {
+                            if (it == DismissValue.DismissedToStart || it == DismissValue.DismissedToEnd) {
+                                viewModel.removeCity(navController.context, index, item.serviceUrl)
+                            }
+                            true
+                        }
                     )
+                    SwipeToDismiss(
+                        state = dismissState,
+                        directions = setOf(DismissDirection.StartToEnd, DismissDirection.EndToStart),
+                        dismissThresholds = { direction ->
+                            FractionalThreshold(if (direction == DismissDirection.StartToEnd) 0.25f else 0.5f)
+                        },
+                        background = {
+                            val direction = dismissState.dismissDirection ?: return@SwipeToDismiss
+                            val alignment = when (direction) {
+                                DismissDirection.StartToEnd -> Alignment.CenterStart
+                                DismissDirection.EndToStart -> Alignment.CenterEnd
+                            }
+                            Box(
+                                Modifier.fillMaxSize().padding(horizontal = 40.dp),
+                                contentAlignment = alignment
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_trash_can),
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colors.onBackground
+                                )
+                            }
+                        },
+                        dismissContent = {
+                            CityListItem(
+                                cityDetails = item,
+                                navController = navController,
+                                viewModel = viewModel
+                            )
+                        }
+                    )
+                    
                 }
             }
         )
@@ -115,7 +155,7 @@ fun CityListItem(
     Card(
         onClick = {
             navController.navigate(
-                "${NavigationDestination.WeatherView}/${cityDetails.serviceUrl}/${cityDetails.cityName}/${cityDetails.stateName}"
+                "${NavigationDestination.WeatherView}/${cityDetails.serviceUrl}"
             )
         },
         modifier = Modifier
@@ -142,6 +182,7 @@ fun CityListItem(
                 Text(
                     text = cityDetails.cityName,
                     style = MaterialTheme.typography.h4,
+                    modifier = Modifier.padding(end = 20.dp)
                 )
                 Text(
                     text = cityDetails.stateName
@@ -150,10 +191,10 @@ fun CityListItem(
                     Text(
                         text = String.format(
                             stringResource(id = R.string.weather_temperature_template),
-                            if (dataStore.getInteger("PREF_TEMP_UNITS") == 0) {
-                                tempCelsius.roundToInt()
-                            } else {
+                            if (dataStore.getBoolean("USE_IMPERIAL_UNITS")) {
                                 tempFarenheit.roundToInt()
+                            } else {
+                                tempCelsius.roundToInt()
                             }
                         ),
                         style = MaterialTheme.typography.h4,

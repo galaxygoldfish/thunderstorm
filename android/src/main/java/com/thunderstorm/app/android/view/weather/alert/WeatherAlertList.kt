@@ -1,6 +1,8 @@
 package com.thunderstorm.app.android.view.weather.alert
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -78,6 +80,10 @@ fun AlertListItem(
             .background(
                 colorResource(id = R.color.interface_gray)
                     .copy(0.5F)
+            )
+            .border(
+                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                shape = RoundedCornerShape(10.dp)
             )
             .clickable {
                 navController.navigate("""${NavigationDestination.AlertDetailView}/$index""")

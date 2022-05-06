@@ -17,3 +17,6 @@ INSERT INTO CityStore(cityName, stateName, countryName, serviceUrl) VALUES(?, ?,
 
 findCityByServiceUrl:
 SELECT * FROM CityStore WHERE serviceUrl = ?;
+
+removeCityByUrl:
+DELETE FROM CityStore WHERE serviceUrl = ?;

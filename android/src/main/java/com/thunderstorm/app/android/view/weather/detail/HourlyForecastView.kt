@@ -198,7 +198,7 @@ fun HourlyListItem(
     )
     Column(
         modifier = Modifier
-            .padding(end = 15.dp)
+            .padding(end = 12.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(colorResource(id = R.color.interface_gray).copy(0.5F))
             .border(

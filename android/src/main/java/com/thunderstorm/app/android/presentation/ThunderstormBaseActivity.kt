@@ -90,7 +90,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
                         navController = navigationController
                     )
                 }
-                composable("${NavigationDestination.WeatherView}/{weatherCity}/{displayCity}/{displayRegion}") {
+                composable("${NavigationDestination.WeatherView}/{weatherCity}") {
                     it.arguments!!.apply {
                         WeatherView(
                             navController = navigationController,

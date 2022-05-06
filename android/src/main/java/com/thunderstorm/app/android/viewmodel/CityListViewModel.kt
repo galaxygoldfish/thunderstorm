@@ -41,7 +41,15 @@ class CityListViewModel : ViewModel() {
             completableDeferred.complete(it)
         }
         return completableDeferred.await()
+    }
 
+    fun removeCity(context: Context, index: Int, url: String) {
+        savedCityList.removeAt(index)
+        CoroutineScope(Dispatchers.Default).launch {
+            ThunderstormDatabase(DatabaseDriver(context).createDriver()).apply {
+                cityStoreQueries.removeCityByUrl(url)
+            }
+        }
     }
 
 }

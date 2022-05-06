@@ -18,14 +18,6 @@ class SetupViewModel : ViewModel() {
     val cityAutocompleteItems = mutableStateOf(mutableListOf<SearchCityResult>())
     val allowNavigateNext = mutableStateOf(false)
 
-    val selectionTemperature = mutableStateOf(0)
-    val selectionSpeed = mutableStateOf(0)
-    val selectionPrecip = mutableStateOf(0)
-    val selectionAir = mutableStateOf(0)
-
-    val currentSelectionItems = mutableStateOf<Array<String>>(arrayOf())
-    val currentItemSelection = mutableStateOf(mutableStateOf(0))
-
     private val asyncScope = CoroutineScope(Dispatchers.IO + Job())
 
     fun fetchCitiesForSearch() {
