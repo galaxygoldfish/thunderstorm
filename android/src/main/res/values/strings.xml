@@ -82,5 +82,6 @@
     <string name="widget_manage_card_subtitle">ID: %1$s</string>
     <string name="widget_manage_preference_dark_title">Dark theme</string>
     <string name="widget_manage_change_city_button">Change city</string>
+    <string name="widget_manage_nothing_here">There aren\'t any widgets here…</string>
 
 </resources>

@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -53,14 +54,41 @@ fun WidgetManagerView(navController: NavController) {
                 )
             }
         ) {
-            LazyColumn {
-                itemsIndexed(viewModel.currentWidgetsList) { _, item ->
-                    WidgetManagerListItem(
-                        widgetID = item,
-                        viewModel = viewModel
-                    )
+            viewModel.currentWidgetsList.let {
+                if (it.isNotEmpty()) {
+                    LazyColumn {
+                        itemsIndexed(viewModel.currentWidgetsList) { _, item ->
+                            WidgetManagerListItem(
+                                widgetID = item,
+                                viewModel = viewModel
+                            )
+                        }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Column {
+                            Image(
+                                painter = painterResource(id = R.drawable.widget_missing_image),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier.padding(horizontal = 40.dp)
+                            )
+                            Text(
+                                text = stringResource(id = R.string.widget_manage_nothing_here),
+                                modifier = Modifier
+                                    .padding(top = 10.dp)
+                                    .align(Alignment.CenterHorizontally)
+                            )
+                            Spacer(modifier = Modifier.fillMaxHeight(0.3F))
+                        }
+
+                    }
                 }
             }
+
         }
         CityChangeDialog(
             viewModel = viewModel,
