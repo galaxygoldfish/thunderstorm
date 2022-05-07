@@ -35,6 +35,7 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.weather.forecast.HourWeatherObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -47,7 +48,7 @@ fun HourlyForecastView(
     context: Activity
 ) {
     val weatherData = viewModel.forecastWeatherData
-    val dataStore = DataStore(context)
+    val dataStore = DataStore(context.applicationContext as SharedContext)
     fun getWeatherData(day: Int): List<HourWeatherObject>?
         = weatherData?.forecast?.forecastDay?.get(day)?.hourDetails
     Column {

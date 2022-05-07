@@ -41,6 +41,7 @@ import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.database.DatabaseDriver
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -102,7 +103,7 @@ fun SetupViewPager(
                     if (viewModel.allowNavigateNext.value) {
                         if (viewPagerState.currentPage == 1) {
                             val dataStore =
-                                DataStore(navController.context as ThunderstormBaseActivity)
+                                DataStore(navController.context.applicationContext as SharedContext)
                             val cityDatabase =
                                 ThunderstormDatabase(DatabaseDriver(navController.context).createDriver())
                             viewModel.apply {

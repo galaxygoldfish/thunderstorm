@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -29,22 +30,31 @@ import androidx.navigation.NavController
 import com.airbnb.lottie.LottieAnimationView
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.InputFieldWithHint
+import com.thunderstorm.app.android.theme.ThunderstormTheme
 import com.thunderstorm.app.android.utils.getViewModel
 import com.thunderstorm.app.android.view.onboarding.CityResultListItem
 import com.thunderstorm.app.android.viewmodel.CityAddViewModel
+import com.thunderstorm.app.model.SearchCityResult
 
 @OptIn(ExperimentalMaterialApi::class,
     ExperimentalAnimationApi::class)
 @Composable
-fun CityAddView(navController: NavController) {
+fun CityAddView(
+    navController: NavController? = null,
+    widgetVersion: Boolean = false,
+    configOnBackPress: (() -> Unit) = {},
+    configOnFinish: ((viewModel: CityAddViewModel) -> Unit) = {}
+) {
     val viewModel = LocalContext.current.getViewModel(CityAddViewModel::class.java)
+    ThunderstormTheme {
     Column {
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(
                 onClick = {
-                    navController.popBackStack()
+                    navController?.popBackStack()
+                    configOnBackPress.invoke()
                 },
                 content = {
                     Icon(
@@ -132,88 +142,113 @@ fun CityAddView(navController: NavController) {
         }
     }
     if (viewModel.showDoneDialog) {
-        AddCityDialog(viewModel = viewModel)
+        AddCityDialog(
+            viewModel = viewModel,
+            widgetVersion = widgetVersion,
+            configOnFinish = configOnFinish
+        )
+    }
     }
 }
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun AddCityDialog(viewModel: CityAddViewModel) {
+fun AddCityDialog(
+    viewModel: CityAddViewModel,
+    widgetVersion: Boolean = false,
+    configOnFinish: ((viewModel: CityAddViewModel) -> Unit) = {}
+) {
     val currentCityCached = viewModel.currentSelectedCity!!
-    Dialog(onDismissRequest = { viewModel.showDoneDialog = false }) {
-        Column(
-            modifier = Modifier
-                .clip(RoundedCornerShape(10.dp))
-                .background(
-                    if (MaterialTheme.colors.isLight) {
-                        MaterialTheme.colors.background
-                    } else {
-                        colorResource(id = R.color.interface_gray_alt)
-                    }
-                )
-                .fillMaxWidth(1.0F)
-                .border(
-                    border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
-                    shape = RoundedCornerShape(10.dp)
-                )
-        ) {
-            Text(
-                text = String.format(
-                    stringResource(id = R.string.city_add_dialog_title_template),
-                    currentCityCached.name.split(",")[0]
-                ),
-                style = MaterialTheme.typography.h5,
-                modifier = Modifier.padding(start = 20.dp, top = 15.dp, end = 15.dp)
-            )
-            Text(
-                text = stringResource(id = R.string.city_add_dialog_subtitle),
-                modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 15.dp)
-            )
-            Row {
-                val context = LocalContext.current
-                Button(
-                    onClick = {
-                        viewModel.saveCity(viewModel.currentSelectedCity!!, context)
-                    },
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .clip(RoundedCornerShape(80.dp))
-                        .background(MaterialTheme.colors.primary)
-                ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
-                            text = stringResource(id = R.string.city_add_dialog_confirm),
-                            color = MaterialTheme.colors.background
-                        )
-                        AnimatedVisibility(visible = viewModel.saveCityInProgress) {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .padding(start = 10.dp)
-                                    .size(12.dp),
-                                color = MaterialTheme.colors.background,
-                                strokeWidth = 1.dp
-                            )
-                        }
-                    }
-                }
-                Button(
-                    onClick = {
-                        viewModel.showDoneDialog = false
-                    },
-                    modifier = Modifier
-                        .padding(bottom = 20.dp, top = 20.dp)
-                        .clip(RoundedCornerShape(50.dp)),
-                    colors = ButtonDefaults
-                        .buttonColors(backgroundColor = if (MaterialTheme.colors.isLight) {
+    ThunderstormTheme {
+        Dialog(onDismissRequest = { viewModel.showDoneDialog = false }) {
+            Column(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(
+                        if (MaterialTheme.colors.isLight) {
                             MaterialTheme.colors.background
                         } else {
                             colorResource(id = R.color.interface_gray_alt)
-                        })
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.city_add_dialog_cancel),
-                        color = MaterialTheme.colors.onBackground
+                        }
                     )
+                    .fillMaxWidth(1.0F)
+                    .border(
+                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+            ) {
+                Text(
+                    text = String.format(
+                        if (widgetVersion) {
+                            stringResource(id = R.string.widget_config_add_dialog_title)
+                        } else {
+                            stringResource(id = R.string.city_add_dialog_title_template)
+                        },
+                        currentCityCached.name.split(",")[0]
+                    ),
+                    style = MaterialTheme.typography.h5,
+                    modifier = Modifier.padding(start = 20.dp, top = 15.dp, end = 15.dp)
+                )
+                Text(
+                    text = if (widgetVersion) {
+                        stringResource(id = R.string.widget_config_add_dialog_subtitle)
+                    } else {
+                        stringResource(id = R.string.city_add_dialog_subtitle)
+                    },
+                    modifier = Modifier.padding(start = 20.dp, top = 5.dp, end = 15.dp)
+                )
+                Row {
+                    val context = LocalContext.current
+                    Button(
+                        onClick = {
+                            if (widgetVersion) {
+                                configOnFinish.invoke(viewModel)
+                            } else {
+                                viewModel.saveCity(viewModel.currentSelectedCity!!, context)
+                            }
+                        },
+                        shape = RoundedCornerShape(80.dp),
+                        elevation = null,
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colors.primary),
+                        modifier = Modifier.padding(20.dp)
+                    ) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = stringResource(id = R.string.city_add_dialog_confirm),
+                                color = MaterialTheme.colors.background
+                            )
+                            AnimatedVisibility(visible = viewModel.saveCityInProgress) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(start = 10.dp)
+                                        .size(12.dp),
+                                    color = MaterialTheme.colors.background,
+                                    strokeWidth = 1.dp
+                                )
+                            }
+                        }
+                    }
+                    Button(
+                        onClick = {
+                            viewModel.showDoneDialog = false
+                        },
+                        modifier = Modifier
+                            .padding(bottom = 20.dp, top = 20.dp),
+                        shape = RoundedCornerShape(80.dp),
+                        colors = ButtonDefaults
+                            .buttonColors(
+                                backgroundColor = if (MaterialTheme.colors.isLight) {
+                                    MaterialTheme.colors.background
+                                } else {
+                                    colorResource(id = R.color.interface_gray_alt)
+                                }
+                            )
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.city_add_dialog_cancel),
+                            color = MaterialTheme.colors.onBackground
+                        )
+                    }
                 }
             }
         }

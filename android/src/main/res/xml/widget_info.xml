@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:minWidth="180dp"
+    android:minHeight="180dp"
+    android:targetCellHeight="2"
+    android:targetCellWidth="3"
+    android:previewImage="@drawable/small_widget_preview"
+    android:resizeMode="horizontal"
+    android:configure="com.thunderstorm.app.android.widget.WidgetConfigurator"
+    android:updatePeriodMillis="1000"
+    />

@@ -28,6 +28,7 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.DataStoreName
+import com.thunderstorm.app.database.datastore.SharedContext
 import java.lang.Integer.max
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -35,7 +36,7 @@ import kotlin.math.roundToInt
 @Composable
 fun QuickDetailView(viewModel: WeatherViewModel, context: Activity) {
     val weatherData = viewModel.forecastWeatherData
-    val dataStore = DataStore(context)
+    val dataStore = DataStore(context.applicationContext as SharedContext)
     Column(
         modifier = Modifier.padding(top = 10.dp)
     ) {

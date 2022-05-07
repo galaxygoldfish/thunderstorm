@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/widgetSmallCityText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingTop="15dp"
+        android:fontFamily="@font/manrope_bold"
+        android:textSize="25sp" />
+    <ImageView
+        android:id="@+id/widgetSmallWeatherImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentEnd="true"
+        android:paddingEnd="20dp"
+        android:paddingTop="15dp" />
+    <TextView
+        android:id="@+id/widgetSmallTempText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="35dp"
+        android:paddingStart="20dp"
+        android:fontFamily="@font/texgyreheros_bold"
+        android:textSize="50sp" />
+    <TextView
+        android:id="@+id/widgetSmallConditionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="20dp"
+        android:paddingStart="20dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/manrope_regular" />
+</RelativeLayout>

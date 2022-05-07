@@ -63,7 +63,7 @@
 
     <string name="city_list_actionbar_title">Saved cities</string>
 
-    <string name="city_add_placeholder_text">Discover somewhere new</string>
+    <string name="city_add_placeholder_text">Add a city</string>
     <string name="city_add_dialog_title_template">Save %1$s?</string>
     <string name="city_add_dialog_subtitle">Do you wish to add this city to your saved cities list?</string>
     <string name="city_add_dialog_confirm">Confirm</string>
@@ -71,5 +71,9 @@
 
     <string name="settings_imperial_title">Use imperial system</string>
     <string name="settings_imperial_subtitle">Use fahrenheit, miles, and inches to measure units</string>
+    
+    <string name="widget_title">Thunderstorm widget</string>
+    <string name="widget_config_add_dialog_title">Use %1$s?</string>
+    <string name="widget_config_add_dialog_subtitle">Do you wish to use this city on the widget?</string>
 
 </resources>

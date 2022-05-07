@@ -22,6 +22,7 @@ import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
 import com.thunderstorm.app.android.view.*
 import com.thunderstorm.app.android.viewmodel.*
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 
 object NavigationDestination {
     const val WelcomeView = "welcome"
@@ -61,7 +62,7 @@ class ThunderstormBaseActivity : ComponentActivity() {
     @Composable
     fun ThunderstormNavHost() {
 
-        val dataStore = DataStore(this)
+        val dataStore = DataStore(this.applicationContext as SharedContext)
         val passedSetup = dataStore.getBoolean("INDICATION_ONBOARDING_DONE")
 
         navigationController = rememberNavController()

@@ -34,6 +34,7 @@ import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.view.settings.BasePreference
 import com.thunderstorm.app.android.viewmodel.SetupViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -64,7 +65,7 @@ fun CustomizationView(
                 .padding(top = 20.dp)
                 .scrollable(rememberScrollState(), Orientation.Vertical)
         ) {
-            val dataStore = DataStore(LocalContext.current as ComponentActivity)
+            val dataStore = DataStore(LocalContext.current.applicationContext as SharedContext)
             val switchState = remember { mutableStateOf(dataStore.getBoolean("USE_IMPERIAL_UNITS")) }
             BasePreference(
                 title = stringResource(id = R.string.settings_imperial_title),

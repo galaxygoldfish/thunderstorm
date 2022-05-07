@@ -25,12 +25,13 @@ import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import kotlin.math.roundToInt
 
 @Composable
 fun CurrentWeatherView(viewModel: WeatherViewModel, context: Activity) {
     val weatherData = viewModel.forecastWeatherData
-    val dataStore = DataStore(context)
+    val dataStore = DataStore(context.applicationContext as SharedContext)
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,

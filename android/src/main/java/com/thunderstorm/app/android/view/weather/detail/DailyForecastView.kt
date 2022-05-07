@@ -37,6 +37,7 @@ import com.thunderstorm.app.android.theme.TexGyreHeros
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -45,7 +46,7 @@ import kotlin.math.roundToInt
 @Composable
 fun DailyForecastView(viewModel: WeatherViewModel, context: Activity) {
     val weatherData = viewModel.forecastWeatherData
-    val dataStore = DataStore(context)
+    val dataStore = DataStore(context.applicationContext as SharedContext)
     Column(
         modifier = Modifier
             .fillMaxWidth()

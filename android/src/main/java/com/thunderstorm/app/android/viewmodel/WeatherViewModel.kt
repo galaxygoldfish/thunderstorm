@@ -17,6 +17,7 @@ import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
 import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.database.DatabaseDriver
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.networking.NetworkingClient
 import kotlinx.coroutines.*
@@ -34,7 +35,7 @@ class WeatherViewModel : ViewModel() {
     private val asyncScope = CoroutineScope(Dispatchers.Default)
 
     fun loadDefaultCity(context: Context) {
-        DataStore(context as ComponentActivity).apply {
+        DataStore(context.applicationContext as SharedContext).apply {
             getCurrentData(context, getString("LAST_CITY_VIEWED"))
         }
     }
@@ -60,7 +61,7 @@ class WeatherViewModel : ViewModel() {
                 showWeatherData = true
             }
         }
-        DataStore(context as ComponentActivity).apply {
+        DataStore(context.applicationContext as SharedContext).apply {
             putString("LAST_CITY_VIEWED", serviceUrl)
         }
     }

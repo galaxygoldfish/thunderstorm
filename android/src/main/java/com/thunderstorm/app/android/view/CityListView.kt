@@ -38,6 +38,7 @@ import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.CityListViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.DataStoreName
+import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.SavedCityItem
 import com.thunderstorm.app.model.weather.WeatherDataResult
 import com.thunderstorm.app.networking.NetworkingClient
@@ -140,7 +141,7 @@ fun CityListItem(
     viewModel: CityListViewModel,
     navController: NavController
 ) {
-    val dataStore = DataStore(context = navController.context as ThunderstormBaseActivity)
+    val dataStore = DataStore(context = navController.context.applicationContext as SharedContext)
     var cityIcon by remember { mutableStateOf<Int?>(null) }
     var weatherResponse by remember { mutableStateOf<WeatherDataResult?>(null) }
     LaunchedEffect(true) {

@@ -1,12 +1,13 @@
 package com.thunderstorm.app.database.datastore
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
 
-val DataStoreName = "com.thunderstorm.app.preferences"
+const val DataStoreName = "com.thunderstorm.app.preferences"
 
-actual typealias SharedContext = Activity
+actual typealias SharedContext = Application
 
 actual fun SharedContext.insertBoolean(key: String, value: Boolean) {
     this.getSharedPreferences(DataStoreName, MODE_PRIVATE).edit().apply {

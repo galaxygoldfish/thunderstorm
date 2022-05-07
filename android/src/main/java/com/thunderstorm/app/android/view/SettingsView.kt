@@ -17,13 +17,14 @@ import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.view.settings.BasePreference
 import com.thunderstorm.app.android.viewmodel.SettingsViewModel
 import com.thunderstorm.app.database.datastore.DataStore
+import com.thunderstorm.app.database.datastore.SharedContext
 
 @Composable
 fun SettingsView(
     navController: NavController,
     viewModel: SettingsViewModel
 ) {
-    val dataStore = DataStore(navController.context as ComponentActivity)
+    val dataStore = DataStore(navController.context.applicationContext as SharedContext)
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
