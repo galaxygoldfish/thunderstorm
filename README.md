@@ -12,10 +12,10 @@ Other libraries include
 
 ## Screenshots
 <div class="flex" align="center">
-     <img src="/media/Screenshot_20220507-141510.png" height=550 />
-     <img src="/media/Screenshot_20220507-141541.png" height=550 />
-     <img src="/media/Screenshot_20220507-141559.png" height=550 />
-     <img src="/media/Screenshot_20220507-145443.png" height=550 />
+     <img src="/media/Screenshot_20220507-141510.png" width=23% />
+     <img src="/media/Screenshot_20220507-141541.png" width=23% />
+     <img src="/media/Screenshot_20220507-141559.png" width=23% />
+     <img src="/media/Screenshot_20220507-145443.png" width=23% />
 </div>
 
 ## Build notes
