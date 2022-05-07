@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
@@ -45,7 +46,8 @@ fun CityAddView(
     configOnBackPress: (() -> Unit) = {},
     configOnFinish: ((viewModel: CityAddViewModel) -> Unit) = {}
 ) {
-    val viewModel = LocalContext.current.getViewModel(CityAddViewModel::class.java)
+    val context = navController?.context ?: LocalContext.current
+    val viewModel = context.getViewModel(CityAddViewModel::class.java)
     ThunderstormTheme {
     Column {
         Row(
@@ -53,6 +55,10 @@ fun CityAddView(
         ) {
             IconButton(
                 onClick = {
+                    viewModel.apply {
+                        citySearchResult.clear()
+                        currentSearchQuery = TextFieldValue()
+                    }
                     navController?.popBackStack()
                     configOnBackPress.invoke()
                 },

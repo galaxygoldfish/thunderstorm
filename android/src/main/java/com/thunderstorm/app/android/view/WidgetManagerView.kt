@@ -1,9 +1,10 @@
 package com.thunderstorm.app.android.view
 
+import android.app.Activity
+import android.appwidget.AppWidgetManager
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -12,6 +13,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -19,6 +21,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
@@ -27,6 +31,7 @@ import com.thunderstorm.app.android.utils.getViewModel
 import com.thunderstorm.app.android.utils.updateAllWidgets
 import com.thunderstorm.app.android.viewmodel.WidgetManagerViewModel
 import com.thunderstorm.app.android.widget.ThunderstormWidget
+import com.thunderstorm.app.android.widget.updateWidgetData
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext
 
@@ -49,15 +54,22 @@ fun WidgetManagerView(navController: NavController) {
         ) {
             LazyColumn {
                 itemsIndexed(viewModel.currentWidgetsList) { _, item ->
-                    WidgetManagerListItem(widgetID = item)
+                    WidgetManagerListItem(
+                        widgetID = item,
+                        viewModel = viewModel
+                    )
                 }
             }
         }
+        CityChangeDialog(
+            viewModel = viewModel,
+            navController = navController
+        )
     }
 }
 
 @Composable
-fun WidgetManagerListItem(widgetID: Int) {
+fun WidgetManagerListItem(widgetID: Int, viewModel: WidgetManagerViewModel) {
     val dataStore = DataStore(LocalContext.current.applicationContext as SharedContext)
     val cityName = dataStore.getString("WIDGET_${widgetID}_CITY_TITLE")
     var cardExpanded by remember { mutableStateOf(false) }
@@ -138,6 +150,10 @@ fun WidgetManagerListItem(widgetID: Int) {
                     }
                     Button(
                         onClick = {
+                            viewModel.apply {
+                                showingCityDialog = true
+                                currentWidgetID = widgetID
+                            }
                         },
                         shape = RoundedCornerShape(80.dp),
                         elevation = null,
@@ -152,6 +168,69 @@ fun WidgetManagerListItem(widgetID: Int) {
                         )
                     }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun CityChangeDialog(
+    viewModel: WidgetManagerViewModel,
+    navController: NavController
+) {
+    val context = LocalContext.current
+    AnimatedVisibility(visible = viewModel.showingCityDialog) {
+        Dialog(
+            onDismissRequest = {
+                viewModel.showingCityDialog = false
+            }
+        ) {
+            Column(
+                modifier = Modifier
+                    .background(
+                        if (MaterialTheme.colors.isLight) {
+                            MaterialTheme.colors.background
+                        } else {
+                            colorResource(id = R.color.interface_gray_alt)
+                        }
+                    )
+                    .clip(RoundedCornerShape(10.dp))
+                    .border(
+                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .fillMaxHeight(0.8F)
+            ) {
+                CityAddView(
+                    navController = navController,
+                    widgetVersion = true,
+                    configOnBackPress = {
+                        navController.popBackStack()
+                    },
+                    configOnFinish = { addCityViewModel ->
+                        addCityViewModel.saveCityInProgress = true
+                        DataStore(context.applicationContext as SharedContext).apply {
+                            viewModel.currentWidgetID?.let { ID ->
+                                putString(
+                                    key = "WIDGET_${ID}_CITY_TITLE",
+                                    value = addCityViewModel.currentSelectedCity!!.name.split(",")[0]
+                                )
+                                putString(
+                                    key = "WIDGET_${ID}_SERVICE_URL",
+                                    value = addCityViewModel.currentSelectedCity!!.url!!
+                                )
+                                putBoolean(
+                                    key = "WIDGET_${ID}_DARK_THEME",
+                                    value = true
+                                )
+                                updateWidgetData(context, ID)
+                                context.updateAllWidgets()
+                            }
+                        }
+                        addCityViewModel.showDoneDialog = false
+                        viewModel.showingCityDialog = false
+                    }
+                )
             }
         }
     }
