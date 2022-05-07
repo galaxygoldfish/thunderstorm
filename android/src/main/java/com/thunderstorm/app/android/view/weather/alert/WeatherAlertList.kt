@@ -128,9 +128,3 @@ fun AlertListItem(
         }
     }
 }
-<div class="flex">
-<img src="/media/Screenshot_20220507-141510.jpg" height=500 />
-<img src="/media/Screenshot_20220507-141541.jpg" height=500 />
-<img src="/media/Screenshot_20220507-141559.jpg" height=500 />
-<img src="/media/Screenshot_20220507-145443.jpg" height=500 />
-</div>
