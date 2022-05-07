@@ -1,5 +1,22 @@
-# Thunderstorm
-⚡️Weather app for Android + iOS built with Kotlin Multiplatform Mobile. (Under heavy development)
+<img src="/media/header.png" />
+⚡️Weather app for Android + iOS built with Kotlin Multiplatform Mobile, Jetpack Compose and SwiftUI (iOS under development). 
+
+Other libraries include
+
+- Ktor
+- SQLDelight
+- Accompanist
+- AndroidX Glance
+- Compose Navigation
+- SwiftUIPager
+
+## Screenshots
+<div class="flex" align="center">
+     <img src="/media/Screenshot_20220507-141510.png" height=550 />
+     <img src="/media/Screenshot_20220507-141541.png" height=550 />
+     <img src="/media/Screenshot_20220507-141559.png" height=550 />
+     <img src="/media/Screenshot_20220507-145443.png" height=550 />
+</div>
 
 ## Build notes
 Before building, you must create an object in the directory ```shared/src/commonMain/kotlin/com/thunderstorm/app/Keystore.kt``` with your API key from [WeatherAPI](https://weatherapi.com).
