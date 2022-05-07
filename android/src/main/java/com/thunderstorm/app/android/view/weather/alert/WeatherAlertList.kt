@@ -107,12 +107,12 @@ fun AlertListItem(
                     .padding(start = 20.dp, top = 15.dp, bottom = 15.dp, end = 20.dp)
             ) {
                 Text(
-                    text = alertObject.headline,
+                    text = alertObject.event,
                     style = MaterialTheme.typography.body2,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = alertObject.event,
+                    text = alertObject.headline,
                     style = MaterialTheme.typography.body1
                 )
             }
@@ -128,3 +128,9 @@ fun AlertListItem(
         }
     }
 }
+<div class="flex">
+<img src="/media/Screenshot_20220507-141510.jpg" height=500 />
+<img src="/media/Screenshot_20220507-141541.jpg" height=500 />
+<img src="/media/Screenshot_20220507-141559.jpg" height=500 />
+<img src="/media/Screenshot_20220507-145443.jpg" height=500 />
+</div>

@@ -30,6 +30,7 @@ import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.DataStoreName
 import com.thunderstorm.app.database.datastore.SharedContext
 import java.lang.Integer.max
+import java.lang.reflect.Array.get
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -61,8 +62,9 @@ fun QuickDetailView(viewModel: WeatherViewModel, context: Activity) {
         ) {
             val airQualityLevel = weatherData?.current?.airQuality?.usEpaIndex?.toInt()
             QuickDetailCard(
-                mainText = stringArrayResource(id = R.array.air_quality_units_epa)
-                    .get(airQualityLevel?.let { max(it - 1, 0) } ?: 0),
+                mainText = stringArrayResource(id = R.array.air_quality_units_epa).let { array ->
+                    array.get(airQualityLevel?.let { min(max(it - 1, 0), array.size - 1) } ?: 0)
+                },
                 subtitle = stringResource(id = R.string.weather_air_quality_detail_text),
                 position = true,
                 airQualityText = true,
