@@ -14,7 +14,6 @@ import androidx.glance.appwidget.AndroidRemoteViews
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
-import androidx.glance.text.Text
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.utils.identifierValue
 import com.thunderstorm.app.database.datastore.DataStore
@@ -53,11 +52,15 @@ class ThunderstormWidget : GlanceAppWidget() {
                     LocalContext.current.packageName,
                     R.layout.layout_widget_small
                 ).apply {
+                    val cityTitle = dataStore.getString("WIDGET_${currentWidgetID}_CITY_TITLE")
                     setTextViewText(
                         R.id.widgetSmallCityText,
-                        dataStore.getString("WIDGET_${currentWidgetID}_CITY_TITLE")
-                            .toUpperCase(Locale.current)
+                        if (cityTitle.isNotEmpty()) {
+                            cityTitle.toUpperCase(Locale.current)
                             .substring(0, 3)
+                        } else {
+                            LocalContext.current.getString(R.string.widget_loading_long)
+                        }
                     )
                     setTextViewText(
                         R.id.widgetSmallTempText,

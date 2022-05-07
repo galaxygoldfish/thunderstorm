@@ -41,7 +41,7 @@ fun BasePreference(
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 5.dp),
         onClick = {
-            checkState!!.value = !checkState.value
+            checkState?.let { checkState.value = !it.value }
             onClick.invoke()
         },
         interactionSource = interactionSource
@@ -60,7 +60,7 @@ fun BasePreference(
             )
             Column(
                 modifier = Modifier
-                    .fillMaxWidth(0.7F)
+                    .fillMaxWidth(if (switchPreference) 0.7F else 1.0F)
                     .padding(top = 15.dp, bottom = 15.dp, start = 20.dp)
             ) {
                 Text(

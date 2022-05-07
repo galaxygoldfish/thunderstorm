@@ -47,6 +47,14 @@ fun SettingsView(
                     },
                     checkState = switchState
                 )
+                BasePreference(
+                    title = stringResource(id = R.string.settings_widget_manager_title),
+                    subtitle = stringResource(id = R.string.settings_widget_manager_subtitle),
+                    icon = painterResource(id = R.drawable.ic_file_edit),
+                    onClick = {
+                        navController.navigate(NavigationDestination.WidgetManageView)
+                    }
+                )
             }
         }
     }

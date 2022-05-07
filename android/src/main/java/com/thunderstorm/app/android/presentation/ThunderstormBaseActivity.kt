@@ -33,6 +33,7 @@ object NavigationDestination {
     const val SettingsView = "settings"
     const val CityListView = "cities"
     const val CityAddView = "cityadd"
+    const val WidgetManageView = "widgetman"
 }
 
 @ExperimentalPagerApi
@@ -127,6 +128,9 @@ class ThunderstormBaseActivity : ComponentActivity() {
                 }
                 composable(NavigationDestination.CityAddView) {
                     CityAddView(navController = navigationController)
+                }
+                composable(NavigationDestination.WidgetManageView) {
+                    WidgetManagerView(navController = navigationController)
                 }
             }
         )
