@@ -1,8 +1,29 @@
 <img src="/media/header.png" />
-⚡️Weather app for Android + iOS built with Kotlin Multiplatform Mobile, Jetpack Compose and SwiftUI (iOS under development). 
+<p>
+⚡️ Weather app for Android + iOS built with Kotlin Multiplatform Mobile, Jetpack Compose and SwiftUI. Features include:
+</p>
 
-Other libraries include
 
+- 24 hour weather forecast
+- Sunrise/sunset times
+- Humidity, UV Index, Air quality and Visibility
+- 3 day forecast
+- Local weather advisories/warnings
+- Save multiple cities
+- Homescreen widget
+
+## Screenshots
+<div class="flex" align="center">
+     <img src="/media/weather.png" width=24% />
+     <img src="/media/cities.png" width=24% />
+     <img src="/media/search.png" width=24% />
+     <img src="/media/alerts.png" width=24% />
+</div>
+
+## Libraries used
+- SwiftUI
+- Jetpack Compose
+- Kotlin Multiplatform Mobile
 - Ktor
 - SQLDelight
 - Accompanist
@@ -10,18 +31,13 @@ Other libraries include
 - Compose Navigation
 - SwiftUIPager
 
-## Screenshots
-<div class="flex" align="center">
-     <img src="/media/Screenshot_20220507-141510.png" width=23% />
-     <img src="/media/Screenshot_20220507-141541.png" width=23% />
-     <img src="/media/Screenshot_20220507-141559.png" width=23% />
-     <img src="/media/Screenshot_20220507-145443.png" width=23% />
-</div>
+## Project structure
+<img src="/media/architecture.png" width=100% />
 
 ## Build notes
-Before building, you must create an object in the directory ```shared/src/commonMain/kotlin/com/thunderstorm/app/Keystore.kt``` with your API key from [WeatherAPI](https://weatherapi.com).
+Before building for Android, you must create an object in the directory ```shared/src/commonMain/kotlin/com/thunderstorm/app/Keystore.kt``` with your API key from [WeatherAPI](https://weatherapi.com).
 
-```
+```kotlin
 package com.thunderstorm.app
 
 object Keystore {
