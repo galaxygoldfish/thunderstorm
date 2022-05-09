@@ -64,6 +64,8 @@
     <string name="settings_imperial_subtitle">Use fahrenheit, miles, and inches to measure units</string>
     <string name="settings_widget_manager_title">Widget manager</string>
     <string name="settings_widget_manager_subtitle">Manage cities &amp; themes for all of your Thunderstorm widgets</string>
+    <string name="settings_dark_mode_title">Dark theme</string>
+    <string name="settings_dark_mode_subtitle">Use darker backgrounds to save battery</string>
 
     <string name="city_list_actionbar_title">Saved cities</string>
     <string name="city_add_placeholder_text">Add a city</string>

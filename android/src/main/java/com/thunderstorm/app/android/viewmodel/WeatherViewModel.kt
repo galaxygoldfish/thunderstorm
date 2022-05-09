@@ -1,21 +1,13 @@
 package com.thunderstorm.app.android.viewmodel
 
 import android.content.Context
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.squareup.sqldelight.internal.copyOnWriteList
 import com.thunderstorm.app.CityStore
-import com.thunderstorm.app.ThunderstormDatabase
 import com.thunderstorm.app.android.R
-import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
-import com.thunderstorm.app.android.utils.getIconForNameAndCode
-import com.thunderstorm.app.database.DatabaseDriver
+import com.thunderstorm.app.android.getIconForNameAndCode
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.weather.WeatherDataResult

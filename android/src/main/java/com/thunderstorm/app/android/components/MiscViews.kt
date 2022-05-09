@@ -1,10 +1,6 @@
-package com.thunderstorm.app.android.view.settings
+package com.thunderstorm.app.android.components
 
-import android.preference.SwitchPreference
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.LocalIndication
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.Interaction
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +10,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,9 +29,9 @@ fun BasePreference(
 ) {
     val interactionSource by remember { mutableStateOf(MutableInteractionSource()) }
     Card(
-        backgroundColor = colorResource(id = R.color.interface_gray_alt),
+        backgroundColor = MaterialTheme.colors.secondary,
         shape = RoundedCornerShape(10.dp),
-        border = BorderStroke(2.dp, colorResource(id = R.color.interface_gray)),
+        border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp, vertical = 5.dp),
@@ -85,7 +80,15 @@ fun BasePreference(
                         checkState.value = it
                         onClick.invoke()
                     },
-                    modifier = Modifier.padding(15.dp)
+                    modifier = Modifier.padding(15.dp),
+                    colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colors.onBackground,
+                        uncheckedThumbColor = MaterialTheme.colors.primaryVariant,
+                        checkedTrackColor = MaterialTheme.colors.onBackground,
+                        checkedTrackAlpha = 0.7F,
+                        uncheckedTrackColor = MaterialTheme.colors.onBackground,
+                        uncheckedTrackAlpha = 0.5F
+                    )
                 )
             }
         }

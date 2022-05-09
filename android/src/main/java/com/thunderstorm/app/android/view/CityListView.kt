@@ -1,48 +1,34 @@
 package com.thunderstorm.app.android.view
 
-import android.content.Context
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavDeepLink
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
+import com.thunderstorm.app.android.NavigationDestination
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
-import com.thunderstorm.app.android.presentation.NavigationDestination
-import com.thunderstorm.app.android.presentation.ThunderstormBaseActivity
-import com.thunderstorm.app.android.utils.getIconForNameAndCode
+import com.thunderstorm.app.android.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.CityListViewModel
 import com.thunderstorm.app.database.datastore.DataStore
-import com.thunderstorm.app.database.datastore.DataStoreName
 import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.SavedCityItem
 import com.thunderstorm.app.model.weather.WeatherDataResult
-import com.thunderstorm.app.networking.NetworkingClient
-import com.valentinilk.shimmer.shimmer
 import kotlin.math.roundToInt
 
 @ExperimentalPagerApi
@@ -169,8 +155,8 @@ fun CityListItem(
                 highlight = PlaceholderHighlight.shimmer()
             ),
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = colorResource(id = R.color.interface_gray_alt),
-        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray))
+        backgroundColor = MaterialTheme.colors.secondary,
+        border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant)
 
     ) {
         Row(

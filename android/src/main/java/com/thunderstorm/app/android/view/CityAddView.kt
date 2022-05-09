@@ -1,9 +1,6 @@
 package com.thunderstorm.app.android.view
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -13,9 +10,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,20 +20,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
-import com.airbnb.lottie.LottieAnimationView
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.InputFieldWithHint
+import com.thunderstorm.app.android.getViewModel
 import com.thunderstorm.app.android.theme.ThunderstormTheme
-import com.thunderstorm.app.android.utils.getViewModel
 import com.thunderstorm.app.android.view.onboarding.CityResultListItem
 import com.thunderstorm.app.android.viewmodel.CityAddViewModel
-import com.thunderstorm.app.model.SearchCityResult
 
-@OptIn(ExperimentalMaterialApi::class,
-    ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun CityAddView(
     navController: NavController? = null,
@@ -78,9 +69,9 @@ fun CityAddView(
                     .padding(top = 20.dp, end = 20.dp)
                     .height(50.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(colorResource(id = R.color.interface_gray_alt))
+                    .background(MaterialTheme.colors.secondary)
                     .border(
-                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                         shape = RoundedCornerShape(10.dp)
                     )
             ) {
@@ -157,7 +148,6 @@ fun CityAddView(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AddCityDialog(
     viewModel: CityAddViewModel,
@@ -174,12 +164,12 @@ fun AddCityDialog(
                         if (MaterialTheme.colors.isLight) {
                             MaterialTheme.colors.background
                         } else {
-                            colorResource(id = R.color.interface_gray_alt)
+                            MaterialTheme.colors.secondary
                         }
                     )
                     .fillMaxWidth(1.0F)
                     .border(
-                        border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                        border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                         shape = RoundedCornerShape(10.dp)
                     )
             ) {
@@ -246,7 +236,7 @@ fun AddCityDialog(
                                 backgroundColor = if (MaterialTheme.colors.isLight) {
                                     MaterialTheme.colors.background
                                 } else {
-                                    colorResource(id = R.color.interface_gray_alt)
+                                    MaterialTheme.colors.secondary
                                 }
                             )
                     ) {

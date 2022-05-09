@@ -1,16 +1,10 @@
-package com.thunderstorm.app.android.view.weather.alert
+package com.thunderstorm.app.android.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,11 +20,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.thunderstorm.app.android.NavigationDestination
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
-import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.viewmodel.WeatherAlertViewModel
 import com.thunderstorm.app.model.weather.special.AlertWeatherObject
 
@@ -78,11 +71,10 @@ fun AlertListItem(
             .padding(start = 20.dp, end = 20.dp, bottom = 10.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(
-                colorResource(id = R.color.interface_gray)
-                    .copy(0.5F)
+                MaterialTheme.colors.primaryVariant.copy(0.5F)
             )
             .border(
-                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                 shape = RoundedCornerShape(10.dp)
             )
             .clickable {

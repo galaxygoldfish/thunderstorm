@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather.detail
+package com.thunderstorm.app.android.view
 
 import android.app.Activity
 import android.content.Context
@@ -6,20 +6,15 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.LocalContentColor
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -29,18 +24,17 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
+import com.thunderstorm.app.android.getIconForNameAndCode
 import com.thunderstorm.app.android.theme.TexGyreHeros
-import com.thunderstorm.app.android.utils.getIconForNameAndCode
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.model.weather.forecast.ForecastDayWeatherObject
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 import kotlin.math.roundToInt
 
 @Composable
@@ -89,9 +83,9 @@ fun DailyListItem(
             .fillMaxWidth()
             .padding(bottom = 10.dp, start = 20.dp, end = 20.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(colorResource(id = R.color.interface_gray).copy(0.5F))
+            .background(MaterialTheme.colors.primaryVariant.copy(0.5F))
             .border(
-                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                 shape = RoundedCornerShape(10.dp)
             ),
         verticalAlignment = Alignment.CenterVertically,

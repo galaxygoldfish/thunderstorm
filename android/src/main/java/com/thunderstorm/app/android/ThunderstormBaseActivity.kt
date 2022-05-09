@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.presentation
+package com.thunderstorm.app.android
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,8 +17,6 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.thunderstorm.app.android.theme.ThunderstormTheme
 import com.thunderstorm.app.android.view.onboarding.SetupViewPager
-import com.thunderstorm.app.android.view.weather.alert.WeatherAlertDetail
-import com.thunderstorm.app.android.view.weather.alert.WeatherAlertList
 import com.thunderstorm.app.android.view.*
 import com.thunderstorm.app.android.viewmodel.*
 import com.thunderstorm.app.database.datastore.DataStore

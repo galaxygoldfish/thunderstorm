@@ -1,19 +1,14 @@
 package com.thunderstorm.app.android.widget
 
 import android.app.Activity
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.content.Intent
-import android.os.Build.ID
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidgetManager
-import androidx.glance.appwidget.LocalAppWidgetOptions
-import com.thunderstorm.app.android.utils.identifierValue
-import com.thunderstorm.app.android.utils.updateAllWidgets
+import com.thunderstorm.app.android.identifierValue
+import com.thunderstorm.app.android.updateAllWidgets
 import com.thunderstorm.app.android.view.CityAddView
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext

@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.lifecycle.ViewModel
-import com.thunderstorm.app.android.utils.identifierValue
+import com.thunderstorm.app.android.identifierValue
 import com.thunderstorm.app.android.widget.ThunderstormWidget
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

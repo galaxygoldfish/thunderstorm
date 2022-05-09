@@ -3,7 +3,8 @@
 
     <color name="thunderstorm_accent_color">#000000</color>
     <color name="interface_gray">#DFDFDF</color>
-    <color name="interface_gray_alt">#F1F1F1</color>
+    <color name="interface_gray_alt_light">#F1F1F1</color>
+    <color name="interface_gray_alt_dark">#191919</color>
     <color name="interface_gray_dark">#252525</color>
     <color name="interface_gray_light">#DFDFDF</color>
     <color name="interface_gray_contrast">#919191</color>

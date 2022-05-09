@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather.alert
+package com.thunderstorm.app.android.view
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,9 +11,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.thunderstorm.app.android.NavigationDestination
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.components.ActionBar
-import com.thunderstorm.app.android.presentation.NavigationDestination
 import com.thunderstorm.app.android.viewmodel.WeatherAlertViewModel
 
 @Composable
@@ -29,7 +29,9 @@ fun WeatherAlertDetail(
         ActionBar(
             text = stringResource(id = R.string.alerts_detail_page_title),
             backAction = {
-                navController.navigate("""${NavigationDestination.AlertView}/${viewModel.currentCity.value}""")
+                navController.navigate(
+                    """${NavigationDestination.AlertView}/${viewModel.currentCity.value}"""
+                )
             }
         )
         val alertHeaderItems = listOf(

@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather.detail
+package com.thunderstorm.app.android.view
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -17,12 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
-import com.google.accompanist.placeholder.material.fade
 import com.google.accompanist.placeholder.material.placeholder
 import com.google.accompanist.placeholder.material.shimmer
 import com.thunderstorm.app.android.R
 import com.thunderstorm.app.android.viewmodel.WeatherViewModel
-import com.thunderstorm.app.model.weather.WeatherDataResult
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,7 +37,7 @@ fun AstronomyDetailCard(
             .padding(top = 20.dp, start = 20.dp, end = 20.dp)
             .clip(RoundedCornerShape(10.dp))
             .background(
-                colorResource(id = R.color.interface_gray).copy(0.5F)
+                MaterialTheme.colors.primaryVariant.copy(0.5F)
             )
             .placeholder(
                 visible = !viewModel.showWeatherData,
@@ -47,7 +45,7 @@ fun AstronomyDetailCard(
                 highlight = PlaceholderHighlight.shimmer()
             )
             .border(
-                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                 shape = RoundedCornerShape(10.dp)
             ),
         verticalAlignment = Alignment.CenterVertically,

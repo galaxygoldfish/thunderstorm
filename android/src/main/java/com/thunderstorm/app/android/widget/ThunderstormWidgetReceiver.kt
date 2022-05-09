@@ -2,15 +2,11 @@ package com.thunderstorm.app.android.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
-import android.os.Build.ID
-import android.util.Log
-import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.GlanceAppWidgetReceiver
-import androidx.glance.appwidget.action.actionRunCallback
-import com.thunderstorm.app.android.utils.getIconForNameAndCode
-import com.thunderstorm.app.android.utils.identifierValue
+import com.thunderstorm.app.android.getIconForNameAndCode
+import com.thunderstorm.app.android.identifierValue
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext
 import com.thunderstorm.app.networking.NetworkingClient

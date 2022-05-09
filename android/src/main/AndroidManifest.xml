@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Thunderstorm"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".presentation.ThunderstormBaseActivity"
+            android:name=".ThunderstormBaseActivity"
             android:exported="true"
             android:theme="@style/Theme.Thunderstorm">
             <intent-filter>

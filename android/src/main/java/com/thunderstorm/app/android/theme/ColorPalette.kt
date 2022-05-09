@@ -10,8 +10,8 @@ import com.thunderstorm.app.android.R
 @Composable
 fun darkColorPalette() = darkColors(
     primary = colorResource(id = R.color.thunderstorm_accent_color),
-    primaryVariant = colorResource(id = R.color.thunderstorm_accent_color),
-    secondary = colorResource(id = R.color.thunderstorm_accent_color),
+    primaryVariant = colorResource(id = R.color.interface_gray_dark),
+    secondary = colorResource(id = R.color.interface_gray_alt_dark),
     background = Color.Black,
     surface = Color.Black,
     onPrimary = Color.Black,
@@ -23,8 +23,8 @@ fun darkColorPalette() = darkColors(
 @Composable
 fun lightColorPalette() = lightColors(
     primary = colorResource(id = R.color.thunderstorm_accent_color),
-    primaryVariant = colorResource(id = R.color.thunderstorm_accent_color),
-    secondary = colorResource(id = R.color.thunderstorm_accent_color),
+    primaryVariant = colorResource(id = R.color.interface_gray_light),
+    secondary = colorResource(id = R.color.interface_gray_alt_light),
     background = Color.White,
     surface = Color.White,
     onPrimary = Color.White,

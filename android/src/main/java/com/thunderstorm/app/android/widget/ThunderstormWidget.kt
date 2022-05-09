@@ -6,7 +6,6 @@ import android.util.Log.d
 import android.widget.RemoteViews
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.toUpperCase
 import androidx.glance.*
@@ -15,7 +14,7 @@ import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import com.thunderstorm.app.android.R
-import com.thunderstorm.app.android.utils.identifierValue
+import com.thunderstorm.app.android.identifierValue
 import com.thunderstorm.app.database.datastore.DataStore
 import com.thunderstorm.app.database.datastore.SharedContext
 

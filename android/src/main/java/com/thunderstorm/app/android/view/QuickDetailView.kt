@@ -1,4 +1,4 @@
-package com.thunderstorm.app.android.view.weather
+package com.thunderstorm.app.android.view
 
 import android.app.Activity
 import androidx.compose.foundation.BorderStroke
@@ -100,7 +100,7 @@ fun QuickDetailCard(
             .padding(top = 10.dp, end = endPadding, start = startPadding)
             .clip(RoundedCornerShape(10.dp))
             .background(
-                colorResource(id = R.color.interface_gray).copy(0.5F)
+                MaterialTheme.colors.primaryVariant.copy(0.5F)
             )
             .placeholder(
                 visible = !viewModel.showWeatherData,
@@ -108,7 +108,7 @@ fun QuickDetailCard(
                 highlight = PlaceholderHighlight.shimmer()
             )
             .border(
-                border = BorderStroke(3.dp, colorResource(id = R.color.interface_gray)),
+                border = BorderStroke(3.dp, MaterialTheme.colors.primaryVariant),
                 shape = RoundedCornerShape(10.dp)
             )
     ) {
