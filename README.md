@@ -1,4 +1,14 @@
 <img src="/media/header.png" />
+<div class="flex">
+     <a href="https://play.google.com/store/apps/details?id=com.thunderstorm.app.android">
+          <img src="https://img.shields.io/static/v1?label=Get+it+on&message=Google+Play&color=blue&style=for-the-badge" />
+     </a>
+     <img src="https://img.shields.io/github/issues/galaxygoldfish/thunderstorm?style=for-the-badge" />
+     <img src="https://img.shields.io/github/license/galaxygoldfish/thunderstorm?style=for-the-badge" />
+     <img src="https://img.shields.io/static/v1?label=version&message=1.0-beta&color=ff69b4&style=for-the-badge" />
+     <img src="https://img.shields.io/github/forks/galaxygoldfish/thunderstorm?label=forks&style=for-the-badge&color=blueviolet" />
+</div>
+<br>
 <p>
 ⚡️ Weather app for Android + iOS built with Kotlin Multiplatform Mobile, Jetpack Compose and SwiftUI. Features include:
 </p>
@@ -35,7 +45,9 @@
 <img src="/media/architecture.png" width=100% />
 
 ## Build notes
-Before building for Android, you must create an object in the directory ```shared/src/commonMain/kotlin/com/thunderstorm/app/Keystore.kt``` with your API key from [WeatherAPI](https://weatherapi.com).
+Before building, you must make sure to:
+- Create an object in the directory ```shared/src/commonMain/kotlin/com/thunderstorm/app/Keystore.kt``` with your API key from [WeatherAPI](https://weatherapi.com). 
+- Have the Kotlin Multiplatform Mobile plugin in Android Studio installed.
 
 ```kotlin
 package com.thunderstorm.app
